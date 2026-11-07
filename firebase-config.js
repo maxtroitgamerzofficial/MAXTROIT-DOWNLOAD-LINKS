@@ -1,13 +1,12 @@
-// Paste the Firebase web-app config from Firebase Console here.
-// This config is public by design. Never put service-account/private keys here.
+// Firebase Web App configuration for MAXTROIT DOWNLOAD HUB.
+// These web identifiers are intended for frontend use. Firestore Rules protect data.
 window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyD3Cpzu1tWUw7xqUKsC9COPwQDloNRKJKA",
+  authDomain: "maxtroit-download-hub.firebaseapp.com",
+  projectId: "maxtroit-download-hub",
+  storageBucket: "maxtroit-download-hub.firebasestorage.app",
+  messagingSenderId: "957047554501",
+  appId: "1:957047554501:web:4ff8204465ba338ec94bac",
+  measurementId: "G-S9CVTLL0ND"
 };
-// After creating your admin account, paste its Firebase Authentication UID here.
-// This is a public identifier; Firestore rules enforce the real permission check.
 window.ADMIN_UID = "PASTE_ADMIN_UID";
