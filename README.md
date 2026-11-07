@@ -1,23 +1,33 @@
 # MAXTROIT DOWNLOAD HUB
 
-Mobile-first starter website for the MAXTROIT DOWNLOAD HUB project.
+Mobile-first download website with separate public and admin panels.
 
-## Current starter features
-- Responsive dark navy / blue / purple design
-- Home page with upload cards, search and category filter
-- Admin form to add and delete download entries
-- Download page with a short visible countdown
-- Older entries remain in the list
+## Panels
+- Public user panel: `index.html` — search, categories and download cards. It has no admin link.
+- Admin panel: `admin.html` — Firebase email/password login; the configured admin UID is checked in the page and enforced again by Firestore Security Rules.
+- Download page: `download.html?id=DOCUMENT_ID`.
 
-## Important limitations — not production-ready
-This first GitHub version uses **localStorage**. Entries exist only in the browser/device where they were created. The admin page is not protected and must not be treated as a secure admin system. The timer is a user-experience delay, not security or proof of a real download. Never put private keys or passwords in frontend code.
+## Firebase setup (required for shared data and secure admin writes)
+1. Create a Firebase project at https://console.firebase.google.com/ and register a Web App.
+2. Enable **Authentication → Sign-in method → Email/Password**.
+3. Create your admin user under **Authentication → Users**. Do not send its password to anyone.
+4. Create a **Cloud Firestore** database.
+5. Open the admin user's Authentication details and copy its UID.
+6. Edit `firebase-config.js`: replace the sample values with the Web App config and replace `PASTE_ADMIN_UID` with the admin UID.
+7. In Firestore → Rules, publish the contents of `firestore.rules`, replacing its `PASTE_ADMIN_UID` with the same UID.
+8. Deploy the website over HTTPS (for example, GitHub Pages).
 
-## Next development stage
-1. Add Firebase Authentication with a server-verified admin UID.
-2. Move entries to Firestore and use restrictive security rules.
-3. Add image uploads using Firebase Storage with file validation.
-4. Add editable entries, configurable timer steps, optional social links, theme controls and analytics.
-5. Test on Android browsers and deploy with HTTPS.
+The Firebase web config is intended to be present in frontend code. Never add service-account JSON, private keys, or passwords to this repository.
 
-## Run locally
-Open `index.html` in a modern browser. For full testing, serve the folder using a local static web server.
+## Data model
+Collection: `downloads`. Each document contains:
+`title`, `description`, `category`, `thumbnail`, `url`, `created`.
+
+Firestore rules allow public reads so visitors can see downloads. Only the configured authenticated UID can create, edit, or delete download documents. The admin panel also checks the UID, but **the Firestore rules are the actual security boundary**.
+
+## Current limitations
+- Firebase is not connected until the setup above is completed.
+- Image fields currently accept image URLs; direct image upload/storage UI is not implemented.
+- Download page has a visible 5-second wait; it is a presentation delay, not a security control.
+- Admin can add, edit and delete download records after Firebase setup.
+- This project has not yet been browser/device QA tested or deployed.
