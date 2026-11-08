@@ -49,12 +49,12 @@ jobs:
           assert.match(admin,/MAXTROIT_INIT/);
           assert.match(app,/MAXTROIT_BRIDGE_V2/);
           assert.match(app,/MAXTROIT_NAVIGATE_DOWNLOAD/);
-          const adminBridge=admin.match(/function templateBridge\\(\\)\\{return String\\.raw`([\\s\\S]*?)`;/);
-          const publicBridge=app.match(/function publicTemplateBridge\\(\\)\\{return String\\.raw`([\\s\\S]*?)`;/);
+          const adminBridge=admin.match(/function templateBridge\(\)\{return String\.raw`([\s\S]*?)`;/);
+          const publicBridge=app.match(/function publicTemplateBridge\(\)\{return String\.raw`([\s\S]*?)`;/);
           assert.ok(adminBridge,'Admin template bridge missing');
           assert.ok(publicBridge,'Public template bridge missing');
-          new Function(adminBridge[1].replace(/^<script>/,'').replace(/<\\/script>$/,''));
-          new Function(publicBridge[1].replace(/^<script>/,'').replace(/<\\/script>$/,''));
+          new Function(adminBridge[1].replace(/^<script>/,'').replace(/<\/script>$/,''));
+          new Function(publicBridge[1].replace(/^<script>/,'').replace(/<\/script>$/,''));
           console.log('Template bridge scripts: PASS');
           console.log('Visual editor invariants: PASS');
           NODE
