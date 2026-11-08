@@ -11,5 +11,8 @@
       "README.md",
       ".github/**"
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
