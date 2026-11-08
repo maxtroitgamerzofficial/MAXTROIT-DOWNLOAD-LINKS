@@ -45,7 +45,7 @@ function templateBridge(){return String.raw`<script>
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){send("MAXTROIT_TEMPLATE_READY")});else send("MAXTROIT_TEMPLATE_READY");
 })();
 </script>`}
-function prepareTemplateHtml(html){const source=String(html||"");if(source.includes("MAXTROIT_BRIDGE_V2"))return source;const bridge=templateBridge();return /<\\/body\\s*>/i.test(source)?source.replace(/<\\/body\\s*>/i,bridge+"</body>"):source+bridge}
+function prepareTemplateHtml(html){const source=String(html||"");if(source.includes("MAXTROIT_BRIDGE_V2"))return source;const bridge=templateBridge();return /<\/body\s*>/i.test(source)?source.replace(/<\/body\s*>/i,bridge+"</body>"):source+bridge}
 async function buildUploadedTemplate(file,name){
  const ext=file.name.split(".").pop().toLowerCase();let html="";
  if(file.size>8*1024*1024)throw Error("Choose a file smaller than 8 MB.");
