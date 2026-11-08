@@ -1,23 +1,4 @@
-const KEY="max_download_hub_items_v1";
-const seed=[{id:"welcome",title:"Welcome to MAXTROIT",description:"Your download hub is ready. New uploads will appear here.",category:"Updates",thumbnail:"",url:"",created:Date.now()}];
-const grid=document.querySelector("#grid");
-function localItems(){try{return JSON.parse(localStorage.getItem(KEY))||seed}catch{return seed}}
-function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-async function loadItems(){
- if(window.hubCloud?.ready){try{const snap=await hubCloud.db.collection("downloads").orderBy("created","desc").get();return snap.docs.map(d=>({id:d.id,...d.data()}))}catch(e){console.error(e)}}
- return localItems();
-}
-if(grid){
- const search=document.querySelector("#search"),category=document.querySelector("#category");
- document.querySelector("#year").textContent=new Date().getFullYear();
- let all=[];
- async function render(){
-  all=await loadItems();const cats=[...new Set(all.map(x=>x.category).filter(Boolean))],old=category.value;
-  category.innerHTML='<option value="">All categories</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
-  category.value=cats.includes(old)?old:"";const q=search.value.toLowerCase();
-  const shown=all.filter(x=>(!category.value||x.category===category.value)&&(!q||(x.title+" "+x.description+" "+x.category).toLowerCase().includes(q)));
-  grid.innerHTML=shown.map(x=>'<article class="card"><div class="thumb">'+(x.thumbnail?'<img src="'+esc(x.thumbnail)+'" alt="">':"MAXTROIT")+'</div><div class="card-body"><span class="tag">'+esc(x.category||"General")+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.description)+'</p><a class="button" href="download.html?id='+encodeURIComponent(x.id)+'">View download</a></div></article>').join("");
-  document.querySelector("#count").textContent=shown.length+" items";document.querySelector("#empty").hidden=shown.length!==0;
- }
- search.addEventListener("input",render);category.addEventListener("change",render);render();
-}
+const KEY="max_download_hub_items_v1",grid=document.querySelector("#grid");function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+async function getItems(){if(window.hubCloud?.ready){try{const s=await hubCloud.db.collection("downloads").orderBy("created","desc").get();return s.docs.map(d=>({id:d.id,...d.data()}))}catch(e){console.error(e)}}try{return JSON.parse(localStorage.getItem(KEY))||[]}catch{return []}}
+async function applySite(){if(!window.hubCloud?.ready)return;try{const d=await hubCloud.db.collection("siteConfig").doc("public").get();if(!d.exists)return;const x=d.data();if(x.brandName){document.querySelector("#brand-name").textContent=x.brandName;document.querySelector("#hero-logo").textContent=x.brandName.slice(0,1);document.querySelector(".footer-brand").textContent=x.brandName}if(x.kicker)document.querySelector("#hero-kicker").textContent=x.kicker;if(x.heroTitle)document.querySelector("#hero-title").textContent=x.heroTitle;if(x.heroDescription)document.querySelector("#hero-description").textContent=x.heroDescription;if(x.logo){document.querySelector("#brand-mark").innerHTML='<img src="'+x.logo+'" alt="">';document.querySelector("#hero-logo").innerHTML='<img src="'+x.logo+'" alt="">'}if(x.banner)document.querySelector(".hero-art").style.backgroundImage='linear-gradient(135deg,#080d1b55,#080d1bdd),url("'+x.banner+'")'}catch(e){console.error("Site settings:",e)}}
+if(grid){const search=document.querySelector("#search"),category=document.querySelector("#category");document.querySelector("#year").textContent=new Date().getFullYear();let all=[];async function render(){all=await getItems();const cats=[...new Set(all.map(x=>x.category).filter(Boolean))],old=category.value;category.innerHTML='<option value="">All categories</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");category.value=cats.includes(old)?old:"";const q=search.value.toLowerCase(),shown=all.filter(x=>(!category.value||x.category===category.value)&&(!q||(x.title+" "+x.description+" "+x.category).toLowerCase().includes(q)));grid.innerHTML=shown.map(x=>'<article class="card"><a class="card-image" href="download.html?id='+encodeURIComponent(x.id)+'">'+(x.thumbnail?'<img src="'+x.thumbnail+'" alt="'+esc(x.title)+'">':'<span class="thumb-placeholder">MAXTROIT</span>')+'</a><div class="card-body"><span class="tag">'+esc(x.category||"General")+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.description||"Explore this download.")+'</p><a class="card-link" href="download.html?id='+encodeURIComponent(x.id)+'">View details <span>↗</span></a></div></article>').join("");document.querySelector("#count").textContent=shown.length+" items";document.querySelector("#empty").hidden=shown.length!==0}search.addEventListener("input",render);category.addEventListener("change",render);applySite();render()}
