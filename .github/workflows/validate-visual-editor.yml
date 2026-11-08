@@ -55,8 +55,8 @@ jobs:
           const publicBridgeEnd=app.indexOf('`}',publicBridgeStart);
           assert.ok(adminBridgeStart>0&&adminBridgeEnd>adminBridgeStart,'Admin template bridge missing');
           assert.ok(publicBridgeStart>0&&publicBridgeEnd>publicBridgeStart,'Public template bridge missing');
-          new Function(admin.slice(adminBridgeStart,adminBridgeEnd).replace(/^<script>/,'').replace(/<\\/script>$/,''));
-          new Function(app.slice(publicBridgeStart,publicBridgeEnd).replace(/^<script>/,'').replace(/<\\/script>$/,''));
+          new Function(admin.slice(adminBridgeStart,adminBridgeEnd).slice(8,-9));
+          new Function(app.slice(publicBridgeStart,publicBridgeEnd).slice(8,-9));
           console.log('Template bridge scripts: PASS');
           console.log('Visual editor invariants: PASS');
           NODE
