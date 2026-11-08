@@ -110,3 +110,7 @@ body[data-template="custom"][data-custom-theme="light"] .card{box-shadow:0 5px 2
 body[data-template="custom"] .card h3{color:var(--text)}
 @media(max-width:900px){body[data-template="custom"] .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){body[data-template="custom"] .grid{grid-template-columns:1fr}.template-import-grid{grid-template-columns:1fr}}
+
+.custom-template-library{display:grid;gap:8px;margin-top:14px}
+.custom-template-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+.custom-template-row span{display:grid;gap:4px}.custom-template-row strong{font-size:12px}.custom-template-row small{font-size:10px;color:var(--muted)}
