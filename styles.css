@@ -429,3 +429,13 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 .hero-logo-name{display:block;position:relative;z-index:2;font:700 14px/1.1 'Space Grotesk',sans-serif;letter-spacing:1.5px;text-align:center;color:#f5f7ff}
 .hero-logo-badge:after{z-index:1}
 @media(max-width:650px){.hero-logo-badge{width:min(360px,92vw);height:112px;padding:7px 10px;gap:4px}.hero-logo-icon{height:67px;flex-basis:67px;font-size:40px}.hero-logo-name{font-size:12px;letter-spacing:1.1px}}
+
+
+/* Social profiles live only in the footer as consistent icon links */
+.header-social-links,#header-social-links,.hero-actions .text-link{display:none!important}
+.footer-social-links{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;margin:24px auto}
+.footer-social-links a{width:48px;height:48px;padding:11px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #34435d;border-radius:50%;background:#101a2b;color:#eaf2ff;transition:transform .2s,border-color .2s,background .2s}
+.footer-social-links a svg{width:25px;height:25px;display:block}
+.footer-social-links a:hover{transform:translateY(-3px);border-color:#39c9ef;background:#172941;color:#fff}
+.footer-social-links a[aria-label="YouTube"]{color:#ff3445}
+@media(max-width:650px){.footer-social-links{gap:12px}.footer-social-links a{width:44px;height:44px;padding:10px}}
