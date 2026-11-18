@@ -412,3 +412,11 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 .hero-logo-name{display:none}
 .hero-logo-badge:not(.has-uploaded-logo) .hero-logo-icon{position:relative;inset:auto;width:100%;height:100%;font-size:30px}
 @media(max-width:650px){.hero-logo-badge{width:min(360px,92vw);height:94px;padding:7px 12px}.hero-logo-icon img{padding:4px}}
+
+
+/* Show the MAXTROIT brand name with the centered hero logo */
+.hero-logo-badge{flex-direction:column;gap:3px;padding:7px 14px 9px}
+.hero-logo-icon{position:relative;inset:auto;width:100%;height:67px;flex:0 0 67px;display:flex;align-items:center;justify-content:center;font-size:42px}
+.hero-logo-icon img{width:100%;height:100%;object-fit:contain;padding:2px}
+.hero-logo-name{display:block;position:relative;z-index:1;font:700 13px/1.1 'Space Grotesk',sans-serif;letter-spacing:1.6px;text-align:center;color:#f5f7ff}
+@media(max-width:650px){.hero-logo-badge{height:106px;gap:2px;padding:6px 10px 8px}.hero-logo-icon{height:63px;flex-basis:63px;font-size:38px}.hero-logo-name{font-size:12px;letter-spacing:1.2px}}
