@@ -273,3 +273,71 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
   const span=button.querySelector("span");if(span&&titles[button.dataset.view])span.textContent=titles[button.dataset.view];
  });
 })();
+
+/* Admin Studio v3: dedicated workspaces for animation and visual editing. */
+(function(){
+ const app=document.querySelector("#admin-app"),sidebar=document.querySelector(".sidebar"),main=document.querySelector(".admin-main");
+ if(!app||!sidebar||!main||document.querySelector("#view-animations"))return;
+ const nav=[
+  ["animations","✦","Animations"],
+  ["visual","▤","Visual editor"]
+ ];
+ nav.forEach(([id,icon,label])=>{
+  const b=document.createElement("button");b.type="button";b.className="nav-item";b.dataset.view=id;b.innerHTML=icon+" <span>"+label+"</span>";
+  const templates=sidebar.querySelector('[data-view="templates"]');sidebar.insertBefore(b,templates);
+  b.addEventListener("click",()=>window.showView(id));
+ });
+ const makeView=(id,title,desc)=>{
+  const s=document.createElement("section");s.id="view-"+id;s.className="admin-view";s.hidden=true;
+  const head=document.createElement("div");head.className="panel-card panel-heading";
+  const copy=document.createElement("div");copy.innerHTML="<h2>"+title+"</h2><p>"+desc+"</p>";head.append(copy);s.append(head);main.insertBefore(s,document.querySelector("#view-templates"));return s;
+ };
+ const anim=makeView("animations","Animation settings","Website ke motion effects ko control karo. Har option ka preview dekhkar save karo.");
+ const visual=makeView("visual","Visual website editor","Live preview mein element select karke text aur appearance edit karo. Publish se pehle changes check karo.");
+ const animCard=document.querySelector(".animation-control-card"),visualCard=document.querySelector(".visual-builder-card");
+ if(animCard)anim.append(animCard);
+ if(visualCard)visual.append(visualCard);
+ const oldShow=window.showView;
+ window.showView=function(name){
+  document.querySelectorAll(".admin-view").forEach(v=>v.hidden=v.id!=="view-"+name);
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+  const titles={overview:"Dashboard",uploads:"Manage downloads",website:"Website settings",templates:"Design templates",animations:"Animation settings",visual:"Visual editor"};
+  const target=document.querySelector("#view-title");if(target)target.textContent=titles[name]||"Dashboard";
+  if(name==="visual")document.querySelector("#vb-frame")?.contentWindow?.postMessage({type:"MAXTROIT_BUILDER_REFRESH"},"*");
+ };
+ const form=document.querySelector("#item-form"),list=document.querySelector("#admin-list");
+ if(form&&list&&!document.querySelector("#download-work-tabs")){
+  const tabs=document.createElement("div");tabs.id="download-work-tabs";tabs.className="template-tabs";
+  tabs.innerHTML='<button type="button" class="template-tab is-active" data-download-tab="add">＋ Add / edit</button><button type="button" class="template-tab" data-download-tab="manage">▤ Published downloads</button>';
+  const formCard=form.closest(".panel-card"),listCard=list.closest(".panel-card");
+  formCard?.parentElement?.insertBefore(tabs,formCard);
+  const setTab=which=>{
+   if(formCard)formCard.hidden=which!=="add";
+   if(listCard)listCard.hidden=which!=="manage";
+   tabs.querySelectorAll("button").forEach(b=>b.classList.toggle("is-active",b.dataset.downloadTab===which));
+   if(which==="manage")document.querySelector("#admin-search")?.focus({preventScroll:true});
+  };
+  tabs.addEventListener("click",e=>{const b=e.target.closest("[data-download-tab]");if(b)setTab(b.dataset.downloadTab)});
+  document.querySelectorAll("[data-goto='uploads']").forEach(b=>b.addEventListener("click",()=>setTab("add")));
+  document.querySelector("#admin-list")?.addEventListener("click",e=>{if(e.target.closest("[data-edit]"))setTab("add")});
+  setTab("add");
+ }
+ // Clear, contextual helper text for the settings people most often misunderstand.
+ const help={
+  colorBackground:"Poore page ka base background.",
+  colorPanel:"Cards aur content panels ka background.",
+  colorText:"Website ka main readable text colour.",
+  colorAccent:"Primary buttons aur highlights.",
+  colorSecondary:"Secondary highlight colour.",
+  showHero:"Homepage ka top introduction section show/hide.",
+  showCollection:"Downloads ki listing show/hide.",
+  showFooter:"Website ka footer show/hide."
+ };
+ Object.entries(help).forEach(([name,message])=>{
+  const field=document.querySelector('#site-form [name="'+name+'"]'),label=field?.closest("label");
+  if(label&&!label.querySelector(".admin-field-hint")){const p=document.createElement("small");p.className="admin-field-hint";p.textContent=message;label.append(p)}
+ });
+ document.querySelectorAll(".site-editor-group").forEach((d,i)=>{d.open=i===0;d.classList.add("admin-accordion")});
+ const title=document.querySelector("#view-website .panel-heading h2");if(title)title.textContent="Website settings";
+ const description=document.querySelector("#view-website .panel-heading p");if(description)description.textContent="Har group mein related settings hain. Sirf jis cheez ko badalna ho wahi kholo.";
+})();
