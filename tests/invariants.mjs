@@ -51,4 +51,13 @@ assert.match(admin, /if\(result\.wasActive\).*?activeTemplate="midnight"/);
 assert.match(admin, /function closeTemplatePreview\(\)/);
 assert.match(html, /id="remove-active-template"/);
 
-console.log("MAXTROIT invariants: 10/10 passed");
+
+// 11. Animation settings are saved separately and applied on the public site.
+assert.match(app, /function applyHubAnimations\(settings\)/);
+assert.match(app, /applyHubAnimations\(x\.animations\)/);
+assert.match(admin, /function loadAnimationControls\(\)/);
+assert.match(admin, /collection\("siteConfig"\)\.doc\("public"\)/);
+assert.match(html, /id="save-animation-settings"/);
+assert.match(html, /id="anim-enabled"/);
+
+console.log("MAXTROIT invariants: 11/11 passed");
