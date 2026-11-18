@@ -106,18 +106,19 @@ function readAnimationControls(){
 function applyAnimationPreview(){
   const animations=readAnimationControls();
   const applyToFrame=frame=>{
-    if(!frame||!frame.contentDocument)return;
-    const root=frame.contentDocument.documentElement;
-    if(!root)return;
-    const enabled=animations.enabled;
-    root.dataset.hubAnimations=enabled?"on":"off";
-    root.dataset.hubPreset=animations.preset;
-    for(const key of ["background","logo","cards","buttons","transitions","loader"]){
-      const attr="anim"+key.charAt(0).toUpperCase()+key.slice(1);
-      root.dataset[attr]=enabled&&animations[key]?"on":"off";
-    }
-    if(frame.contentWindow&&frame.contentWindow.matchMedia&&frame.contentWindow.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.hubReducedMotion="on";
-    else delete root.dataset.hubReducedMotion;
+    try{
+      const root=frame?.contentDocument?.documentElement;
+      if(!root)return;
+      const enabled=animations.enabled;
+      root.dataset.hubAnimations=enabled?"on":"off";
+      root.dataset.hubPreset=animations.preset;
+      for(const key of ["background","logo","cards","buttons","transitions","loader"]){
+        const attr="anim"+key.charAt(0).toUpperCase()+key.slice(1);
+        root.dataset[attr]=enabled&&animations[key]?"on":"off";
+      }
+      if(frame.contentWindow?.matchMedia?.("(prefers-reduced-motion: reduce)").matches)root.dataset.hubReducedMotion="on";
+      else delete root.dataset.hubReducedMotion;
+    }catch(error){/* Sandboxed custom template previews may not expose their document. */}
   };
   applyToFrame($("#vb-frame"));
   const templateFrame=$("#template-preview-frame");
