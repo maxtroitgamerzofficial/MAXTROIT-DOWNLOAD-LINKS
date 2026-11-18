@@ -341,3 +341,25 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
  const title=document.querySelector("#view-website .panel-heading h2");if(title)title.textContent="Website settings";
  const description=document.querySelector("#view-website .panel-heading p");if(description)description.textContent="Har group mein related settings hain. Sirf jis cheez ko badalna ho wahi kholo.";
 })();
+
+/* MAXTROIT Admin Studio v4 — restore a prominent, unmistakable logo manager. */
+(function(){
+ const form=document.querySelector("#site-form"),view=document.querySelector("#view-website");
+ const logoInput=document.querySelector("#logo-file"),logoLabel=logoInput?.closest("label");
+ if(!form||!view||!logoLabel||document.querySelector("#brand-logo-panel"))return;
+ const panel=document.createElement("section");panel.id="brand-logo-panel";panel.className="panel-card brand-logo-panel";
+ panel.innerHTML='<div class="panel-heading"><div><h2>Website logo</h2><p>Yahin se apna logo upload, preview ya remove karo. Yehi saved logo website aur supported loading screen areas ke liye use hota hai.</p></div><span class="logo-status-pill">BRAND</span></div>';
+ const inner=document.createElement("div");inner.className="brand-logo-content";
+ const title=document.createElement("strong");title.textContent="Upload your logo";
+ const note=document.createElement("p");note.textContent="PNG ya WebP transparent logo recommended. Image choose karte hi preview dikhega; Save logo dabakar changes save karo.";
+ inner.append(title,note,logoLabel);
+ panel.append(inner);
+ const save=document.createElement("button");save.type="button";save.className="button";save.id="save-brand-logo";save.textContent="Save logo";
+ save.addEventListener("click",()=>form.requestSubmit());
+ panel.append(save);
+ const intro=form.querySelector("#site-form-intro");
+ form.insertBefore(panel,intro?intro.nextSibling:form.firstChild);
+ // Remove the logo field from any collapsed group; there must be one obvious, visible place to find it.
+ form.querySelectorAll(".admin-core-group").forEach(group=>{if(group.contains(panel))return;group.querySelectorAll("label").forEach(label=>{if(label.querySelector("#logo-file"))panel.querySelector(".brand-logo-content").append(label)})});
+ const logoGroup=logoLabel.closest("details");if(logoGroup&&logoGroup.querySelector(".admin-field-grid")?.children.length===0)logoGroup.remove();
+})();
