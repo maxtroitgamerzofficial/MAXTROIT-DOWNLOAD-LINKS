@@ -513,3 +513,45 @@ body>.topbar{z-index:5}
 @media(max-width:650px){
  .brand-mark{width:42px;height:42px;flex-basis:42px}
 }
+
+
+/* MAXTROIT hero logo: neon-glass finish with restrained motion */
+.hero-logo-badge{
+ isolation:isolate;overflow:hidden;position:relative;
+ width:min(390px,90vw);height:148px;min-width:0;
+ border:1px solid transparent;
+ background:
+   linear-gradient(125deg,rgba(35,12,49,.96),rgba(78,22,65,.94) 52%,rgba(31,13,49,.97)) padding-box,
+   linear-gradient(115deg,#ff9a69,#ed4c9c 48%,#9b6bff,#ff9a69) border-box;
+ box-shadow:0 14px 42px rgba(217,70,155,.22),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -18px 35px rgba(135,61,171,.13);
+ animation:maxtroitLogoFloat 5.5s ease-in-out infinite;
+}
+.hero-logo-badge:before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:
+  radial-gradient(ellipse at 18% 22%,rgba(255,137,104,.28),transparent 43%),
+  radial-gradient(ellipse at 84% 78%,rgba(205,67,165,.3),transparent 48%),
+  repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.025) 23px 24px,transparent 25px 48px);
+}
+.hero-logo-badge:after{
+ content:"";position:absolute;z-index:0;top:-45%;bottom:-45%;left:-65%;width:38%;
+ transform:skewX(-22deg);
+ background:linear-gradient(90deg,transparent,rgba(255,231,245,.23),rgba(255,255,255,.06),transparent);
+ animation:maxtroitBadgeShine 5s ease-in-out infinite;
+ pointer-events:none;
+}
+.hero-logo-icon,.hero-logo-name{z-index:1;position:relative}
+.hero-logo-icon{background:transparent;border-radius:50%;overflow:hidden;filter:drop-shadow(0 0 13px rgba(255,132,178,.25))}
+.hero-logo-icon img{object-fit:contain;padding:0}
+.hero-logo-name{text-shadow:0 2px 16px rgba(255,110,170,.3);letter-spacing:1.4px}
+@keyframes maxtroitLogoFloat{0%,100%{box-shadow:0 14px 38px rgba(217,70,155,.19),inset 0 1px 0 rgba(255,255,255,.14)}50%{box-shadow:0 17px 48px rgba(217,70,155,.32),inset 0 1px 0 rgba(255,255,255,.2)}}
+[data-hub-animations="off"] .hero-logo-badge,
+[data-anim-logo="off"] .hero-logo-badge,
+[data-hub-reduced-motion="on"] .hero-logo-badge{animation:none!important}
+[data-hub-animations="off"] .hero-logo-badge:after,
+[data-anim-logo="off"] .hero-logo-badge:after,
+[data-hub-reduced-motion="on"] .hero-logo-badge:after{animation:none!important;display:none}
+@media(prefers-reduced-motion:reduce){.hero-logo-badge,.hero-logo-badge:after{animation:none!important}}
+@media(max-width:650px){
+ .hero-logo-badge{width:min(340px,92vw);height:132px}
+}
