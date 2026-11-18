@@ -7,7 +7,7 @@ function mountUploadedTemplate(items){const tpl=window.__MAXTROIT_UPLOADED_TEMPL
 document.querySelector(".brand")?.addEventListener("click",e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});});
 const grid=document.querySelector("#grid");
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function imageSrc(s=""){const v=String(s||"");return /^(https?:\/\/|data:image\/(png|jpeg|webp|gif);base64,)/i.test(v)?v:""}
+function imageSrc(s=""){const v=String(s||"");return /^(https?:\/\/|data:image\/[a-z0-9.+-]+;base64,)/i.test(v)?v:""}
 function timeValue(v){if(v&&typeof v.toMillis==="function")return v.toMillis();if(v instanceof Date)return v.getTime();return Number(v)||0}
 async function getItems(){if(!window.hubCloud?.ready)throw new Error("Cloud database is not connected. Refresh and check Firebase configuration.");try{const s=await hubCloud.db.collection("downloads").get();return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>timeValue(b.created)-timeValue(a.created))}catch(e){console.error("Downloads could not load from Firestore:",e);throw e}}
 function setBrand(el,name){if(!el)return;const value=String(name||"MAXTROIT OFFICIAL").trim(),m=value.match(/^(.*?)(\s+OFFICIAL)$/i);el.innerHTML=m?esc(m[1])+' <b>OFFICIAL</b>':esc(value)}
