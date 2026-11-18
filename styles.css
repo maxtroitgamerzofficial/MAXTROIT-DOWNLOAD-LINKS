@@ -584,3 +584,10 @@ opacity:0;transform:scale(.28) rotate(-35deg);animation:startupParticlesJoin 1.1
 @keyframes startupMarkSettle{0%{transform:scale(.82)}72%{transform:scale(1.04)}100%{transform:scale(1)}}
 @keyframes startupLabelAppear{to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.site-startup-mark,.site-startup-mark img,.site-startup-mark:before,.site-startup-mark:after,#site-startup-label{animation:none!important;opacity:1!important;transform:none!important;clip-path:none!important}}
+
+/* Returning visitors get the same one-time logo reveal, just faster. */
+html[data-startup-returning="true"] .site-startup-mark{animation-duration:1.05s}
+html[data-startup-returning="true"] .site-startup-mark img{animation-duration:1.05s;animation-delay:0s}
+html[data-startup-returning="true"] .site-startup-mark:before{animation-duration:.85s}
+html[data-startup-returning="true"] .site-startup-mark:after{animation-duration:.55s;animation-delay:.45s}
+html[data-startup-returning="true"] #site-startup-label{animation-duration:.35s;animation-delay:.65s}
