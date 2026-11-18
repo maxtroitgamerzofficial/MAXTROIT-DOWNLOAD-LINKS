@@ -591,3 +591,11 @@ html[data-startup-returning="true"] .site-startup-mark img{animation-duration:1.
 html[data-startup-returning="true"] .site-startup-mark:before{animation-duration:.85s}
 html[data-startup-returning="true"] .site-startup-mark:after{animation-duration:.55s;animation-delay:.45s}
 html[data-startup-returning="true"] #site-startup-label{animation-duration:.35s;animation-delay:.65s}
+
+/* 3x3 puzzle assembly for the saved startup logo */
+.site-startup-mark{width:min(58vw,220px);height:min(58vw,220px);display:grid;place-items:center}
+.startup-puzzle-grid{width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);overflow:visible}
+.startup-puzzle-piece{display:block;width:100%;height:100%;background-repeat:no-repeat;background-size:300% 300%;opacity:0;transform:translate(var(--piece-x,0),var(--piece-y,0)) scale(.72) rotate(var(--piece-rot,0deg));animation:startupPuzzleJoin .62s cubic-bezier(.2,.8,.25,1) forwards;filter:drop-shadow(0 0 7px rgba(255,80,210,.3))}
+.startup-puzzle-piece:nth-child(1){--piece-x:-22px;--piece-y:-22px;--piece-rot:-12deg}.startup-puzzle-piece:nth-child(2){--piece-x:0px;--piece-y:-25px;--piece-rot:8deg}.startup-puzzle-piece:nth-child(3){--piece-x:22px;--piece-y:-22px;--piece-rot:12deg}.startup-puzzle-piece:nth-child(4){--piece-x:-25px;--piece-y:0px;--piece-rot:-8deg}.startup-puzzle-piece:nth-child(5){--piece-x:0px;--piece-y:0px;--piece-rot:0deg}.startup-puzzle-piece:nth-child(6){--piece-x:25px;--piece-y:0px;--piece-rot:8deg}.startup-puzzle-piece:nth-child(7){--piece-x:-22px;--piece-y:22px;--piece-rot:12deg}.startup-puzzle-piece:nth-child(8){--piece-x:0px;--piece-y:25px;--piece-rot:-8deg}.startup-puzzle-piece:nth-child(9){--piece-x:22px;--piece-y:22px;--piece-rot:-12deg}
+@keyframes startupPuzzleJoin{0%{opacity:0;transform:translate(var(--piece-x),var(--piece-y)) scale(.72) rotate(var(--piece-rot));filter:brightness(1.8) drop-shadow(0 0 12px rgba(255,80,210,.75))}75%{opacity:1}100%{opacity:1;transform:translate(0,0) scale(1) rotate(0);filter:brightness(1) drop-shadow(0 0 0 transparent)}}
+@media(prefers-reduced-motion:reduce){.startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}}
