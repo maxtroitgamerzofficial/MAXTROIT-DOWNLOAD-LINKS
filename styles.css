@@ -386,3 +386,11 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 .brand-mark{width:36px;height:36px;border-radius:9px}
 [data-hub-animations="off"] .hero-logo-badge:after,[data-anim-logo="off"] .hero-logo-badge:after,[data-hub-reduced-motion="on"] .hero-logo-badge:after{animation:none!important;display:none}
 @media(max-width:650px){.hero{padding:43px 0 40px}.hero-kicker-row{gap:10px;margin-bottom:18px}.hero-logo-badge{width:66px;height:38px;border-radius:8px}.hero-kicker-row .eyebrow{font-size:9px;letter-spacing:1.6px}}
+
+/* Branded compact hero identity plate */
+.hero-logo-badge{width:auto;min-width:174px;height:52px;padding:6px 13px 6px 8px;display:inline-flex;flex-direction:row;gap:10px;justify-content:flex-start;border-radius:11px;white-space:nowrap}
+.hero-logo-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;overflow:hidden;border-radius:7px;background:#071323;color:#fff;font-weight:800;font-size:17px;position:relative;z-index:1}
+.hero-logo-icon img{width:100%;height:100%;object-fit:contain;padding:3px}
+.hero-logo-name{position:relative;z-index:1;font:700 11px/1.2 'Space Grotesk',sans-serif;letter-spacing:1.1px;color:#f5f7ff}
+.hero-logo-badge:after{z-index:0}
+@media(max-width:650px){.hero-logo-badge{min-width:152px;width:auto;height:46px;padding:5px 10px 5px 6px;gap:8px}.hero-logo-icon{width:34px;height:34px;flex-basis:34px}.hero-logo-name{font-size:10px;letter-spacing:.8px}}
