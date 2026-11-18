@@ -555,3 +555,33 @@ body>.topbar{z-index:5}
 @media(max-width:650px){
  .hero-logo-badge{width:min(340px,92vw);height:132px}
 }
+
+
+/* 9:16 portrait watermark frame: preserve the uploaded PNG's transparency and proportions */
+body:before{
+  content:"";
+  position:fixed;
+  z-index:0;
+  pointer-events:none;
+  top:50%;
+  left:50%;
+  width:min(56.25vh,58vw);
+  height:min(100vh,960px);
+  transform:translate(-50%,-50%);
+  background-image:var(--brand-wallpaper);
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:contain;
+  opacity:var(--brand-wallpaper-opacity,.10);
+  filter:saturate(.9);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 13%,#000 86%,transparent 100%);
+}
+@media(max-width:650px){
+  body:before{
+    width:min(90vw,56.25vh);
+    height:min(160vw,90vh);
+    background-size:contain;
+    background-position:center;
+    opacity:calc(var(--brand-wallpaper-opacity,.10)*.85);
+  }
+}
