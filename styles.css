@@ -891,8 +891,15 @@ html[data-startup-returning="true"]{
 .hero-logo img{width:100%;height:100%;object-fit:contain}
 @media(max-width:720px){.hero{grid-template-columns:1fr;gap:24px}.hero-art{height:230px;grid-row:1}.hero-copy{grid-row:2}.header-social-links{gap:4px}.header-social-links a{width:27px;height:27px}}
 
-/* Homepage refresh: remove duplicate boxed logo tiles; keep one brand mark in the header. */
-.hero-logo-badge,.hero-art{display:none!important}
+/* Homepage correction: keep the original centered logo plaque; remove only the extra artwork box. */
+.hero-logo-badge{display:flex!important}
+.hero-art{display:none!important}
+.hero-kicker-row{width:100%;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:13px;margin:0 0 25px;text-align:center}
+.hero-kicker-row .eyebrow{text-align:center}
+.hero-logo-badge{width:min(440px,92vw);height:116px;min-width:0;padding:8px 18px;display:flex!important;flex-direction:row;align-items:center;justify-content:center;gap:16px}
+.hero-logo-icon{width:82px;height:82px;flex:0 0 82px;border-radius:50%}
+.hero-logo-name{font-size:14px;letter-spacing:1.5px}
+@media(max-width:650px){.hero-kicker-row{gap:10px;margin-bottom:21px}.hero-logo-badge{width:min(320px,90vw);height:96px;padding:7px 12px;gap:12px}.hero-logo-icon{width:68px;height:68px;flex-basis:68px}.hero-logo-name{font-size:12px;letter-spacing:1px}}
 .hero{display:block;position:relative;isolation:isolate;min-height:0;max-width:none;margin:0 auto;padding:clamp(58px,9vw,112px) 0 clamp(58px,8vw,96px);border:0;border-radius:0;box-shadow:none;background-color:transparent;background-image:radial-gradient(ellipse at 8% 20%,rgba(119,54,150,.24),transparent 48%),radial-gradient(ellipse at 92% 80%,rgba(41,108,160,.16),transparent 42%)}
 .hero-copy{max-width:850px}
 .hero-kicker-row{display:block;margin:0 0 22px}
