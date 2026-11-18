@@ -44,4 +44,11 @@ assert.match(html, /id="stat-connection">Checking…/);
 assert.match(admin, /textContent="Connected"/);
 assert.doesNotMatch(html, />Live<\/strong>/);
 
-// 10. Removing an uploaded template also clears its active state and preview.\nassert.match(admin, /activeUploadedTemplateId===target\\.id/);\nassert.match(admin, /activeCustomTemplateId===target\\.id/);\nassert.match(admin, /if\\(result\\.wasActive\\).*?activeTemplate="midnight"/);\nassert.match(admin, /function closeTemplatePreview\\(\\)/);\nassert.match(admin, /id="remove-active-template"/);\n\nconsole.log("MAXTROIT invariants: 10/10 passed");
+// 10. Removing an uploaded template also clears its active state and preview.
+assert.match(admin, /activeUploadedTemplateId===target\.id/);
+assert.match(admin, /activeCustomTemplateId===target\.id/);
+assert.match(admin, /if\(result\.wasActive\).*?activeTemplate="midnight"/);
+assert.match(admin, /function closeTemplatePreview\(\)/);
+assert.match(html, /id="remove-active-template"/);
+
+console.log("MAXTROIT invariants: 10/10 passed");
