@@ -611,3 +611,14 @@ html[data-startup-returning="true"] #site-startup-label{animation-duration:.35s;
 100%{opacity:1;filter:brightness(1) drop-shadow(0 0 12px rgba(255,90,220,.5))}
 }
 @media(prefers-reduced-motion:reduce){.startup-puzzle-complete{animation:none!important;opacity:1!important;filter:none!important}}
+
+/* Keep the assembled puzzle at full size; glow the same large logo, no duplicate overlay. */
+.startup-puzzle-complete{display:none!important}
+.startup-puzzle-grid{animation:puzzleWholeLogoGlow .9s ease-out 1.28s both}
+@keyframes puzzleWholeLogoGlow{
+  0%{filter:drop-shadow(0 0 0 rgba(255,70,215,0))}
+  28%{filter:drop-shadow(0 0 12px rgba(255,70,215,.95)) drop-shadow(0 0 25px rgba(170,90,255,.75))}
+  58%{filter:drop-shadow(0 0 18px rgba(255,70,215,.85)) drop-shadow(0 0 34px rgba(170,90,255,.65))}
+  100%{filter:drop-shadow(0 0 9px rgba(255,70,215,.48)) drop-shadow(0 0 16px rgba(170,90,255,.35))}
+}
+@media(prefers-reduced-motion:reduce){.startup-puzzle-grid{animation:none!important;filter:none!important}}
