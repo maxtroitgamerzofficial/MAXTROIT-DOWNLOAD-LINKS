@@ -98,18 +98,52 @@ itemForm.addEventListener("submit",async e=>{e.preventDefault();if(!requireAdmin
 adminList.addEventListener("click",async e=>{const edit=e.target.closest("[data-edit]"),del=e.target.closest("[data-delete]");if(edit){const x=items.find(v=>v.id===edit.dataset.edit);if(!x)return;for(const k of ["title","category","description","url"])itemForm.elements[k].value=x[k]||"";itemForm.elements.id.value=x.id;thumbData=x.thumbnail||"";thumbRemoved=false;$("#thumb-file").value="";setPreview("#thumb-preview",thumbData,"#remove-thumb");$("#form-heading").textContent="Edit download";showView("uploads");itemForm.scrollIntoView({behavior:"smooth",block:"start"})}if(del){if(!requireAdmin())return;const target=items.find(x=>x.id===del.dataset.delete);if(!confirm('Permanently delete "'+(target?.title||"this download")+'"?'))return;del.disabled=true;try{await withTimeout(hubCloud.db.collection("downloads").doc(del.dataset.delete).delete(),"Deleting download");if(itemForm.elements.id.value===del.dataset.delete)clearItem();say("Download deleted successfully.");try{await loadAll()}catch(refreshError){say("Download was deleted, but the list could not refresh. "+errorText(refreshError))}}catch(err){say(err.code==="app/timeout"?"Delete status uncertain. Refresh the list before retrying.":"Delete failed: "+errorText(err));del.disabled=false}}});
 
 
+function readAnimationControls(){
+  const animations={preset:$("#animation-preset").value};
+  for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])animations[key]=$("#anim-"+key).checked;
+  return animations;
+}
+function applyAnimationPreview(){
+  const animations=readAnimationControls();
+  const applyToFrame=frame=>{
+    if(!frame||!frame.contentDocument)return;
+    const root=frame.contentDocument.documentElement;
+    if(!root)return;
+    const enabled=animations.enabled;
+    root.dataset.hubAnimations=enabled?"on":"off";
+    root.dataset.hubPreset=animations.preset;
+    for(const key of ["background","logo","cards","buttons","transitions","loader"]){
+      const attr="anim"+key.charAt(0).toUpperCase()+key.slice(1);
+      root.dataset[attr]=enabled&&animations[key]?"on":"off";
+    }
+    if(frame.contentWindow&&frame.contentWindow.matchMedia&&frame.contentWindow.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.hubReducedMotion="on";
+    else delete root.dataset.hubReducedMotion;
+  };
+  applyToFrame($("#vb-frame"));
+  const templateFrame=$("#template-preview-frame");
+  if(templateFrame&&templateFrame.contentDocument?.documentElement)applyToFrame(templateFrame);
+  const message=$("#animation-status");
+  if(message)message.textContent="Live preview updated instantly. Press Save animation settings to publish this choice.";
+}
 function loadAnimationControls(){
   const cfg=siteSettings.animations&&typeof siteSettings.animations==="object"?siteSettings.animations:{};
   const defaults={enabled:true,preset:"cyber",background:true,logo:true,cards:true,buttons:true,transitions:true,loader:true};
   const value={...defaults,...cfg};
   $("#animation-preset").value=["cyber","energy","dimension"].includes(value.preset)?value.preset:"cyber";
   for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])$("#anim-"+key).checked=value[key]!==false;
+  applyAnimationPreview();
 }
+["animation-preset","anim-enabled","anim-background","anim-logo","anim-cards","anim-buttons","anim-transitions","anim-loader"].forEach(id=>{
+  const control=$("#"+id);
+  control.addEventListener("input",applyAnimationPreview);
+  control.addEventListener("change",applyAnimationPreview);
+});
+$("#vb-frame").addEventListener("load",()=>setTimeout(applyAnimationPreview,0));
+$("#template-preview-frame").addEventListener("load",()=>setTimeout(applyAnimationPreview,0));
 $("#save-animation-settings").addEventListener("click",async()=>{
   if(!requireAdmin())return;
   const button=$("#save-animation-settings"),message=$("#animation-status");
-  const animations={preset:$("#animation-preset").value};
-  for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])animations[key]=$("#anim-"+key).checked;
+  const animations=readAnimationControls();
   button.disabled=true;message.textContent="Saving animation settings…";
   try{
     const ref=hubCloud.db.collection("siteConfig").doc("public");
@@ -117,7 +151,7 @@ $("#save-animation-settings").addEventListener("click",async()=>{
     const verify=await withTimeout(ref.get(),"Verifying animation settings");
     if(!verify.exists||JSON.stringify(verify.data().animations)!==JSON.stringify(animations))throw Error("Saved settings could not be verified.");
     siteSettings={...siteSettings,animations};
-    message.textContent="Animation settings saved. Refresh the public website to see the changes.";
+    message.textContent="Saved and verified. The live preview already reflects these settings.";
   }catch(err){message.textContent="Could not save: "+errorText(err)}
   finally{button.disabled=false}
 });
