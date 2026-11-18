@@ -1,0 +1,37 @@
+name: Deploy MAXTROIT Download Hub to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy_live:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate JavaScript
+        run: |
+          for file in admin.js app.js download.js firebase.js firebase-config.js; do
+            node --check "$file"
+          done
+          node tests/invariants.mjs
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAXTROIT_DOWNLOAD_HUB }}
+          projectId: maxtroit-download-hub
+          channelId: live
