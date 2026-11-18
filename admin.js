@@ -12,7 +12,7 @@ function setBusy(form,busy,label){const b=form.querySelector('button[type="submi
 function endBusy(form,label){const b=form.querySelector('button[type="submit"]');if(b){b.disabled=false;b.textContent=label}}
 function showView(name){document.querySelectorAll(".admin-view").forEach(v=>v.hidden=v.id!=="view-"+name);document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===name));$("#view-title").textContent=({overview:"Overview",uploads:"Downloads",website:"Website editor",templates:"Templates"})[name]||"Overview"}
 document.querySelectorAll("[data-view],[data-goto]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view||b.dataset.goto)));
-const templateNames={midnight:"Midnight",clean:"Clean Light",neon:"Neon Grid",editorial:"Editorial"};
+const templateNames={midnight:"Midnight",clean:"Clean Light",neon:"Neon Grid",editorial:"Editorial",ocean:"Ocean Glass",sunset:"Sunset Studio",minimal:"Minimal Mono"};
 let activeTemplate="midnight";
 function renderTemplateStates(){Object.keys(templateNames).forEach(id=>{const state=document.querySelector('[data-template-state="'+id+'"]'),card=document.querySelector('[data-template-card="'+id+'"]');if(state)state.textContent=activeTemplate===id?"ACTIVE":"";if(card)card.classList.toggle("is-active",activeTemplate===id)});$("#active-template-label").textContent="Current: "+(templateNames[activeTemplate]||"Midnight")}
 function openTemplatePreview(id){if(!templateNames[id])return;$("#template-preview-title").textContent=templateNames[id]+" preview";$("#template-preview-frame").src="index.html?templatePreview="+encodeURIComponent(id);$("#template-preview-panel").hidden=false;$("#template-preview-panel").scrollIntoView({behavior:"smooth",block:"start"})}
