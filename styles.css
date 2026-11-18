@@ -394,3 +394,12 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 .hero-logo-name{position:relative;z-index:1;font:700 11px/1.2 'Space Grotesk',sans-serif;letter-spacing:1.1px;color:#f5f7ff}
 .hero-logo-badge:after{z-index:0}
 @media(max-width:650px){.hero-logo-badge{min-width:152px;width:auto;height:46px;padding:5px 10px 5px 6px;gap:8px}.hero-logo-icon{width:34px;height:34px;flex-basis:34px}.hero-logo-name{font-size:10px;letter-spacing:.8px}}
+
+/* Centered, medium-size brand plaque above the hero heading */
+.hero-kicker-row{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;margin:0 0 25px;text-align:center}
+.hero-kicker-row .eyebrow{text-align:center}
+.hero-logo-badge{width:min(320px,86vw);min-width:0;height:82px;padding:10px 20px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:16px;border-radius:15px}
+.hero-logo-icon{width:58px;height:58px;flex:0 0 58px;border-radius:10px;font-size:24px}
+.hero-logo-name{font-size:17px;letter-spacing:1.8px}
+.hero-logo-icon img{padding:4px}
+@media(max-width:650px){.hero-kicker-row{gap:10px;margin-bottom:21px}.hero-logo-badge{width:min(280px,88vw);height:70px;padding:8px 14px;gap:12px}.hero-logo-icon{width:50px;height:50px;flex-basis:50px}.hero-logo-name{font-size:14px;letter-spacing:1.2px}}
