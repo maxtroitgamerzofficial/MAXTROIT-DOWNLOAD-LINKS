@@ -702,3 +702,13 @@ html[data-startup-returning="true"]{
   .startup-puzzle-grid:after,.startup-puzzle-grid{animation:none!important;filter:none!important}
   #site-startup-label{animation:none!important;opacity:1!important;transform:none!important}
 }
+
+
+/* Reveal the same-size seamless logo only as the puzzle seams dissolve. */
+.startup-puzzle-grid{background-image:none!important}
+.startup-puzzle-grid:before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--startup-logo-image);background-repeat:no-repeat;background-position:center;background-size:100% 100%;
+  opacity:0;animation:startupPuzzleUnderlay var(--startup-seam-duration) ease-out var(--startup-seam-start) forwards;
+}
+@keyframes startupPuzzleUnderlay{from{opacity:0}to{opacity:1}}
