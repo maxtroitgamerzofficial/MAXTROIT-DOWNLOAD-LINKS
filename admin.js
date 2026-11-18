@@ -128,7 +128,7 @@ function applyAnimationPreview(){
 }
 function loadAnimationControls(){
   const cfg=siteSettings.animations&&typeof siteSettings.animations==="object"?siteSettings.animations:{};
-  const defaults={enabled:true,preset:"cyber",background:true,logo:true,cards:true,buttons:true,transitions:true,loader:true};
+  const defaults={enabled:false,preset:"cyber",background:false,logo:false,cards:false,buttons:false,transitions:false,loader:false};
   const value={...defaults,...cfg};
   $("#animation-preset").value=["cyber","energy","dimension"].includes(value.preset)?value.preset:"cyber";
   for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])$("#anim-"+key).checked=value[key]!==false;
