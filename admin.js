@@ -225,3 +225,51 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
   templateHelp.after(note);
  }
 })();
+
+/* Admin Studio information architecture v2 — groups core controls without changing form names or save handlers. */
+(function(){
+ const form=document.querySelector("#site-form");
+ if(!form||form.dataset.adminGrouped==="yes")return;
+ form.dataset.adminGrouped="yes";
+ const groups=[
+  {title:"Brand, logo & homepage",hint:"Website ka naam, logo aur homepage par dikhne wali main heading.",open:true,selectors:['[name="brandName"]','#logo-file','[name="kicker"]','[name="heroTitle"]','[name="heroDescription"]','#banner-file']},
+  {title:"Buttons & navigation",hint:"Menu links aur homepage buttons ke labels aur destinations.",selectors:['[name="navLabel"]','[name="navUrl"]','[name="youtubeUrl"]','[name="heroButton"]','[name="heroButtonUrl"]','[name="heroSecondaryButton"]','[name="heroSecondaryButtonUrl"]']},
+  {title:"Downloads page text",hint:"Downloads library ke heading aur description ko badlein.",selectors:['[name="collectionEyebrow"]','[name="collectionTitle"]','[name="collectionSubtitle"]']},
+  {title:"Footer & Google search",hint:"Website ke footer aur browser/search result details.",selectors:['[name="footerDescription"]','[name="footerCopyright"]','[name="seoTitle"]','[name="seoDescription"]']}
+ ];
+ const firstPanel=form.querySelector(".editor-subpanel");
+ groups.forEach(group=>{
+  const details=document.createElement("details");
+  details.className="admin-accordion admin-core-group";
+  details.open=!!group.open;
+  const summary=document.createElement("summary");
+  const title=document.createElement("span");title.textContent=group.title;
+  const hint=document.createElement("small");hint.textContent=group.hint;
+  const mark=document.createElement("b");mark.textContent="＋";
+  summary.append(title,hint,mark);
+  const grid=document.createElement("div");grid.className="admin-field-grid";
+  details.append(summary,grid);
+  group.selectors.forEach(selector=>{
+   const control=form.querySelector(selector);
+   const label=control?.closest("label");
+   if(label&&!grid.contains(label)){label.classList.remove("wide");grid.append(label)}
+  });
+  if(grid.children.length){form.insertBefore(details,firstPanel||form.querySelector(".form-actions"))}
+ });
+ const intro=form.querySelector("#site-form-intro");
+ if(intro){intro.querySelector("strong").textContent="Website control room";intro.querySelector("span").textContent="Basic settings upar groups mein hain. Social links, homepage visibility, colors aur layout neeche alag sections mein milenge. Save website changes dabakar updates publish karein."}
+ const visibility=form.querySelector(".editor-subpanel h3");
+ if(visibility&&visibility.textContent.trim()==="Section visibility"){
+  const p=document.createElement("p");p.className="admin-inline-help";p.textContent="In switches se homepage ke bade sections visitors ke liye show ya hide honge.";visibility.after(p);
+ }
+ document.querySelectorAll(".admin-accordion>summary,.admin-advanced>summary").forEach(summary=>{
+  const detail=summary.parentElement;
+  const mark=summary.querySelector("b");
+  const sync=()=>{if(mark)mark.textContent=detail.open?"−":"＋"};
+  sync();detail.addEventListener("toggle",sync);
+ });
+ const titles={overview:"Dashboard",uploads:"Manage downloads",website:"Website settings",templates:"Design templates"};
+ document.querySelectorAll(".nav-item[data-view]").forEach(button=>{
+  const span=button.querySelector("span");if(span&&titles[button.dataset.view])span.textContent=titles[button.dataset.view];
+ });
+})();
