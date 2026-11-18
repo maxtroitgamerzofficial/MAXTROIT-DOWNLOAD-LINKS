@@ -166,3 +166,62 @@ $("#logout").addEventListener("click",()=>hubCloud.auth.signOut().catch(e=>say("
 function showUser(user){if(!user){loginScreen.hidden=false;adminApp.hidden=true;return}if(!isAdmin(user)){loginScreen.hidden=false;adminApp.hidden=true;loginSay("This account is not authorised as administrator.");hubCloud.auth.signOut().catch(()=>{});return}loginScreen.hidden=true;adminApp.hidden=false;loginSay("");$("#admin-account").textContent=user.email||"Administrator";showView("overview");loadAll().catch(e=>{say("Could not load admin data: "+errorText(e));$("#stat-connection").textContent="Unavailable"})}
 if(ready){hubCloud.auth.onAuthStateChanged(showUser);loginSay("Sign in with the authorised administrator email.")}else{login.querySelector("button").disabled=true;loginSay("Firebase did not initialise. Check configuration and network.")}
 login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay("Firebase is not ready. Refresh and try again.");return}const d=new FormData(login);setBusy(login,true);loginSay("Checking sign-in…");try{const credential=await hubCloud.auth.signInWithEmailAndPassword(String(d.get("email")).trim(),String(d.get("password")));if(!isAdmin(credential.user)){loginSay("This account is not the authorised administrator.");await hubCloud.auth.signOut()}}catch(err){const messages={"auth/invalid-credential":"Email or password is incorrect.","auth/user-not-found":"No account exists for this email.","auth/wrong-password":"Password is incorrect.","auth/too-many-requests":"Too many attempts. Wait and try again.","auth/network-request-failed":"Network error. Check your connection."};loginSay(messages[err.code]||errorText(err))}finally{endBusy(login,"Sign in to dashboard")}});
+
+
+/* Admin Studio usability: plain-language navigation and collapsible settings */
+(function(){
+ const navLabels={overview:"Dashboard",uploads:"Manage downloads",website:"Website settings",templates:"Design templates"};
+ document.querySelectorAll(".nav-item[data-view]").forEach(b=>{
+  const key=b.dataset.view,span=b.querySelector("span");
+  if(span&&navLabels[key])span.textContent=navLabels[key];
+  b.title=({overview:"Website summary and shortcuts",uploads:"Add, edit and remove downloadable items",website:"Change logo, text, colors and social links",templates:"Change or import website designs"})[key]||"";
+ });
+ const descriptions={
+  "social-links-editor":["Social links","Add your social profile URLs and choose which links visitors can see."],
+  "section-visibility":["Homepage sections","Turn the main homepage areas on or off."],
+  "Website colors":["Website colors","Change the public website background, panels, text and accent colors."],
+  "Page layout builder":["Homepage layout","Reorder sections or add a custom text, feature or call-to-action section."]
+ };
+ document.querySelectorAll("#site-form .editor-subpanel").forEach((panel,index)=>{
+  const h=panel.querySelector("h3"),key=panel.id||h?.textContent.trim(),meta=descriptions[key]||descriptions[h?.textContent.trim()];
+  if(!h||panel.parentElement.tagName==="DETAILS")return;
+  const details=document.createElement("details");details.className="admin-accordion";
+  details.open=index===0;
+  const summary=document.createElement("summary");
+  const title=document.createElement("span");title.textContent=meta?.[0]||h.textContent;
+  const hint=document.createElement("small");hint.textContent=meta?.[1]||"Open this group to edit these settings.";
+  const arrow=document.createElement("b");arrow.textContent="＋";
+  summary.append(title,hint,arrow);details.append(summary);
+  panel.parentNode.insertBefore(details,panel);details.append(panel);
+  panel.classList.add("accordion-content");
+ });
+ const form=$("#site-form");
+ if(form&&!$("#site-form-intro")){
+  const intro=document.createElement("div");intro.id="site-form-intro";intro.className="admin-help";
+  intro.innerHTML="<strong>Website settings</strong><span>Upar basic details aur images edit karein. Neeche ke groups kholkar colors, social links aur homepage layout badlein. Sab changes ek hi button se save honge.</span>";
+  form.prepend(intro);
+ }
+ const anim=document.querySelector(".animation-control-card");
+ if(anim&&!anim.querySelector(".admin-section-note")){
+  const note=document.createElement("p");note.className="admin-section-note";note.textContent="Optional: loading screen aur website motion effects. Agar animations nahi badalni, is section ko chhod dein.";
+  anim.querySelector(".panel-heading")?.after(note);
+ }
+ const vb=document.querySelector("#visual-builder-studio");
+ if(vb&&!vb.parentElement.matches("details")){
+  const details=document.createElement("details");details.className="admin-advanced";
+  const summary=document.createElement("summary");summary.innerHTML="<span>Advanced visual editor</span><small>For detailed element-by-element editing. Most users can ignore this.</small><b>＋</b>";
+  vb.parentNode.insertBefore(details,vb);details.append(summary,vb);
+ }
+ const uploadForm=$("#item-form");
+ if(uploadForm&&!$("#download-form-help")){
+  const help=document.createElement("p");help.id="download-form-help";help.className="admin-help";
+  help.innerHTML="<strong>Publish a download</strong><span>Fill in the name, category, short description, image and direct download URL. Then tap Save download.</span>";
+  uploadForm.prepend(help);
+ }
+ const templateHelp=document.querySelector("#view-templates .panel-heading");
+ if(templateHelp&&!$("#template-help-note")){
+  const note=document.createElement("p");note.id="template-help-note";note.className="admin-help";
+  note.innerHTML="<strong>Change your website design</strong><span>Preview a design first. Apply only when you want visitors to see it. Your downloads and text are kept.</span>";
+  templateHelp.after(note);
+ }
+})();
