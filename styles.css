@@ -599,3 +599,15 @@ html[data-startup-returning="true"] #site-startup-label{animation-duration:.35s;
 .startup-puzzle-piece:nth-child(1){--piece-x:-22px;--piece-y:-22px;--piece-rot:-12deg}.startup-puzzle-piece:nth-child(2){--piece-x:0px;--piece-y:-25px;--piece-rot:8deg}.startup-puzzle-piece:nth-child(3){--piece-x:22px;--piece-y:-22px;--piece-rot:12deg}.startup-puzzle-piece:nth-child(4){--piece-x:-25px;--piece-y:0px;--piece-rot:-8deg}.startup-puzzle-piece:nth-child(5){--piece-x:0px;--piece-y:0px;--piece-rot:0deg}.startup-puzzle-piece:nth-child(6){--piece-x:25px;--piece-y:0px;--piece-rot:8deg}.startup-puzzle-piece:nth-child(7){--piece-x:-22px;--piece-y:22px;--piece-rot:12deg}.startup-puzzle-piece:nth-child(8){--piece-x:0px;--piece-y:25px;--piece-rot:-8deg}.startup-puzzle-piece:nth-child(9){--piece-x:22px;--piece-y:22px;--piece-rot:-12deg}
 @keyframes startupPuzzleJoin{0%{opacity:0;transform:translate(var(--piece-x),var(--piece-y)) scale(.72) rotate(var(--piece-rot));filter:brightness(1.8) drop-shadow(0 0 12px rgba(255,80,210,.75))}75%{opacity:1}100%{opacity:1;transform:translate(0,0) scale(1) rotate(0);filter:brightness(1) drop-shadow(0 0 0 transparent)}}
 @media(prefers-reduced-motion:reduce){.startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}}
+
+/* Seamless finished logo overlay and glow pulse after puzzle assembly */
+.startup-puzzle-grid{position:relative;overflow:visible}
+.startup-puzzle-piece{animation-duration:.72s}
+.startup-puzzle-complete{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;pointer-events:none;animation:puzzleSeamlessFinish .8s ease-out 1.28s forwards}
+@keyframes puzzleSeamlessFinish{
+0%{opacity:0;filter:brightness(1.4) drop-shadow(0 0 0 rgba(255,90,220,0))}
+35%{opacity:1;filter:brightness(1.35) drop-shadow(0 0 22px rgba(255,90,220,.95))}
+65%{opacity:1;filter:brightness(1.15) drop-shadow(0 0 30px rgba(170,110,255,.9))}
+100%{opacity:1;filter:brightness(1) drop-shadow(0 0 12px rgba(255,90,220,.5))}
+}
+@media(prefers-reduced-motion:reduce){.startup-puzzle-complete{animation:none!important;opacity:1!important;filter:none!important}}
