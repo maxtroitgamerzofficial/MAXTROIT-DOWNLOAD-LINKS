@@ -439,3 +439,28 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 .footer-social-links a:hover{transform:translateY(-3px);border-color:#39c9ef;background:#172941;color:#fff}
 .footer-social-links a[aria-label="YouTube"]{color:#ff3445}
 @media(max-width:650px){.footer-social-links{gap:12px}.footer-social-links a{width:44px;height:44px;padding:10px}}
+
+
+/* MAXTROIT sunset brand skin */
+:root{--bg:#16091f;--panel:#25102f;--panel2:#30143b;--line:#59304f;--text:#fff5fb;--muted:#c0a9c2;--cyan:#ff8a67;--violet:#d9469b;--green:#f3b35e}
+body{background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);color:var(--text);position:relative}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--brand-wallpaper);background-repeat:no-repeat;background-position:center 42%;background-size:min(78vw,760px) auto;opacity:var(--brand-wallpaper-opacity,0);filter:saturate(.9);mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 72%,transparent 100%)}
+.topbar{background:#16091fee;border-bottom-color:#e66ab322}
+.brand b,.footer-brand b{color:#ff936f}
+.brand-mark{background:linear-gradient(135deg,#ff805e,#d9469b);color:#fff}
+.hero h1 span{background:linear-gradient(90deg,#ff986b,#f15a9b,#b78aff);background-clip:text;color:transparent}
+.eyebrow{color:#ff9b78}
+.button{background:linear-gradient(105deg,#f36c73,#b83f9a);box-shadow:0 8px 24px #d9469b33}
+.card{background:linear-gradient(145deg,#30143b,#1c0d27);border-color:#59304f}
+.card:hover{border-color:#ed789d;box-shadow:0 15px 45px #d9469b22}
+.card-image{background:linear-gradient(130deg,#5b2149,#2c1741)}
+.tag{color:#ffc0a5;background:#4a203f}
+.card-link{color:#ff9b86;border-color:#ffffff18}
+input,select,textarea{background:#21102b;border-color:#59304f;color:#fff5fb}
+input:focus,select:focus,textarea:focus{border-color:#f17b9c;box-shadow:0 0 0 3px #d9469b24}
+footer{background:#12081a;border-top-color:#e66ab322}
+.footer-social-links a{background:#281332;border-color:#68405f;color:#ffe9f4}
+.footer-social-links a:hover{border-color:#ff986b;background:#40203e}
+.hero-logo-badge{background:linear-gradient(125deg,#3b1740,#5a214a 52%,#25102f);border-color:#e66b9b;box-shadow:0 0 26px #d9469b35}
+.hero-logo-badge:after{background:linear-gradient(90deg,transparent,#ffe1ec66,transparent)}
+@media(max-width:650px){body:before{background-size:105vw auto;background-position:center 35%;opacity:calc(var(--brand-wallpaper-opacity,0)*.8)}}
