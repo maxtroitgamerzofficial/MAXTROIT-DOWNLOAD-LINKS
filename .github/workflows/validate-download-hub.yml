@@ -3,6 +3,7 @@ name: Validate MAXTROIT Download Hub
 on:
   push:
     branches:
+      - main
       - fix/admin-public-audit
 
 permissions:
@@ -23,5 +24,5 @@ jobs:
           for file in admin.js app.js download.js firebase.js firebase-config.js; do
             node --check "$file"
           done
-      - name: Check nine regression invariants
+      - name: Check ten regression invariants
         run: node tests/invariants.mjs
