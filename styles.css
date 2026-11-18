@@ -561,6 +561,6 @@ body>.topbar{z-index:5}
 .site-startup{display:none}
 html.site-loading body>*:not(.site-startup){visibility:hidden}
 html.site-loading .site-startup{visibility:visible;display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);color:#fff;font:600 14px system-ui,sans-serif;letter-spacing:.04em}
-.site-startup-mark{display:grid;place-items:center;width:min(78vw,340px);height:132px;border-radius:18px;border:1px solid #d77ab7;background:linear-gradient(120deg,#532044,#35183f);font-size:30px;box-shadow:0 0 32px rgba(218,72,160,.28);overflow:hidden}
+.site-startup-mark{display:grid;place-items:center;width:min(58vw,220px);height:min(58vw,220px);border:0;background:transparent;border-radius:0;font-size:30px;box-shadow:none;overflow:visible}
 
-.site-startup-mark img{width:100%;height:100%;object-fit:contain;padding:12px;border-radius:inherit}
+.site-startup-mark img{width:100%;height:100%;object-fit:contain;padding:0;border:0;border-radius:0;box-shadow:none}
