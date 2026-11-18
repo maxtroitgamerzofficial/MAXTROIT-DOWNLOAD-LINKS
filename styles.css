@@ -555,3 +555,10 @@ body>.topbar{z-index:5}
 @media(max-width:650px){
  .hero-logo-badge{width:min(340px,92vw);height:132px}
 }
+
+
+/* Prevent default-content flash while Firebase settings initialize */
+.site-startup{display:none}
+html.site-loading body>*:not(.site-startup){visibility:hidden}
+html.site-loading .site-startup{visibility:visible;display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#100819;color:#fff;font:600 14px system-ui,sans-serif;letter-spacing:.04em}
+.site-startup-mark{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:1px solid rgba(255,145,190,.65);font-size:30px;box-shadow:0 0 32px rgba(218,72,160,.28)}
