@@ -15,14 +15,14 @@ function paramsTemplatePreview(){try{const raw=new URLSearchParams(location.sear
 function applyVisualEdits(edits){if(!edits||typeof edits!=="object")return;const allowed=["color","backgroundColor","fontSize","padding","borderRadius","textAlign","width","maxWidth","margin"];for(const [selector,patch] of Object.entries(edits.elements||{})){let el;try{el=document.querySelector(selector)}catch(e){}if(!el||!patch)continue;if(typeof patch.text==="string")el.textContent=patch.text;if(typeof patch.src==="string"&&el.matches("img"))el.src=patch.src;if(typeof patch.href==="string"&&el.matches("a"))el.href=patch.href;for(const key of allowed){const value=patch.style?.[key];if(typeof value==="string"&&value.length<80)el.style[key]=value}}for(const [parentSelector,order] of Object.entries(edits.orders||{})){let parent;try{parent=document.querySelector(parentSelector)}catch(e){}if(!parent||!Array.isArray(order))continue;for(const selector of order){let child;try{child=document.querySelector(selector)}catch(e){}if(child&&child.parentElement===parent)parent.appendChild(child)}}}
 
 function applyHubAnimations(settings){
-  const config=settings&&typeof settings==="object"?settings:{};
-  const enabled=config.enabled===true;
+  const config=settings&&typeof settings==="object"?settings:{enabled:true,logo:true};
+  const enabled=config.enabled!==false;
   const root=document.documentElement;
   const preset=["cyber","energy","dimension"].includes(config.preset)?config.preset:"cyber";
   root.dataset.hubAnimations=enabled?"on":"off";
   root.dataset.hubPreset=preset;
   const flags=["background","logo","cards","buttons","transitions","loader"];
-  for(const key of flags)root.dataset["anim"+key.charAt(0).toUpperCase()+key.slice(1)]=enabled&&config[key]!==false?"on":"off";
+  for(const key of flags){const defaultOn=key==="logo";root.dataset["anim"+key.charAt(0).toUpperCase()+key.slice(1)]=enabled&&(config[key]===undefined?defaultOn:config[key]!==false)?"on":"off";}
 
   if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.hubReducedMotion="on";else delete root.dataset.hubReducedMotion;
 }
