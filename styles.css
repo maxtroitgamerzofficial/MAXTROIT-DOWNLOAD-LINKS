@@ -931,10 +931,11 @@ html[data-startup-returning="true"]{
 }
 
 
-/* Enforce a clearly staggered 3x3 puzzle assembly before reflection. */
+/* Corrected loader override: animation controls opacity; do not force pieces invisible. */
 :root,html[data-startup-returning="true"]{--startup-piece-duration:.78s;--startup-piece-stagger:.45s;--startup-seam-start:4.55s;--startup-seam-duration:.48s;--startup-reflect-start:5.15s;--startup-reflect-duration:1.35s;--startup-glow-start:6.62s;--startup-glow-duration:.62s;--startup-label-start:7.15s}
-.startup-puzzle-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;background:none!important}
-.startup-puzzle-piece{background-size:300% 300%!important;background-repeat:no-repeat!important;animation-name:startupPuzzleJoin,startupPuzzleSeamFade!important;animation-duration:var(--startup-piece-duration),var(--startup-seam-duration)!important;animation-delay:var(--join-delay,0s),var(--startup-seam-start)!important;animation-timing-function:cubic-bezier(.18,.78,.22,1),ease-out!important;animation-fill-mode:both,forwards!important;opacity:0!important}
-.startup-puzzle-grid:before{animation-delay:var(--startup-seam-start)!important;animation-duration:var(--startup-seam-duration)!important}
-.startup-puzzle-grid:after{animation-delay:var(--startup-reflect-start)!important;animation-duration:var(--startup-reflect-duration)!important}
-@media(prefers-reduced-motion:reduce){.startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}.startup-puzzle-grid:before{animation:none!important;opacity:1!important}.startup-puzzle-grid:after{animation:none!important;opacity:0!important}}
+.site-startup .startup-puzzle-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;background:none!important}
+.site-startup .startup-puzzle-piece{background-size:300% 300%!important;background-repeat:no-repeat!important;animation:startupPuzzleJoin var(--startup-piece-duration) cubic-bezier(.18,.78,.22,1) var(--join-delay,0s) both,startupPuzzleSeamFade var(--startup-seam-duration) ease-out var(--startup-seam-start) forwards!important}
+.site-startup .startup-puzzle-grid:before{animation-delay:var(--startup-seam-start)!important;animation-duration:var(--startup-seam-duration)!important}
+.site-startup .startup-puzzle-grid:after{animation-delay:var(--startup-reflect-start)!important;animation-duration:var(--startup-reflect-duration)!important}
+html[data-hub-animations="off"] .site-startup .startup-puzzle-piece{animation:startupPuzzleJoin var(--startup-piece-duration) cubic-bezier(.18,.78,.22,1) var(--join-delay,0s) both,startupPuzzleSeamFade var(--startup-seam-duration) ease-out var(--startup-seam-start) forwards!important}
+@media(prefers-reduced-motion:reduce){.site-startup .startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}.site-startup .startup-puzzle-grid:before{animation:none!important;opacity:1!important}.site-startup .startup-puzzle-grid:after{animation:none!important;opacity:0!important}}
