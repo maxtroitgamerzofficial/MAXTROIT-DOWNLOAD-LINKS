@@ -372,3 +372,17 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 @media(prefers-reduced-motion:reduce){
  html[data-hub-animations="on"] *,html[data-hub-animations="on"] *:before,html[data-hub-animations="on"] *:after{animation:none!important;transition:none!important}
 }
+
+/* MAXTROIT compact hero identity badge */
+.hero{display:block;min-height:0;padding:68px 0 58px}
+.hero-copy{max-width:780px}
+.hero-kicker-row{display:flex;align-items:center;gap:13px;margin:0 0 22px}
+.hero-kicker-row .eyebrow{margin:0}
+.hero-logo-badge{width:76px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:10px;border:1px solid #5bcdf477;background:linear-gradient(120deg,#102d49,#211b43);box-shadow:0 0 20px #37c8f533;color:#fff;font:700 19px 'Space Grotesk';letter-spacing:.5px;position:relative}
+.hero-logo-badge:after{content:"";position:absolute;inset:-60% auto -60% -55%;width:35%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,#ffffff55,transparent);animation:maxtroitBadgeShine 3.8s ease-in-out infinite;pointer-events:none}
+.hero-logo-badge img{width:100%;height:100%;object-fit:contain;padding:5px;position:relative;z-index:1}
+@keyframes maxtroitBadgeShine{0%,65%{left:-55%}100%{left:130%}}
+.brand{cursor:pointer}
+.brand-mark{width:36px;height:36px;border-radius:9px}
+[data-hub-animations="off"] .hero-logo-badge:after,[data-anim-logo="off"] .hero-logo-badge:after,[data-hub-reduced-motion="on"] .hero-logo-badge:after{animation:none!important;display:none}
+@media(max-width:650px){.hero{padding:43px 0 40px}.hero-kicker-row{gap:10px;margin-bottom:18px}.hero-logo-badge{width:66px;height:38px;border-radius:8px}.hero-kicker-row .eyebrow{font-size:9px;letter-spacing:1.6px}}
