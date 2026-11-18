@@ -913,3 +913,19 @@ html[data-startup-returning="true"]{
 .hero-actions .text-link{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d77ba566;background:rgba(91,32,94,.22);color:#ffe1f0;font-weight:650;text-decoration:none}
 .hero-actions .text-link:hover{border-color:#f49bc0;background:rgba(143,54,117,.32)}
 @media(max-width:650px){.hero{padding:50px 0 54px}.hero h1{font-size:clamp(39px,10vw,53px);letter-spacing:-1.8px}.hero-copy>p:not(.eyebrow){font-size:14px}.hero-actions{gap:10px}.hero-actions .button,.hero-actions .text-link{min-height:44px;padding:12px 15px}}
+
+
+/* Match the supplied 7-second reference sequence on every visit:
+   puzzle pieces -> seam closure -> logo reflection -> final glow -> reveal page. */
+:root,
+html[data-startup-returning="true"]{
+  --startup-piece-duration:.86s;
+  --startup-piece-stagger:.40s;
+  --startup-seam-start:4.08s;
+  --startup-seam-duration:.45s;
+  --startup-reflect-start:5s;
+  --startup-reflect-duration:1.45s;
+  --startup-glow-start:6.48s;
+  --startup-glow-duration:.55s;
+  --startup-label-start:7.03s;
+}
