@@ -712,3 +712,55 @@ html[data-startup-returning="true"]{
   opacity:0;animation:startupPuzzleUnderlay var(--startup-seam-duration) ease-out var(--startup-seam-start) forwards;
 }
 @keyframes startupPuzzleUnderlay{from{opacity:0}to{opacity:1}}
+
+
+/* Final startup animation correction: keep the reflection clipped to the logo. */
+:root{
+  --startup-piece-duration:.86s;
+  --startup-piece-stagger:.14s;
+  --startup-seam-start:2.05s;
+  --startup-seam-duration:.42s;
+  --startup-reflect-start:2.48s;
+  --startup-reflect-duration:1.12s;
+  --startup-glow-start:3.62s;
+  --startup-glow-duration:.82s;
+  --startup-label-start:4.45s;
+}
+html[data-startup-returning="true"]{
+  --startup-piece-duration:.62s;
+  --startup-piece-stagger:.10s;
+  --startup-seam-start:1.52s;
+  --startup-seam-duration:.30s;
+  --startup-reflect-start:1.83s;
+  --startup-reflect-duration:.92s;
+  --startup-glow-start:2.77s;
+  --startup-glow-duration:.50s;
+  --startup-label-start:3.28s;
+}
+.startup-puzzle-grid:after{
+  inset:0;
+  transform:none!important;
+  background-size:250% 100%;
+  background-position:-150% center;
+  -webkit-mask-image:var(--startup-logo-image);
+  mask-image:var(--startup-logo-image);
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-position:center;
+  mask-position:center;
+  -webkit-mask-size:100% 100%;
+  mask-size:100% 100%;
+  animation:startupLogoReflection var(--startup-reflect-duration) ease-in-out var(--startup-reflect-start) both;
+}
+@keyframes startupLogoReflection{
+  0%{opacity:0;background-position:-150% center}
+  12%{opacity:.95}
+  82%{opacity:.85}
+  100%{opacity:0;background-position:150% center}
+}
+@media(prefers-reduced-motion:reduce){
+  .startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}
+  .startup-puzzle-grid:after,.startup-puzzle-grid{animation:none!important;filter:none!important}
+  .startup-puzzle-grid:before{animation:none!important;opacity:1!important}
+  #site-startup-label{animation:none!important;opacity:1!important;transform:none!important}
+}
