@@ -1,13 +1,11 @@
-name: Deploy MAXTROIT Download Hub to Firebase Hosting
+name: Deploy MAXTROIT Download Hub to Firebase Hosting (manual)
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   deploy_live:
@@ -28,10 +26,17 @@ jobs:
           done
           node tests/invariants.mjs
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Authenticate to Google Cloud with Workload Identity Federation
+        uses: google-github-actions/auth@v2
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAXTROIT_DOWNLOAD_HUB }}
-          projectId: maxtroit-download-hub
-          channelId: live
+          workload_identity_provider: projects/957047554501/locations/global/workloadIdentityPools/github-pool/providers/github
+          service_account: github-firebase-deploy@maxtroit-download-hub.iam.gserviceaccount.com
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting --project maxtroit-download-hub --non-interactive
