@@ -363,3 +363,21 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
  form.querySelectorAll(".admin-core-group").forEach(group=>{if(group.contains(panel))return;group.querySelectorAll("label").forEach(label=>{if(label.querySelector("#logo-file"))panel.querySelector(".brand-logo-content").append(label)})});
  const logoGroup=logoLabel.closest("details");if(logoGroup&&logoGroup.querySelector(".admin-field-grid")?.children.length===0)logoGroup.remove();
 })();
+
+/* Final integration correction: keep the dedicated logo manager outside collapsed editor groups. */
+(function(){
+ const original=window.organizeWebsiteEditor||organizeWebsiteEditor;
+ if(typeof original==="function"&&!window.__maxTroitLogoGroupFix){
+  window.__maxTroitLogoGroupFix=true;
+  window.organizeWebsiteEditor=function(){
+   original();
+   const form=document.querySelector("#site-form"),panel=document.querySelector("#brand-logo-panel");
+   if(form&&panel){const first=form.querySelector(".site-editor-group");if(first&&panel.parentElement!==form)form.insertBefore(panel,first);else if(first&&panel.nextElementSibling!==first)form.insertBefore(panel,first)}
+  };
+  organizeWebsiteEditor=window.organizeWebsiteEditor;
+ }
+ const panel=document.querySelector("#brand-logo-panel"),form=document.querySelector("#site-form");
+ if(panel&&form){const first=form.querySelector(".site-editor-group");if(first&&panel.parentElement!==form)form.insertBefore(panel,first)}
+ const save=document.querySelector("#save-brand-logo");
+ if(save&&!save.dataset.bound){save.dataset.bound="1";save.addEventListener("click",()=>{const status=document.querySelector("#admin-status");if(status)status.textContent="Logo is ready to save. Website changes will be verified after saving."})}
+})();
