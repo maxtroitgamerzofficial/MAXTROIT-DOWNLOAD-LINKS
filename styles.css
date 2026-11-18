@@ -237,3 +237,31 @@ input[type=color]{height:46px;padding:5px;cursor:pointer}
 
 /* Unified template manager tabs */
 .template-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 14px;padding:5px;border:1px solid var(--line);border-radius:12px;background:var(--panel);width:max-content;max-width:100%}.template-tab{border:0;border-radius:8px;padding:11px 16px;background:transparent;color:var(--muted);font:600 12px inherit;cursor:pointer}.template-tab.is-active{background:var(--cyan);color:#07111f}.template-tab-panel[hidden]{display:none!important}.template-card-body{grid-template-columns:1fr 1fr}.template-card-body h3,.template-card-body p,.template-card-body [data-template-state]{grid-column:1/-1}.template-card-body button{width:100%}#template-preview-panel[hidden]{display:none!important}#template-preview-frame{display:block;width:100%;height:min(78vh,850px);min-height:560px;border:1px solid var(--line);border-radius:12px;background:#fff}@media(max-width:700px){.template-tabs{width:100%}.template-tab{flex:1;padding:10px 8px}.template-card-body{grid-template-columns:1fr 1fr}}
+
+
+/* MAXTROIT original motion system — CSS-only and lightweight */
+.animation-control-card .animation-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.animation-control-card .animation-settings-grid>label{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #263750;border-radius:9px;background:#0b1423;color:#dbe8fa;font-size:12px}
+.animation-control-card .animation-settings-grid>label:first-child{display:grid;grid-column:1/-1;align-items:stretch}
+.animation-control-card input[type=checkbox]{width:17px;height:17px;accent-color:#37c8f5;flex:none}
+.animation-control-card select{width:100%}
+html[data-hub-animations="on"][data-anim-background="on"] body{background-image:radial-gradient(ellipse at 12% 18%,#17658b22,transparent 38%),radial-gradient(ellipse at 86% 24%,#7548b522,transparent 34%),radial-gradient(ellipse at 52% 92%,#17658b18,transparent 40%)}
+html[data-hub-animations="on"][data-anim-background="on"] body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28;background-image:radial-gradient(2px 2px at 18% 28%,#74dcff 45%,transparent 60%),radial-gradient(1px 1px at 76% 62%,#b99aff 45%,transparent 60%),radial-gradient(2px 2px at 44% 84%,#74dcff 45%,transparent 60%);background-size:190px 170px,230px 210px,270px 240px;animation:maxParticleDrift 28s linear infinite}
+html[data-hub-preset="energy"][data-anim-background="on"] body:before{background-size:150px 130px,190px 170px,220px 190px;opacity:.36}
+html[data-hub-preset="dimension"][data-anim-background="on"] body:before{opacity:.2;filter:hue-rotate(42deg)}
+html[data-hub-animations="on"][data-anim-logo="on"] .brand-mark,html[data-hub-animations="on"][data-anim-logo="on"] .hero-logo{animation:maxLogoFloat 5s ease-in-out infinite}
+html[data-hub-animations="on"][data-anim-cards="on"] .card{transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease}
+html[data-hub-animations="on"][data-anim-cards="on"] .card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 18px 48px #0007}
+html[data-hub-animations="on"][data-anim-buttons="on"] .button,html[data-hub-animations="on"][data-anim-buttons="on"] .card-link{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+html[data-hub-animations="on"][data-anim-buttons="on"] .button:hover{transform:translateY(-2px);filter:brightness(1.14);box-shadow:0 8px 28px #37c8f544}
+html[data-hub-animations="on"][data-anim-transitions="on"] body:not(.admin-body) .wrap{animation:maxPageEnter .65s ease both}
+html[data-hub-animations="on"][data-anim-loader="on"] #grid>p.muted:first-child:before{content:"";display:inline-block;width:11px;height:11px;margin-right:9px;border:2px solid #37c8f555;border-top-color:var(--cyan);border-radius:50%;vertical-align:-2px;animation:maxSpin .8s linear infinite}
+html[data-hub-preset="energy"] .hero-art{box-shadow:0 0 55px #37c8f51a}
+html[data-hub-preset="dimension"] .hero-art{border-color:#9c72ff66}
+@keyframes maxParticleDrift{to{background-position:190px 170px,-230px 210px,270px -240px}}
+@keyframes maxLogoFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes maxPageEnter{from{opacity:.65;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes maxSpin{to{transform:rotate(360deg)}}
+html[data-hub-animations="off"] *,html[data-hub-reduced-motion="on"] *{animation:none!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+@media(max-width:650px){.animation-control-card .animation-settings-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html[data-hub-animations="on"] *,html[data-hub-animations="on"] *:before,html[data-hub-animations="on"] *:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
