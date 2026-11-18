@@ -464,3 +464,8 @@ footer{background:#12081a;border-top-color:#e66ab322}
 .hero-logo-badge{background:linear-gradient(125deg,#3b1740,#5a214a 52%,#25102f);border-color:#e66b9b;box-shadow:0 0 26px #d9469b35}
 .hero-logo-badge:after{background:linear-gradient(90deg,transparent,#ffe1ec66,transparent)}
 @media(max-width:650px){body:before{background-size:105vw auto;background-position:center 35%;opacity:calc(var(--brand-wallpaper-opacity,0)*.8)}}
+
+/* Keep the translucent logo watermark above the page paint but behind content */
+body:before{z-index:0}
+body>.topbar,body>main,body>footer{position:relative;z-index:1}
+body>.topbar{z-index:5}
