@@ -22,6 +22,7 @@ async function findItem(){
  return d.exists?{id:d.id,...d.data()}:null;
 }
 (async()=>{
+ applyBrandLogo();
  try{
   const item=await findItem();
   if(!item||!item.url) throw new Error("This download is unavailable.");
