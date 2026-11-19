@@ -34,8 +34,9 @@ async function findItem(){
   title.textContent=item.title||"Download";
   description.textContent=item.description||"";
   link.href=parsed.href;
-  link.hidden=false;
+  link.hidden=true;
   document.title=(item.title||"Download")+" · MAXTROIT OFFICIAL";
+  await showViewDetailsGate(parsed.href);
  }catch(e){
   console.error("Download details:",e);
   title.textContent="Download unavailable";
@@ -43,3 +44,81 @@ async function findItem(){
   error.hidden=false;
  }
 })();
+
+async function showViewDetailsGate(finalUrl){
+ const host=document.createElement("section");
+ host.id="view-details-unlock";
+ host.className="view-details-unlock";
+ const style=document.createElement("style");
+ style.textContent=`
+ .view-details-unlock{margin:28px 0 18px;padding:22px;border:1px solid rgba(177,115,255,.32);border-radius:20px;background:linear-gradient(145deg,rgba(40,24,75,.72),rgba(13,18,38,.94));box-shadow:0 16px 45px rgba(0,0,0,.22)}
+ .view-details-unlock h2{margin:0 0 8px;font-size:1.2rem}.view-details-unlock p{margin:8px 0;color:var(--muted,#aab2ca);line-height:1.6}
+ .vdg-timer{font-size:clamp(2rem,8vw,3rem);font-weight:800;letter-spacing:.04em;margin:16px 0;color:var(--text,#fff)}
+ .vdg-main-button{display:block;width:100%;min-height:58px;margin-top:14px;padding:16px 22px;border:0;border-radius:14px;background:linear-gradient(100deg,#a855f7,#ec4899);color:#fff;font-size:1.08rem;font-weight:800;text-align:center;cursor:pointer}
+ .vdg-main-button:disabled{opacity:.55;cursor:not-allowed}.vdg-task{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 0;border-top:1px solid rgba(255,255,255,.1)}
+ .vdg-task strong{flex:1 1 140px}.vdg-task a{color:#f0abfc;text-decoration:underline}.vdg-task label{display:flex;align-items:center;gap:8px;font-size:.92rem}
+ .vdg-task input{width:18px;height:18px;accent-color:#d946ef}.vdg-note{font-size:.82rem!important}
+ `;
+ document.head.appendChild(style);
+ const heading=document.createElement("h2");heading.textContent="Unlock download";
+ const intro=document.createElement("p");intro.textContent="Complete the steps below to continue to your download.";
+ const timer=document.createElement("div");timer.className="vdg-timer";timer.setAttribute("aria-live","polite");
+ const message=document.createElement("p");message.setAttribute("role","status");
+ const action=document.createElement("button");action.type="button";action.className="vdg-main-button";action.hidden=true;
+ const tasksHost=document.createElement("div");tasksHost.hidden=true;
+ const note=document.createElement("p");note.className="vdg-note";note.textContent="Social tasks are confirmed by your own check. Opening a social link does not let this website verify a follow or subscription.";
+ host.append(heading,intro,timer,message,action,tasksHost,note);
+ link.parentNode.insertBefore(host,link);
+ let config={enabled:true,timerMinutes:1,tasks:[]};
+ try{
+  if(window.hubCloud?.ready){
+   const snap=await hubCloud.db.collection("siteConfig").doc("public").get();
+   const saved=snap.exists?snap.data()?.viewDetailsGate:null;
+   if(saved&&typeof saved==="object")config={...config,...saved};
+  }
+ }catch(e){console.warn("View Details unlock settings unavailable:",e)}
+ const tasks=Array.isArray(config.tasks)?config.tasks.filter(t=>t&&typeof t.title==="string"&&/^https:\/\//i.test(String(t.url||""))):[];
+ const showTasks=()=>{
+  timer.hidden=true;message.textContent="Now complete the required social media steps.";
+  action.hidden=true;tasksHost.hidden=false;tasksHost.replaceChildren();
+  tasks.forEach((task,index)=>{
+   const row=document.createElement("div");row.className="vdg-task";
+   const name=document.createElement("strong");name.textContent="Step "+(index+1)+": "+task.title;
+   const open=document.createElement("a");open.href=task.url;open.target="_blank";open.rel="noopener noreferrer";open.textContent="Open link ↗";
+   const label=document.createElement("label"),check=document.createElement("input");check.type="checkbox";check.setAttribute("aria-label","Confirm "+task.title);
+   const text=document.createElement("span");text.textContent="I've completed this step";
+   label.append(check,text);row.append(name,open,label);tasksHost.append(row);
+   check.addEventListener("change",updateCompletion);
+  });
+  updateCompletion();
+ };
+ function updateCompletion(){
+  const checks=[...tasksHost.querySelectorAll('input[type="checkbox"]')];
+  const done=checks.filter(c=>c.checked).length;
+  message.textContent=checks.length?done+" of "+checks.length+" tasks completed.": "No social tasks are required.";
+  link.hidden=done!==checks.length;
+  if(done===checks.length)link.scrollIntoView({behavior:"smooth",block:"nearest"});
+ }
+ if(config.enabled===false||Number(config.timerMinutes)<=0){
+  timer.hidden=true;message.textContent="Ready when you are.";
+  action.textContent="View Details";action.hidden=false;
+ }else{
+  const seconds=Math.min(600,Math.max(1,Math.round(Number(config.timerMinutes)*60)||60));
+  const key="maxtroit-view-details-start:"+encodeURIComponent(id||"");
+  let started=0;
+  try{started=Number(sessionStorage.getItem(key))||0;if(!started||started>Date.now()||Date.now()-started>seconds*1000+3600000){started=Date.now();sessionStorage.setItem(key,String(started))}}catch(e){started=Date.now()}
+  action.hidden=true;message.textContent="Please wait for the timer to finish.";
+  const update=()=>{
+   const remaining=Math.max(0,seconds-Math.floor((Date.now()-started)/1000));
+   timer.textContent=Math.floor(remaining/60).toString().padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
+   if(remaining<=0){clearInterval(interval);timer.textContent="00:00";message.textContent="Timer complete. Tap below to continue.";action.textContent="View Details";action.hidden=false}
+  };
+  update();const interval=setInterval(update,250);
+ }
+ action.addEventListener("click",()=>{
+  action.hidden=true;
+  if(tasks.length)showTasks();
+  else{timer.hidden=true;message.textContent="All steps complete.";link.hidden=false}
+ });
+ if(!tasks.length){note.hidden=true}
+}
