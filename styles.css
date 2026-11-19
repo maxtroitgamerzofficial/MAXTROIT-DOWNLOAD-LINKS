@@ -973,3 +973,37 @@ html[data-hub-animations="off"] .site-startup .startup-puzzle-piece{animation:st
 .hero-brand-tagline i{font-style:normal;color:#b98cff;padding:0 5px}
 .hero-kicker-row>.eyebrow{margin:0 0 14px}
 @media(max-width:650px){.hero-logo-badge{min-height:228px;padding:24px 14px;border-radius:23px;gap:13px}.hero-logo-icon{width:112px;height:112px}.hero-logo-name{font-size:22px;letter-spacing:1.4px}.hero-brand-tagline{font-size:9px;letter-spacing:1.7px}.search-row{flex-direction:column}#category{width:100%}}
+
+
+/* Header search aligned to the right of the brand. */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:16px;min-width:0}
+.header-search{position:relative;width:clamp(190px,28vw,340px);margin:0}
+.header-search input{width:100%;min-height:42px;padding:10px 42px 10px 15px;border:1px solid #ffffff24;border-radius:13px;background:rgba(15,20,38,.88);color:var(--text);outline:none}
+.header-search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #63d9f522}
+.header-search>span{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:23px;color:var(--muted);pointer-events:none}
+.collection>.collection-filters{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:0 0 22px}
+.collection-filters select{min-width:180px}
+.filter-label{font-size:12px;color:var(--muted)}
+.latest-uploads{margin:0 0 28px;padding:18px 0 20px;border-top:1px solid #ffffff12;border-bottom:1px solid #ffffff12}
+.latest-uploads-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
+.latest-uploads-head .eyebrow{margin:0 0 4px;font-size:10px;letter-spacing:2px;color:#f09ab9}
+.latest-uploads-head h3{margin:0;font-size:20px}
+.latest-uploads-head>.muted{font-size:11px}
+.latest-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.latest-upload-card{min-width:0;display:flex;align-items:center;gap:10px;padding:9px;border:1px solid #ffffff16;border-radius:13px;background:#ffffff07;color:var(--text);text-decoration:none;transition:transform .18s,border-color .18s}
+.latest-upload-card:hover{transform:translateY(-2px);border-color:#e78acb88}
+.latest-upload-card>img,.latest-upload-placeholder{width:54px;height:54px;flex:0 0 54px;border-radius:9px;object-fit:cover;background:#281c39}
+.latest-upload-placeholder{display:grid;place-items:center;font-weight:800;color:#f5a4d1}
+.latest-upload-copy{min-width:0;display:grid;gap:4px}
+.latest-upload-copy b{font-size:12px;line-height:1.3;overflow-wrap:anywhere}
+.latest-upload-copy small{font-size:10px;color:var(--muted)}
+.card-image img[data-zoom-src],.zoomable-logo{cursor:zoom-in}
+.zoomable-logo:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
+.image-lightbox[hidden]{display:none!important}
+.image-lightbox{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:5vw;background:rgba(3,5,13,.94);backdrop-filter:blur(12px)}
+.image-lightbox img{display:block;max-width:min(92vw,1200px);max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 20px 80px #0009}
+.lightbox-close{position:absolute;top:18px;right:20px;width:44px;height:44px;border:1px solid #ffffff40;border-radius:50%;background:#171a2b;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+body.lightbox-open{overflow:hidden}
+@media(max-width:760px){.topbar{align-items:flex-start;flex-wrap:wrap}.header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}.header-search{grid-column:1/-1;width:100%;grid-row:1}.header-link{grid-column:1}.header-social-links{grid-column:2;justify-self:end}.latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.latest-uploads-head{align-items:flex-start;flex-direction:column}.collection>.collection-filters{justify-content:space-between}.collection-filters select{min-width:0;max-width:65%}}
+@media(max-width:420px){.latest-grid{grid-template-columns:1fr}.latest-upload-card>img,.latest-upload-placeholder{width:48px;height:48px;flex-basis:48px}}
