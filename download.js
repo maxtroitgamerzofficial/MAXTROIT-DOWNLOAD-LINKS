@@ -3,16 +3,19 @@ const title=document.querySelector("#title"),description=document.querySelector(
 
 async function applyBrandLogo(){
  const mark=document.querySelector(".brand-mark");
- if(!mark||!window.hubCloud?.ready)return;
+ if(!mark)return;
+ const showFallback=()=>{mark.textContent="M";mark.style.visibility="visible";};
+ if(!window.hubCloud?.ready){showFallback();return;}
  try{
   const snap=await hubCloud.db.collection("siteConfig").doc("public").get();
   const logo=snap.exists?String(snap.data()?.logo||""):"";
-  if(!/^https:\/\/|^data:image\//i.test(logo))return;
-  const img=document.createElement("img");
-  img.src=logo;img.alt="MAXTROIT OFFICIAL";
-  img.style.cssText="width:100%;height:100%;object-fit:cover;border-radius:inherit";
-  mark.replaceChildren(img);
- }catch(e){console.warn("MAXTROIT brand logo could not load on download page:",e)}
+  if(!/^https:\/\/|^data:image\//i.test(logo)){showFallback();return;}
+  const img=new Image();
+  img.alt="MAXTROIT OFFICIAL";
+  img.onload=()=>{mark.replaceChildren(img);mark.style.visibility="visible";};
+  img.onerror=showFallback;
+  img.src=logo;
+ }catch(e){console.warn("MAXTROIT brand logo could not load on download page:",e);showFallback();}
 }
 
 async function findItem(){
@@ -22,7 +25,7 @@ async function findItem(){
  return d.exists?{id:d.id,...d.data()}:null;
 }
 (async()=>{
- applyBrandLogo();
+ await applyBrandLogo();
  try{
   const item=await findItem();
   if(!item||!item.url) throw new Error("This download is unavailable.");
