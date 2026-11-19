@@ -385,54 +385,67 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
 })();
 
 
-/* MAXTROIT View Details gate: timer first, then an optional social-task checklist. */
+/* MAXTROIT View Details gate — independent timer and per-task controls. */
 (function(){
  const view=document.querySelector("#view-uploads");
  const listCard=document.querySelector("#admin-list")?.closest(".panel-card");
  if(!view||!listCard||document.querySelector("#view-details-gate-admin"))return;
  const panel=document.createElement("section");
- panel.id="view-details-gate-admin";
- panel.className="panel-card";
- panel.innerHTML='<div class="panel-heading"><div><h2>View Details unlock</h2><p>Visitor pehle timer dekhega. Timer ke baad bada View Details button aayega; click karne par social tasks dikhenge.</p></div></div><div class="editor-grid"><label><span><input id="vdg-enabled" type="checkbox" checked> Enable View Details timer</span></label><label>Timer duration<select id="vdg-minutes"><option value="0">No timer</option><option value="1">1 minute</option><option value="2">2 minutes</option><option value="3">3 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option></select></label><div class="wide"><h3>Social media tasks (optional)</h3><p class="muted">Add tasks that appear after the timer and View Details button. Users confirm each task themselves; opening a link cannot verify a follow or subscription.</p><div id="vdg-task-list"></div><button id="vdg-add-task" class="secondary-button" type="button">＋ Add social task</button></div><div class="form-actions wide"><button id="vdg-save" class="button" type="button">Save View Details settings</button><p id="vdg-status" class="status" role="status"></p></div></div>';
+ panel.id="view-details-gate-admin";panel.className="panel-card";
+ panel.innerHTML='<div class="panel-heading"><div><h2>View Details unlock</h2><p>Timer aur har social task ko alag se save aur ON/OFF kar sakte ho.</p></div></div><div class="editor-grid"><label><span><input id="vdg-enabled" type="checkbox" checked> Enable timer</span></label><label>Timer duration<select id="vdg-minutes"><option value="0">No timer</option><option value="1">1 minute</option><option value="2">2 minutes</option><option value="3">3 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option></select></label><div class="wide form-actions"><button id="vdg-save-timer" class="button" type="button">Save timer</button><p id="vdg-timer-status" class="status" role="status"></p></div><div class="wide"><h3>Social media tasks</h3><p class="muted">Har task ka ON/OFF aur Save alag hai. Visitor sirf ON tasks dekhega. Follow/subscription ko website automatically verify nahi kar sakti.</p><div id="vdg-task-list"></div><button id="vdg-add-task" class="secondary-button" type="button">＋ Add social task</button><p id="vdg-task-status" class="status" role="status"></p></div></div>';
  view.insertBefore(panel,listCard);
  let tasks=[];
- const taskList=panel.querySelector("#vdg-task-list"),status=panel.querySelector("#vdg-status");
+ const taskList=panel.querySelector("#vdg-task-list"),timerStatus=panel.querySelector("#vdg-timer-status"),taskStatus=panel.querySelector("#vdg-task-status"),timerButton=panel.querySelector("#vdg-save-timer");
+ function escAttr(v){return safe(String(v||""))}
  function render(){
-  taskList.innerHTML=tasks.map((t,i)=>'<div class="editor-grid vdg-task-row" data-index="'+i+'" style="margin:12px 0;padding:12px;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px"><label>Task name<input data-task-title maxlength="70" value="'+safe(t.title||"")+'" placeholder="e.g. Follow Instagram"></label><label>Social link<input data-task-url type="url" value="'+safe(t.url||"")+'" placeholder="https://instagram.com/yourprofile"></label><div class="wide"><button type="button" class="delete-button" data-task-remove>Remove task</button></div></div>').join("")||'<p class="muted">No social tasks added. Timer ke baad View Details button se details directly open hongi.</p>';
+  taskList.innerHTML=tasks.map((t,i)=>'<div class="vdg-task-row" data-index="'+i+'" style="margin:12px 0;padding:14px;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><strong>Social task '+(i+1)+'</strong><label><input type="checkbox" data-task-enabled '+(t.enabled!==false?'checked':'')+'> ON</label></div><div class="editor-grid"><label>Task name<input data-task-title maxlength="70" value="'+escAttr(t.title)+'" placeholder="e.g. Follow Instagram"></label><label>Social link<input data-task-url type="url" value="'+escAttr(t.url)+'" placeholder="https://instagram.com/yourprofile"></label><div class="wide form-actions"><button type="button" class="button" data-task-save>Save this task</button><button type="button" class="delete-button" data-task-remove>Remove</button><small class="status" data-task-status></small></div></div></div>').join("")||'<p class="muted">No social tasks added.</p>';
  }
- panel.querySelector("#vdg-add-task").addEventListener("click",()=>{if(tasks.length>=12){status.textContent="Maximum 12 tasks allowed.";return}tasks.push({title:"",url:""});render()});
- taskList.addEventListener("input",e=>{const row=e.target.closest("[data-index]");if(!row)return;const task=tasks[Number(row.dataset.index)];if(!task)return;if(e.target.matches("[data-task-title]"))task.title=e.target.value;if(e.target.matches("[data-task-url]"))task.url=e.target.value});
- taskList.addEventListener("click",e=>{const b=e.target.closest("[data-task-remove]");if(!b)return;const row=b.closest("[data-index]");tasks.splice(Number(row.dataset.index),1);render()});
+ function readRow(row){return {title:row.querySelector("[data-task-title]").value.trim(),url:row.querySelector("[data-task-url]").value.trim(),enabled:row.querySelector("[data-task-enabled]").checked}}
+ async function persist(next){
+  if(!requireAdmin())throw Error("Admin access required.");
+  const config={enabled:panel.querySelector("#vdg-enabled").checked,timerMinutes:Number(panel.querySelector("#vdg-minutes").value),tasks:next,updatedAt:Date.now()};
+  const ref=hubCloud.db.collection("siteConfig").doc("public");
+  await withTimeout(ref.set({viewDetailsGate:config},{merge:true}),"Saving View Details settings");
+  const verify=await withTimeout(ref.get(),"Verifying View Details settings");
+  const saved=verify.exists?verify.data().viewDetailsGate:null;
+  if(!saved||saved.updatedAt!==config.updatedAt||!Array.isArray(saved.tasks)||saved.tasks.length!==next.length)throw Error("Saved settings could not be verified.");
+  siteSettings={...siteSettings,viewDetailsGate:config};tasks=next;return config;
+ }
+ panel.querySelector("#vdg-add-task").addEventListener("click",()=>{
+  if(tasks.length>=12){taskStatus.textContent="Maximum 12 tasks allowed.";return}
+  tasks.push({title:"",url:"",enabled:true});render();taskStatus.textContent="New task added. Fill it in and press its own Save button.";
+ });
+ taskList.addEventListener("click",async e=>{
+  const row=e.target.closest("[data-index]");if(!row)return;
+  const index=Number(row.dataset.index);
+  if(e.target.closest("[data-task-remove]")){
+   if(!confirm("Remove this social task?"))return;
+   const next=tasks.filter((_,i)=>i!==index),b=e.target.closest("button");b.disabled=true;
+   try{await persist(next);render();taskStatus.textContent="Task removed and saved."}
+   catch(err){taskStatus.textContent="Remove failed: "+errorText(err);b.disabled=false}
+   return;
+  }
+  const button=e.target.closest("[data-task-save]");if(!button)return;
+  const item=readRow(row),msg=row.querySelector("[data-task-status]");
+  if(!item.title||!/^https:\/\//i.test(item.url)){msg.textContent="Task name aur valid HTTPS link dono bharo.";return}
+  const next=tasks.map((t,i)=>i===index?item:t);
+  button.disabled=true;msg.textContent="Saving…";
+  try{await persist(next);msg.textContent="Saved and verified."}
+  catch(err){msg.textContent="Save failed: "+errorText(err)}
+  finally{button.disabled=false}
+ });
+ timerButton.addEventListener("click",async()=>{
+  timerButton.disabled=true;timerStatus.textContent="Saving timer…";
+  try{await persist(tasks);timerStatus.textContent="Timer settings saved and verified."}
+  catch(err){timerStatus.textContent="Save failed: "+errorText(err)}
+  finally{timerButton.disabled=false}
+ });
  window.loadViewGateAdmin=function(settings){
   const cfg=settings?.viewDetailsGate||{};
   panel.querySelector("#vdg-enabled").checked=cfg.enabled!==false;
   panel.querySelector("#vdg-minutes").value=String([0,1,2,3,5,10].includes(Number(cfg.timerMinutes))?Number(cfg.timerMinutes):1);
-  tasks=Array.isArray(cfg.tasks)?cfg.tasks.map(t=>({title:String(t.title||""),url:String(t.url||"")})):[];
+  tasks=Array.isArray(cfg.tasks)?cfg.tasks.map(t=>({title:String(t.title||""),url:String(t.url||""),enabled:t.enabled!==false})):[];
   render();
  };
- panel.querySelector("#vdg-save").addEventListener("click",async()=>{
-  if(!requireAdmin())return;
-  const enabled=panel.querySelector("#vdg-enabled").checked;
-  const timerMinutes=Number(panel.querySelector("#vdg-minutes").value);
-  const clean=[];
-  for(const task of tasks){
-   const title=String(task.title||"").trim(),url=String(task.url||"").trim();
-   if(!title&&!url)continue;
-   if(!title||!/^https:\/\//i.test(url)){status.textContent="Har task ke liye naam aur valid HTTPS link zaroori hai.";return}
-   clean.push({title:title.slice(0,70),url});
-  }
-  const button=panel.querySelector("#vdg-save");button.disabled=true;status.textContent="Saving settings…";
-  const config={enabled,timerMinutes,tasks:clean,updatedAt:Date.now()};
-  try{
-   const ref=hubCloud.db.collection("siteConfig").doc("public");
-   await withTimeout(ref.set({viewDetailsGate:config},{merge:true}),"Saving View Details settings");
-   const verify=await withTimeout(ref.get(),"Verifying View Details settings");
-   const saved=verify.exists?verify.data().viewDetailsGate:null;
-   if(!saved||saved.updatedAt!==config.updatedAt||saved.tasks?.length!==clean.length)throw Error("Saved settings could not be verified.");
-   siteSettings={...siteSettings,viewDetailsGate:config};
-   tasks=clean;render();status.textContent="View Details settings saved and verified.";
-  }catch(e){status.textContent="Save failed: "+errorText(e)}
-  finally{button.disabled=false}
- });
  render();
 })();
