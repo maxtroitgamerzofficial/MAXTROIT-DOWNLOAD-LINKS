@@ -77,7 +77,7 @@ async function showViewDetailsGate(finalUrl){
    if(saved&&typeof saved==="object")config={...config,...saved};
   }
  }catch(e){console.warn("View Details unlock settings unavailable:",e)}
- const tasks=Array.isArray(config.tasks)?config.tasks.filter(t=>t&&typeof t.title==="string"&&/^https:\/\//i.test(String(t.url||""))):[];
+ const tasks=Array.isArray(config.tasks)?config.tasks.filter(t=>t&&t.enabled!==false&&typeof t.title==="string"&&/^https:\/\//i.test(String(t.url||""))):[];
  const showTasks=()=>{
   timer.hidden=true;message.textContent="Now complete the required social media steps.";
   action.hidden=true;tasksHost.hidden=false;tasksHost.replaceChildren();
