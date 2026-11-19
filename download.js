@@ -108,12 +108,13 @@ async function showViewDetailsGate(finalUrl){
   let started=0;
   try{started=Number(sessionStorage.getItem(key))||0;if(!started||started>Date.now()||Date.now()-started>seconds*1000+3600000){started=Date.now();sessionStorage.setItem(key,String(started))}}catch(e){started=Date.now()}
   action.hidden=true;message.textContent="Please wait for the timer to finish.";
+  let interval=null;
   const update=()=>{
    const remaining=Math.max(0,seconds-Math.floor((Date.now()-started)/1000));
    timer.textContent=Math.floor(remaining/60).toString().padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
    if(remaining<=0){clearInterval(interval);timer.textContent="00:00";message.textContent="Timer complete. Tap below to continue.";action.textContent="View Details";action.hidden=false}
   };
-  update();const interval=setInterval(update,250);
+  update();interval=setInterval(update,250);
  }
  action.addEventListener("click",()=>{
   action.hidden=true;
