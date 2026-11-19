@@ -10,7 +10,7 @@ function errorText(e){if(!navigator.onLine)return "You appear to be offline. Rec
 function withTimeout(p,label,ms=15000){let timer;return Promise.race([p,new Promise((_,reject)=>{timer=setTimeout(()=>{const e=new Error(label+" timed out.");e.code="app/timeout";reject(e)},ms)})]).finally(()=>clearTimeout(timer))}
 function setBusy(form,busy,label){const b=form.querySelector('button[type="submit"]');if(!b)return;b.disabled=busy;if(!busy){b.textContent=label;return}b.dataset.original=b.textContent;b.textContent="Saving…"}
 function endBusy(form,label){const b=form.querySelector('button[type="submit"]');if(b){b.disabled=false;b.textContent=label}}
-function showView(name){document.querySelectorAll(".admin-view").forEach(v=>v.hidden=v.id!=="view-"+name);document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===name));$("#view-title").textContent=({overview:"Overview",uploads:"Downloads",website:"Website editor",templates:"Templates"})[name]||"Overview"}
+function showView(name){document.querySelectorAll(".admin-view").forEach(v=>v.hidden=v.id!=="view-"+name);document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===name));$("#view-title").textContent=({overview:"Overview",uploads:"Downloads",unlock:"Unlock steps",website:"Website editor",templates:"Templates"})[name]||"Overview"}
 document.querySelectorAll("[data-view],[data-goto]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view||b.dataset.goto)));
 const templateNames={midnight:"Midnight",clean:"Clean Light",neon:"Neon Grid",editorial:"Editorial",ocean:"Ocean Glass",sunset:"Sunset Studio",minimal:"Minimal Mono"};
 let activeTemplate="midnight",previewedTemplateId=null;
@@ -387,13 +387,12 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
 
 /* MAXTROIT View Details gate — independent timer and per-task controls. */
 (function(){
- const view=document.querySelector("#view-uploads");
- const listCard=document.querySelector("#admin-list")?.closest(".panel-card");
- if(!view||!listCard||document.querySelector("#view-details-gate-admin"))return;
+ const view=document.querySelector("#view-unlock");
+ if(!view||document.querySelector("#view-details-gate-admin"))return;
  const panel=document.createElement("section");
  panel.id="view-details-gate-admin";panel.className="panel-card";
  panel.innerHTML='<div class="panel-heading"><div><h2>View Details unlock</h2><p>Timer aur har social task ko alag se save aur ON/OFF kar sakte ho.</p></div></div><div class="editor-grid"><label><span><input id="vdg-enabled" type="checkbox" checked> Enable timer</span></label><label>Timer duration<select id="vdg-minutes"><option value="0">No timer</option><option value="1">1 minute</option><option value="2">2 minutes</option><option value="3">3 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option></select></label><div class="wide form-actions"><button id="vdg-save-timer" class="button" type="button">Save timer</button><p id="vdg-timer-status" class="status" role="status"></p></div><div class="wide"><h3>Social media tasks</h3><p class="muted">Har task ka ON/OFF aur Save alag hai. Visitor sirf ON tasks dekhega. Follow/subscription ko website automatically verify nahi kar sakti.</p><div id="vdg-task-list"></div><button id="vdg-add-task" class="secondary-button" type="button">＋ Add social task</button><p id="vdg-task-status" class="status" role="status"></p></div></div>';
- view.insertBefore(panel,listCard);
+ view.appendChild(panel);
  let tasks=[];
  const taskList=panel.querySelector("#vdg-task-list"),timerStatus=panel.querySelector("#vdg-timer-status"),taskStatus=panel.querySelector("#vdg-task-status"),timerButton=panel.querySelector("#vdg-save-timer");
  function escAttr(v){return safe(String(v||""))}
@@ -403,17 +402,17 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
  function readRow(row){return {title:row.querySelector("[data-task-title]").value.trim(),url:row.querySelector("[data-task-url]").value.trim(),enabled:row.querySelector("[data-task-enabled]").checked}}
  async function persist(next){
   if(!requireAdmin())throw Error("Admin access required.");
-  const config={enabled:panel.querySelector("#vdg-enabled").checked,timerMinutes:Number(panel.querySelector("#vdg-minutes").value),tasks:next,updatedAt:Date.now()};
+  const config={enabled:panel.querySelector("#vdg-enabled").checked,timerMinutes:Number(panel.querySelector("#vdg-minutes").value),tasks:next.filter(t=>!t._draft).map(({_draft,...t})=>t),updatedAt:Date.now()};
   const ref=hubCloud.db.collection("siteConfig").doc("public");
   await withTimeout(ref.set({viewDetailsGate:config},{merge:true}),"Saving View Details settings");
   const verify=await withTimeout(ref.get(),"Verifying View Details settings");
   const saved=verify.exists?verify.data().viewDetailsGate:null;
-  if(!saved||saved.updatedAt!==config.updatedAt||!Array.isArray(saved.tasks)||saved.tasks.length!==next.length)throw Error("Saved settings could not be verified.");
+  if(!saved||saved.updatedAt!==config.updatedAt||!Array.isArray(saved.tasks)||saved.tasks.length!==config.tasks.length)throw Error("Saved settings could not be verified.");
   siteSettings={...siteSettings,viewDetailsGate:config};tasks=next;return config;
  }
  panel.querySelector("#vdg-add-task").addEventListener("click",()=>{
   if(tasks.length>=12){taskStatus.textContent="Maximum 12 tasks allowed.";return}
-  tasks.push({title:"",url:"",enabled:true});render();taskStatus.textContent="New task added. Fill it in and press its own Save button.";
+  tasks.push({title:"",url:"",enabled:true,_draft:true});render();taskStatus.textContent="New task added. Fill it in and press its own Save button.";
  });
  taskList.addEventListener("click",async e=>{
   const row=e.target.closest("[data-index]");if(!row)return;
