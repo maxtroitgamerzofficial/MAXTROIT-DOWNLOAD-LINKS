@@ -432,12 +432,12 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 
 
 /* Social profiles live only in the footer as consistent icon links */
-.header-social-links,#header-social-links,.hero-actions .text-link{display:none!important}
+.header-social-links,#header-social-links{display:none!important}
 .footer-social-links{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;margin:24px auto}
 .footer-social-links a{width:48px;height:48px;padding:11px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #34435d;border-radius:50%;background:#101a2b;color:#eaf2ff;transition:transform .2s,border-color .2s,background .2s}
 .footer-social-links a svg{width:25px;height:25px;display:block}
 .footer-social-links a:hover{transform:translateY(-3px);border-color:#39c9ef;background:#172941;color:#fff}
-.footer-social-links a[aria-label="YouTube"]{color:#ff3445}
+.footer-social-links a[aria-label="YouTube"]{color:#fff}
 @media(max-width:650px){.footer-social-links{gap:12px}.footer-social-links a{width:44px;height:44px;padding:10px}}
 
 
@@ -939,3 +939,9 @@ html[data-startup-returning="true"]{
 .site-startup .startup-puzzle-grid:after{animation-delay:var(--startup-reflect-start)!important;animation-duration:var(--startup-reflect-duration)!important}
 html[data-hub-animations="off"] .site-startup .startup-puzzle-piece{animation:startupPuzzleJoin var(--startup-piece-duration) cubic-bezier(.18,.78,.22,1) var(--join-delay,0s) both,startupPuzzleSeamFade var(--startup-seam-duration) ease-out var(--startup-seam-start) forwards!important}
 @media(prefers-reduced-motion:reduce){.site-startup .startup-puzzle-piece{animation:none!important;opacity:1!important;transform:none!important}.site-startup .startup-puzzle-grid:before{animation:none!important;opacity:1!important}.site-startup .startup-puzzle-grid:after{animation:none!important;opacity:0!important}}
+
+
+/* Restore the original white YouTube mark beside the channel handle. */
+.hero-actions .text-link{display:inline-flex!important;align-items:center;gap:9px;color:#fff!important}
+.hero-actions .text-link .youtube-mark{width:19px;height:19px;display:inline-block;flex:0 0 19px;fill:#fff}
+.footer-social-links a[aria-label="YouTube"]{color:#fff!important}
