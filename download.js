@@ -1,5 +1,20 @@
 const id=new URLSearchParams(location.search).get("id");
 const title=document.querySelector("#title"),description=document.querySelector("#description"),link=document.querySelector("#download"),error=document.querySelector("#error");
+
+async function applyBrandLogo(){
+ const mark=document.querySelector(".brand-mark");
+ if(!mark||!window.hubCloud?.ready)return;
+ try{
+  const snap=await hubCloud.db.collection("siteConfig").doc("public").get();
+  const logo=snap.exists?String(snap.data()?.logo||""):"";
+  if(!/^https:\/\/|^data:image\//i.test(logo))return;
+  const img=document.createElement("img");
+  img.src=logo;img.alt="MAXTROIT OFFICIAL";
+  img.style.cssText="width:100%;height:100%;object-fit:cover;border-radius:inherit";
+  mark.replaceChildren(img);
+ }catch(e){console.warn("MAXTROIT brand logo could not load on download page:",e)}
+}
+
 async function findItem(){
  if(!id) return null;
  if(!window.hubCloud?.ready) throw new Error("Cloud database is not connected.");
