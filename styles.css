@@ -960,3 +960,16 @@ html[data-hub-animations="off"] .site-startup .startup-puzzle-piece{animation:st
 .footer-youtube-mark{border-radius:50%!important;background:#24102f!important;border:1px solid #78446e!important;display:inline-flex!important;align-items:center;justify-content:center}
 .footer-youtube-mark svg{width:22px!important;height:22px!important;fill:#fff!important}
 .hero-actions .text-link{display:none!important}
+
+
+/* Centered MAXTROIT brand identity card */
+.hero-kicker-row{display:block;width:100%;margin:0 0 30px}
+.hero-logo-badge{width:100%;min-height:260px;padding:28px 20px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;border:1px solid #f18acb55;border-radius:30px;background:radial-gradient(ellipse at 50% 18%,#e85caa45,transparent 58%),linear-gradient(135deg,#311334ed,#571d50e8 55%,#32143fed);box-shadow:0 18px 55px #10051466,inset 0 1px #ffffff24;position:relative;overflow:hidden}
+.hero-logo-badge:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(130deg,transparent 0 58px,#ffffff08 59px 62px,transparent 63px 120px);pointer-events:none}
+.hero-logo-icon{position:relative;z-index:1;width:128px;height:128px;flex:none;display:grid;place-items:center;border-radius:50%;overflow:hidden;border:2px solid #f18acb;box-shadow:0 0 0 5px #ed75bd22,0 0 34px #ed4ca966;background:linear-gradient(140deg,#ed639e,#7139a4);font:700 58px 'Space Grotesk';color:#fff}
+.hero-logo-icon img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.hero-logo-name{position:relative;z-index:1;font:800 clamp(22px,4vw,34px)/1.1 'Space Grotesk';letter-spacing:2px;text-transform:uppercase;background:linear-gradient(90deg,#fff4fb,#ff9dcc 48%,#c18cff);background-clip:text;color:transparent}
+.hero-brand-tagline{position:relative;z-index:1;font:800 10px 'DM Sans';letter-spacing:2.8px;color:#ffd0e8}
+.hero-brand-tagline i{font-style:normal;color:#b98cff;padding:0 5px}
+.hero-kicker-row>.eyebrow{margin:0 0 14px}
+@media(max-width:650px){.hero-logo-badge{min-height:228px;padding:24px 14px;border-radius:23px;gap:13px}.hero-logo-icon{width:112px;height:112px}.hero-logo-name{font-size:22px;letter-spacing:1.4px}.hero-brand-tagline{font-size:9px;letter-spacing:1.7px}.search-row{flex-direction:column}#category{width:100%}}
