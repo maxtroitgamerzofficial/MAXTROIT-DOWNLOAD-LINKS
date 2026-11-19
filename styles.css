@@ -945,3 +945,13 @@ html[data-hub-animations="off"] .site-startup .startup-puzzle-piece{animation:st
 .hero-actions .text-link{display:inline-flex!important;align-items:center;gap:9px;color:#fff!important}
 .hero-actions .text-link .youtube-mark{width:19px;height:19px;display:inline-block;flex:0 0 19px;fill:#fff}
 .footer-social-links a[aria-label="YouTube"]{color:#fff!important}
+
+
+/* Search-first library layout: keep search visible before the section heading. */
+.collection>.search-row{margin:0 0 22px;display:flex;gap:12px}
+.collection>.section-head{margin-bottom:18px}
+.collection>.search-row input{min-width:0}
+.footer-social-links a{width:46px;height:46px;padding:10px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#281332;border:1px solid #68405f;color:#fff}
+.footer-social-links a svg{width:25px;height:25px;display:block;fill:currentColor}
+.footer-social-links a:hover{transform:translateY(-2px);border-color:#ff986b}
+@media(max-width:650px){.collection>.search-row{margin-bottom:18px}.footer-social-links{gap:12px}}
