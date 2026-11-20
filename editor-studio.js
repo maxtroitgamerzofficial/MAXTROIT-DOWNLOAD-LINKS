@@ -42,3 +42,44 @@
  window.loadEditorStudio=load;
  if(window.hubCloud?.ready){hubCloud.db.collection("siteConfig").doc("public").get().then(s=>load(s.exists?s.data():{})).catch(()=>load({}))}else load({});
 })();
+
+/* Full visual element picker/editor */
+(function(){
+ const $=id=>document.getElementById(id),frame=$("es-frame"),panel=$("es-element-panel");if(!frame||!panel)return;
+ let doc=null,selected=null,selectMode=true,edits={elements:{},orders:{}},dirty=false,activeKey="";
+ const ids=["es-el-text","es-el-link","es-el-color","es-el-bg","es-el-size","es-el-weight","es-el-align","es-el-padding","es-el-radius","es-el-width","es-el-opacity","es-el-spacing","es-el-animation","es-el-hidden"];
+ const say=t=>$("es-el-status").textContent=t;
+ function selector(el){if(el.id)return "#"+CSS.escape(el.id);const parts=[];let n=el;while(n&&n.nodeType===1&&n!==doc.body&&parts.length<6){let bit=n.tagName.toLowerCase();if(n.parentElement){const same=[...n.parentElement.children].filter(x=>x.tagName===n.tagName);if(same.length>1)bit+=":nth-of-type("+(same.indexOf(n)+1)+")"}parts.unshift(bit);n=n.parentElement;if(n?.id){parts.unshift("#"+CSS.escape(n.id));break}}return parts.join(" > ")}
+ function valid(el){return el&&el.nodeType===1&&!["HTML","BODY","SCRIPT","STYLE","META","LINK","IFRAME","INPUT","SELECT","OPTION","TEXTAREA"].includes(el.tagName)&&!el.closest("#admin-app")}
+ function enablePicker(){try{doc=frame.contentDocument;if(!doc?.body)throw Error();doc.addEventListener("click",pick,true);doc.addEventListener("mouseover",hover,true);doc.addEventListener("mouseout",unhover,true);doc.addEventListener("submit",e=>{if(selectMode)e.preventDefault()},true);setSelectMode(selectMode);say("Preview ready. Kisi bhi element par click karke select karo.");}catch(e){say("Preview load nahi hua. Reload dabao.")}}
+ function hover(e){if(!selectMode)return;const el=e.target.closest("*");if(valid(el))el.classList.add("es-hover")}
+ function unhover(e){e.target.closest("*")?.classList.remove("es-hover")}
+ function pick(e){if(!selectMode)return;const el=e.target.closest("*");if(!valid(el))return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();choose(el)}
+ function setSelectMode(on){selectMode=on;doc?.body.classList.toggle("editor-select-mode",on);$("es-pick-toggle").classList.toggle("is-active",on);$("es-pick-toggle").textContent=on?"✓ Select mode ON":"✎ Select element"}
+ function choose(el){if(selected)selected.classList.remove("es-picked");selected=el;activeKey=selector(el);selected.classList.add("es-picked");const patch=edits.elements[activeKey]||{},cs=doc.defaultView.getComputedStyle(el);$("es-selected-name").textContent=el.tagName.toLowerCase()+(el.id?" #"+el.id:"")+" · "+activeKey;
+  $("es-el-text").value=patch.text??(el.matches("img")?"":el.innerText?.trim().slice(0,500)||"");$("es-el-link").value=patch.href??(el.matches("a")?el.getAttribute("href")||"":"");
+  const hex=v=>{const m=String(v).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);return m?"#"+m.slice(1,4).map(n=>Number(n).toString(16).padStart(2,"0")).join(""):"#10182a"};
+  $("es-el-color").value=patch.style?.color||hex(cs.color);$("es-el-bg").value=patch.style?.backgroundColor||hex(cs.backgroundColor);$("es-el-size").value=parseInt(patch.style?.fontSize||cs.fontSize)||16;$("es-el-weight").value=patch.style?.fontWeight||"";$("es-el-align").value=patch.style?.textAlign==="start"?"":patch.style?.textAlign||"";
+  $("es-el-padding").value=parseInt(patch.style?.padding||cs.padding)||0;$("es-el-radius").value=parseInt(patch.style?.borderRadius||cs.borderRadius)||0;$("es-el-width").value=parseInt(patch.style?.width)||"";$("es-el-opacity").value=Math.round(Number(patch.style?.opacity??cs.opacity??1)*100);$("es-el-spacing").value=parseFloat(patch.style?.letterSpacing)||0;$("es-el-animation").value=patch.animation||"";$("es-el-hidden").checked=patch.hidden===true;
+  ids.forEach(id=>$(id).disabled=false);$("es-el-link").disabled=!el.matches("a");$("es-el-image").disabled=!el.matches("img");$("es-el-apply").disabled=false;$("es-el-reset").disabled=false;$("es-el-save").disabled=false;say("Selected element ready. Values change kar ke Apply to preview dabao.");panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+ }
+ function patchFromControls(){const style={color:$("es-el-color").value,backgroundColor:$("es-el-bg").value,fontSize:Math.max(8,Math.min(120,Number($("es-el-size").value)||16))+"px",fontWeight:$("es-el-weight").value,padding:Math.max(0,Math.min(160,Number($("es-el-padding").value)||0))+"px",borderRadius:Math.max(0,Math.min(100,Number($("es-el-radius").value)||0))+"px",textAlign:$("es-el-align").value,width:$("es-el-width").value?Math.max(20,Math.min(1400,Number($("es-el-width").value)))+"px":"",opacity:String(Math.max(0,Math.min(100,Number($("es-el-opacity").value)))/100),letterSpacing:Number($("es-el-spacing").value)+"px"};
+  Object.keys(style).forEach(k=>{if(style[k]==="")delete style[k]});return {text:$("es-el-text").value,href:$("es-el-link").value,hidden:$("es-el-hidden").checked,style,animation:$("es-el-animation").value};}
+ function apply(){if(!selected)return;const patch=patchFromControls();if(patch.href&&!/^https:\/\//i.test(patch.href)&&!patch.href.startsWith("#")){say("Link https:// ya #anchor hona chahiye.");return}if(patch.href&&!selected.matches("a")){say("Link sirf link element par apply hoga.");return}
+  if(selected.matches("img")){const src=selected.getAttribute("src");if(src)patch.src=src}
+  if(selected.matches("a")&&patch.href)selected.href=patch.href;
+  if(!selected.matches("img")&&patch.text!==undefined)selected.textContent=patch.text;
+  if(selected.matches("img")&&patch.text)selected.alt=patch.text;
+  if(patch.src&&selected.matches("img"))selected.src=patch.src;
+  Object.assign(selected.style,patch.style);selected.hidden=patch.hidden;selected.classList.remove("es-anim-glow","es-anim-pulse","es-anim-flash","es-anim-float");if(patch.animation)selected.classList.add("es-anim-"+patch.animation.replace("es-",""));
+  edits.elements[activeKey]=patch;dirty=true;$("es-el-save").disabled=false;say("Preview update ho gaya. Save element changes se draft Firestore mein save hoga.");}
+ $("es-pick-toggle").addEventListener("click",()=>setSelectMode(!selectMode));
+ $("es-el-apply").addEventListener("click",apply);
+ $("es-el-reset").addEventListener("click",()=>{if(!selected)return;delete edits.elements[activeKey];selected.removeAttribute("style");selected.hidden=false;selected.classList.remove("es-anim-glow","es-anim-pulse","es-anim-flash","es-anim-float");say("Selected element ke preview edits reset ho gaye. Save dabane par reset publish hoga.")});
+ $("es-el-image").addEventListener("change",async e=>{const file=e.target.files[0];if(!file||!selected?.matches("img"))return;try{const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const scale=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*scale;c.height=im.height*scale;c.getContext("2d").drawImage(im,0,0,c.width,c.height);const v=c.toDataURL("image/jpeg",.72);if(v.length>280000)reject(Error("Image chhoti/compress karke upload karo."));else resolve(v)};im.onerror=()=>reject(Error("Image open nahi hui"));im.src=r.result};r.onerror=()=>reject(Error("File read nahi hui"));r.readAsDataURL(file)});selected.src=data;const p=edits.elements[activeKey]||(edits.elements[activeKey]={style:{}});p.src=data;dirty=true;say("Image preview updated. Save element changes dabao.");}catch(err){say(err.message)}});
+ $("es-el-save").addEventListener("click",async()=>{if(!window.hubCloud?.ready||window.hubCloud.auth.currentUser?.uid!==window.ADMIN_UID){say("Admin sign-in required.");return}const b=$("es-el-save");b.disabled=true;try{await hubCloud.db.collection("siteConfig").doc("public").set({visualEdits:edits,visualEditsUpdated:Date.now()},{merge:true});const snap=await hubCloud.db.collection("siteConfig").doc("public").get();if(!snap.exists||!snap.data().visualEdits?.elements)throw Error("Save verification failed");dirty=false;say("Element edits saved. Public website refresh karo; changes live ho gaye.");}catch(err){say("Save failed: "+err.message);b.disabled=false}});
+ $("es-reload").addEventListener("click",()=>{frame.src="index.html?editorPreview=1&refresh="+Date.now()});
+ document.querySelectorAll("[data-es-device]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-es-device]").forEach(x=>x.classList.toggle("is-active",x===b));$("es-frame").parentElement.classList.toggle("is-mobile",b.dataset.esDevice==="mobile")}));
+ frame.addEventListener("load",()=>setTimeout(enablePicker,600));
+ window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue=""}});
+})();
