@@ -448,3 +448,32 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
  };
  render();
 })();
+
+/* MAXTROIT Appearance Effects Studio: independent, previewable public-site effects. */
+(function(){
+ const card=document.querySelector(".animation-control-card");
+ if(!card||document.querySelector("#appearance-effects-studio"))return;
+ const panel=document.createElement("div");panel.id="appearance-effects-studio";panel.className="editor-subpanel effects-studio";
+ panel.innerHTML='<h3>Glow, neon & flash effects</h3><p class="muted">Purple/pink glow aur optional light pulse ko alag control karein. Flash default OFF rahega.</p><div class="editor-grid"><label>Glow strength <output id="effect-glow-value">55%</output><input id="effect-glow" type="range" min="0" max="100" value="55"></label><label>Neon border strength <output id="effect-neon-value">35%</output><input id="effect-neon" type="range" min="0" max="100" value="35"></label><label>Button glow <span class="social-enable"><input id="effect-button-glow" type="checkbox" checked> Enable button glow</span></label><label>Card glow <span class="social-enable"><input id="effect-card-glow" type="checkbox" checked> Enable download card glow</span></label><label>Light pulse / flash <span class="social-enable"><input id="effect-flash" type="checkbox"> Enable subtle light pulse</span></label><label>Flash speed<select id="effect-flash-speed"><option value="slow">Slow</option><option value="medium">Medium</option><option value="fast">Fast</option></select></label></div><div class="form-actions"><button id="save-appearance-effects" class="button" type="button">Save appearance effects</button><button id="reset-appearance-effects" class="secondary-button" type="button">Reset effects</button></div><p id="effects-status" class="status" role="status"></p>';
+ card.appendChild(panel);
+ const $=id=>document.getElementById(id);
+ const defaults={glow:55,neon:35,buttonGlow:true,cardGlow:true,flash:false,flashSpeed:"slow"};
+ let value={...defaults,...(siteSettings.effects||{})};
+ function read(){return {glow:Number($("effect-glow").value),neon:Number($("effect-neon").value),buttonGlow:$("effect-button-glow").checked,cardGlow:$("effect-card-glow").checked,flash:$("effect-flash").checked,flashSpeed:$("effect-flash-speed").value};}
+ function paint(v){$("effect-glow").value=v.glow;$("effect-neon").value=v.neon;$("effect-button-glow").checked=v.buttonGlow;$("effect-card-glow").checked=v.cardGlow;$("effect-flash").checked=v.flash;$("effect-flash-speed").value=v.flashSpeed;update();}
+ function update(){
+  const v=read();$("effect-glow-value").textContent=v.glow+"%";$("effect-neon-value").textContent=v.neon+"%";
+  const apply=frame=>{try{const root=frame.contentDocument.documentElement;root.dataset.hubGlow=String(v.glow);root.dataset.hubNeon=String(v.neon);root.dataset.hubButtonGlow=v.buttonGlow?"on":"off";root.dataset.hubCardGlow=v.cardGlow?"on":"off";root.dataset.hubFlash=v.flash?"on":"off";root.dataset.hubFlashSpeed=v.flashSpeed;}catch(e){}};
+  apply(document.querySelector("#vb-frame"));apply(document.querySelector("#template-preview-frame"));
+  $("effects-status").textContent="Preview updated. Save to publish.";
+ }
+ ["effect-glow","effect-neon","effect-button-glow","effect-card-glow","effect-flash","effect-flash-speed"].forEach(id=>$(id).addEventListener("input",update));
+ $("save-appearance-effects").addEventListener("click",async()=>{
+  if(!requireAdmin())return;const v=read(),btn=$("save-appearance-effects");btn.disabled=true;
+  try{const ref=hubCloud.db.collection("siteConfig").doc("public");await withTimeout(ref.set({effects:v},{merge:true}),"Saving appearance effects");const snap=await withTimeout(ref.get(),"Verifying appearance effects");if(!snap.exists||Number(snap.data().effects?.glow)!==v.glow)throw Error("Effects save could not be verified.");siteSettings={...siteSettings,effects:v};$("effects-status").textContent="Appearance effects saved and verified."}
+  catch(e){$("effects-status").textContent="Save failed: "+errorText(e)}finally{btn.disabled=false}
+ });
+ $("reset-appearance-effects").addEventListener("click",()=>{paint(defaults);$("effects-status").textContent="Defaults previewed. Save to publish."});
+ window.loadAppearanceEffects=function(cfg){paint({...defaults,...(cfg||{})});};
+ window.loadAppearanceEffects(siteSettings.effects||{});
+})();
