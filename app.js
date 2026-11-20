@@ -47,7 +47,7 @@ function applyHubAppearanceEffects(config){
  const value=config&&typeof config==="object"?config:{};
  const glow=Math.max(0,Math.min(100,Number(value.glow??55)));
  const neon=Math.max(0,Math.min(100,Number(value.neon??35)));
- root.dataset.hubGlow=String(glow);root.dataset.hubNeon=String(neon);
+ root.dataset.hubGlow=String(glow);root.dataset.hubNeon=String(neon);root.style.setProperty("--hub-glow-alpha",String(glow/100));root.style.setProperty("--hub-neon-alpha",String(neon/100));
  root.dataset.hubButtonGlow=value.buttonGlow===false?"off":"on";
  root.dataset.hubCardGlow=value.cardGlow===false?"off":"on";
  root.dataset.hubFlash=value.flash===true?"on":"off";
