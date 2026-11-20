@@ -1030,3 +1030,30 @@ body.lightbox-open{overflow:hidden}
 #collection .section-head h2{margin:0 0 5px}
 @media(max-width:760px){.hero.hero-compact{padding:30px 0 18px}.hero-compact h1{font-size:clamp(32px,9vw,44px)}#collection .collection-filters{align-items:flex-start;flex-direction:column;gap:8px}#collection .collection-filters select{width:100%;min-width:0}#collection .latest-uploads{padding:16px 0;margin-bottom:18px}#collection .latest-uploads-head{gap:6px}#collection .latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){#collection .latest-grid{grid-template-columns:1fr}}
+
+
+/* MAXTROIT signature purple/pink accent and admin-controlled appearance effects. */
+:root{--cyan:#ec4899;--violet:#9b5cf6}
+html[data-hub-glow]{
+ --hub-glow-alpha:calc(attr(data-hub-glow number,55)*.01);
+ --hub-neon-alpha:calc(attr(data-hub-neon number,35)*.01);
+}
+html[data-hub-button-glow="on"] .button,
+html[data-hub-button-glow="on"] .hero-actions a,
+html[data-hub-button-glow="on"] .card-link{
+ box-shadow:0 0 calc(5px + var(--hub-glow-alpha, .55)*22px) rgba(217,70,239,.38),0 0 calc(3px + var(--hub-glow-alpha, .55)*12px) rgba(155,92,246,.30);
+}
+html[data-hub-card-glow="on"] .card,
+html[data-hub-card-glow="on"] .latest-upload-card{
+ border-color:rgba(217,70,239,calc(.10 + var(--hub-neon-alpha,.35)*.48));
+ box-shadow:0 0 calc(var(--hub-neon-alpha,.35)*18px) rgba(155,92,246,.18);
+}
+html[data-hub-flash="on"]:not([data-hub-reduced-motion="on"]) .hero-logo,
+html[data-hub-flash="on"]:not([data-hub-reduced-motion="on"]) .hero-logo-icon{
+ animation:maxtroitSoftPulse var(--hub-flash-duration,5s) ease-in-out infinite;
+}
+html[data-hub-flash-speed="slow"]{--hub-flash-duration:6s}
+html[data-hub-flash-speed="medium"]{--hub-flash-duration:4s}
+html[data-hub-flash-speed="fast"]{--hub-flash-duration:2.8s}
+@keyframes maxtroitSoftPulse{0%,100%{filter:drop-shadow(0 0 2px rgba(217,70,239,.15))}50%{filter:drop-shadow(0 0 16px rgba(217,70,239,.75)) drop-shadow(0 0 24px rgba(155,92,246,.45))}}
+@media(prefers-reduced-motion:reduce){html[data-hub-flash="on"] .hero-logo,html[data-hub-flash="on"] .hero-logo-icon{animation:none!important}}
