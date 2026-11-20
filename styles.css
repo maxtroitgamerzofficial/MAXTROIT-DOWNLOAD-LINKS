@@ -1057,3 +1057,19 @@ html[data-hub-flash-speed="medium"]{--hub-flash-duration:4s}
 html[data-hub-flash-speed="fast"]{--hub-flash-duration:2.8s}
 @keyframes maxtroitSoftPulse{0%,100%{filter:drop-shadow(0 0 2px rgba(217,70,239,.15))}50%{filter:drop-shadow(0 0 16px rgba(217,70,239,.75)) drop-shadow(0 0 24px rgba(155,92,246,.45))}}
 @media(prefers-reduced-motion:reduce){html[data-hub-flash="on"] .hero-logo,html[data-hub-flash="on"] .hero-logo-icon{animation:none!important}}
+
+/* MAXTROIT Editor Studio website background layer */
+body{position:relative;isolation:isolate;background:var(--bg)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--site-bg-overlay, #070b16),var(--site-bg-overlay, #070b16)),var(--site-bg-image,none);background-size:cover, var(--site-bg-fit,cover);background-position:center,var(--site-bg-position,center);background-repeat:no-repeat;opacity:1;filter:blur(var(--site-bg-blur,0px));}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--site-bg-overlay,#070b16);opacity:var(--site-bg-overlay-opacity,0);mix-blend-mode:multiply}
+#hero-art.has-custom-banner{background-repeat:no-repeat;border-color:#ffffff24}
+.editor-studio-intro{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px;margin-bottom:16px;border:1px solid #ffffff18;border-radius:16px;background:linear-gradient(120deg,#28134a,#35163c)}
+.editor-studio-intro h2{font:700 25px 'Space Grotesk';margin:0 0 8px}.editor-studio-intro p:not(.eyebrow){color:#d1c6e8;font-size:12px;line-height:1.6;max-width:700px;margin:0}
+.editor-live-pill{font-size:10px;white-space:nowrap;color:#f0abfc;background:#ffffff10;padding:9px 12px;border-radius:30px}
+.editor-studio-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:16px;align-items:start}
+.editor-preview-panel{position:sticky;top:16px}.editor-preview-panel iframe{width:100%;height:min(78vh,820px);min-height:540px;border:1px solid #ffffff18;border-radius:12px;background:#080d18}
+.editor-control-stack{display:grid;gap:13px}.editor-control-card{margin:0!important}.editor-control-card>label,.editor-control-card .editor-grid label{display:grid;gap:8px;color:#bdc8dc;font-size:12px;margin:12px 0}
+.editor-bg-preview{width:100%;max-height:180px;object-fit:cover}.editor-hero-preview{max-width:100%;max-height:150px}
+.editor-studio-actions{display:flex;gap:10px;flex-wrap:wrap}.editor-studio-actions .button{flex:1}
+@media(max-width:850px){.editor-studio-layout{grid-template-columns:1fr}.editor-preview-panel{position:static}.editor-preview-panel iframe{height:65vh;min-height:430px}}
+@media(max-width:650px){.editor-studio-intro{align-items:flex-start;flex-direction:column;padding:16px}.editor-studio-intro h2{font-size:22px}.editor-studio-layout{gap:12px}.editor-preview-panel iframe{height:55vh;min-height:360px}.editor-control-card{padding:14px!important}.editor-studio-actions{display:grid;grid-template-columns:1fr}.editor-studio-actions button{width:100%;min-height:46px}}
