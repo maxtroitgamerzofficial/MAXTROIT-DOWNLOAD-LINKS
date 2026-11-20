@@ -1060,7 +1060,7 @@ html[data-hub-flash-speed="fast"]{--hub-flash-duration:2.8s}
 
 /* MAXTROIT Editor Studio website background layer */
 body{position:relative;isolation:isolate;background:var(--bg)}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--site-bg-overlay, #070b16),var(--site-bg-overlay, #070b16)),var(--site-bg-image,none);background-size:cover, var(--site-bg-fit,cover);background-position:center,var(--site-bg-position,center);background-repeat:no-repeat;opacity:1;filter:blur(var(--site-bg-blur,0px));}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--site-bg-image,none);background-size:var(--site-bg-fit,cover);background-position:var(--site-bg-position,center);background-repeat:no-repeat;opacity:var(--site-bg-opacity,0);filter:blur(var(--site-bg-blur,0px));}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--site-bg-overlay,#070b16);opacity:var(--site-bg-overlay-opacity,0);mix-blend-mode:multiply}
 #hero-art.has-custom-banner{background-repeat:no-repeat;border-color:#ffffff24}
 .editor-studio-intro{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px;margin-bottom:16px;border:1px solid #ffffff18;border-radius:16px;background:linear-gradient(120deg,#28134a,#35163c)}
