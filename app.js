@@ -96,7 +96,7 @@ function applyVisualEdits(edits){
   }
  };
  apply();
- if(!window.__MAXTROIT_VISUAL_OBSERVER&&document.body){
+ if(!window.__MAXTROIT_VISUAL_OBSERVER&&document.body&&new URLSearchParams(location.search).get("visualEditorPreview")!=="1"){
   let queued=false;
   window.__MAXTROIT_VISUAL_OBSERVER=new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply()})});
   window.__MAXTROIT_VISUAL_OBSERVER.observe(document.body,{childList:true,subtree:true});
