@@ -1088,3 +1088,15 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 /* Native PWA install action */
 .pwa-install-button{border:1px solid #b66cff;background:linear-gradient(105deg,#9b42db,#e34b9f);color:#fff;min-height:44px}
 .pwa-install-button:disabled{opacity:.75;cursor:default}
+
+/* MAXTROIT animated colour field + glass surface system */
+:root{--hub-bg-1:#122d68;--hub-bg-2:#7c2ca8;--hub-bg-3:#087e83;--hub-bg-speed:18s;--hub-bg-intensity:.75;--hub-glass-opacity:.72;--hub-glass-blur:16px;--hub-logo-glass:.82}
+html[data-hub-animations="on"][data-anim-background="on"] body{background-color:#080d1b;background-image:linear-gradient(125deg,color-mix(in srgb,var(--hub-bg-1) calc(var(--hub-bg-intensity)*100%),transparent),color-mix(in srgb,var(--hub-bg-2) calc(var(--hub-bg-intensity)*100%),transparent),color-mix(in srgb,var(--hub-bg-3) calc(var(--hub-bg-intensity)*100%),transparent),var(--hub-bg-1));background-size:320% 320%;animation:maxTroitColourFlow var(--hub-bg-speed) ease-in-out infinite alternate}
+@keyframes maxTroitColourFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+html[data-hub-animations="on"][data-anim-background="on"] .topbar{background:rgba(8,13,29,var(--hub-glass-opacity));backdrop-filter:blur(var(--hub-glass-blur));-webkit-backdrop-filter:blur(var(--hub-glass-blur))}
+html[data-hub-animations="on"][data-anim-background="on"] .card,html[data-hub-animations="on"][data-anim-background="on"] .hero-art,html[data-hub-animations="on"][data-anim-background="on"] .hero-logo-badge,html[data-hub-animations="on"][data-anim-background="on"] .custom-site-section{background:rgba(13,23,47,var(--hub-glass-opacity));backdrop-filter:blur(var(--hub-glass-blur));-webkit-backdrop-filter:blur(var(--hub-glass-blur));border-color:#ffffff2b;box-shadow:0 14px 44px #03071355,inset 0 1px #ffffff24}
+html[data-hub-animations="on"][data-anim-background="on"] .hero-logo-badge{background:rgba(18,26,52,var(--hub-logo-glass));border:1px solid #ffffff38}
+html[data-hub-animations="on"][data-anim-background="on"] .card{background:rgba(13,23,47,var(--hub-glass-opacity))}
+html[data-hub-animations="on"][data-anim-background="on"] .hero-art{background-color:rgba(12,22,44,var(--hub-glass-opacity));background-blend-mode:screen}
+html[data-hub-animations="on"][data-anim-background="on"] footer{background:rgba(8,13,29,.28);backdrop-filter:blur(calc(var(--hub-glass-blur)*.5))}
+@media(prefers-reduced-motion:reduce){html[data-hub-animations="on"][data-anim-background="on"] body{animation:none;background-size:cover}}
