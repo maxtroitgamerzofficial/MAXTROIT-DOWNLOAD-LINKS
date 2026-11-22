@@ -73,7 +73,7 @@ function paramsTemplatePreview(){try{const raw=new URLSearchParams(location.sear
 function applyVisualEdits(edits){
  if(!edits||typeof edits!=="object")return;
  window.__MAXTROIT_VISUAL_EDITS=edits;
- const allowed=["color","backgroundColor","fontSize","fontWeight","padding","borderRadius","textAlign","width","maxWidth","margin","opacity","letterSpacing","lineHeight","boxShadow","display","animation","filter","textTransform"];
+ const allowed=["color","backgroundColor","fontSize","fontWeight","padding","borderRadius","textAlign","width","maxWidth","margin","opacity","letterSpacing","lineHeight","boxShadow","display","animation","filter","textTransform","transform","position","zIndex","border","borderWidth","borderStyle","borderColor","minHeight","minWidth","height","backgroundImage","backgroundSize","backgroundPosition","cursor"];
  const apply=()=>{
   for(const [selector,patch] of Object.entries(edits.elements||{})){
    let el;try{el=document.querySelector(selector)}catch(e){}if(!el||!patch)continue;
