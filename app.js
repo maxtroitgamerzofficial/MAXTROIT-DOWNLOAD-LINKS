@@ -2,7 +2,7 @@
 function syncPwaBrandIcon(logo){
  if(!logo||!/^data:image\/(png|jpeg|webp);base64,/i.test(logo)||!("serviceWorker" in navigator))return;
  const send=()=>{
-  const worker=navigator.serviceWorker.controller;
+  const worker=navigator.serviceWorker.controller||window.__MAXTROIT_PWA_REG?.active;
   if(!worker)return;
   const img=new Image();
   img.onload=()=>{
@@ -16,7 +16,7 @@ function syncPwaBrandIcon(logo){
   };img.src=logo;
  };
  if(navigator.serviceWorker.controller)send();
- else navigator.serviceWorker.ready.then(send).catch(()=>{});
+ else navigator.serviceWorker.ready.then(reg=>{window.__MAXTROIT_PWA_REG=reg;send()}).catch(()=>{});
 }
 function publicTemplateBridge(){return String.raw`<script>
 /* MAXTROIT_BRIDGE_V2 */
