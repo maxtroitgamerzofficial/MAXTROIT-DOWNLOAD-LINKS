@@ -1,5 +1,27 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d1b"><title>MAXTROIT Admin</title><link rel="stylesheet" href="styles.css?v=20261122-admin-reset"><link rel="stylesheet" href="admin.css?v=20261122-admin-reset"></head><body class="admin-body">
-<section id="login-screen" class="login-screen"><a class="brand login-brand" href="index.html"><span class="brand-mark">M</span><span>MAXTROIT <b>ADMIN</b></span></a><div class="login-card"><p class="eyebrow">PRIVATE ADMIN ACCESS</p><h1>Admin sign in</h1><p class="muted">Sign in with the authorised administrator account.</p><form id="login-form" class="form-grid"><label>Email address<input name="email" type="email" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><button class="button full-button" type="submit">Sign in</button></form><p id="login-status" class="status" role="status"></p><a class="back-link" href="index.html">← Back to website</a></div></section>
-<main id="admin-app" class="admin-reset-shell" hidden><header><a class="brand" href="index.html"><span class="brand-mark">M</span><span>MAXTROIT <b>ADMIN</b></span></a><button id="logout" class="secondary-button" type="button">Sign out</button></header><section class="admin-reset-empty" aria-label="Empty admin workspace"></section></main>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="firebase-config.js?v=20261122-admin-reset"></script><script src="firebase.js?v=20261122-admin-reset"></script><script src="admin.js?v=20261122-admin-reset"></script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Admin Login</title>
+<link rel="stylesheet" href="admin.css?v=20261122-clean-login">
+</head>
+<body>
+<main id="login-screen" class="login-screen">
+  <form id="login-form" class="login-form">
+    <h1>Admin Login</h1>
+    <label>Email<input name="email" type="email" autocomplete="username" required></label>
+    <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit">Login</button>
+    <p id="login-status" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<main id="admin-app" hidden></main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="firebase-config.js?v=20261122-clean-login"></script>
+<script src="firebase.js?v=20261122-clean-login"></script>
+<script src="admin.js?v=20261122-clean-login"></script>
+</body>
+</html>
