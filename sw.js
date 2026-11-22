@@ -1,18 +1,23 @@
-const CACHE="maxtroit-pwa-brand-v2";
-self.addEventListener("install",e=>{self.skipWaiting()});
-self.addEventListener("activate",e=>{e.waitUntil(self.clients.claim())});
+const CACHE="maxtroit-pwa-icons-v3";
+self.addEventListener("install",e=>self.skipWaiting());
+self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
 self.addEventListener("message",e=>{
- const d=e.data||{};
- if(d.type!=="UPDATE_PWA_LOGO"||typeof d.logo!=="string"||!/^data:image\/(png|jpeg|webp);base64,/i.test(d.logo))return;
+ const icons=e.data?.icons;
+ if(!icons||typeof icons[192]!=="string"||typeof icons[512]!=="string")return;
  e.waitUntil((async()=>{
-  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><image href="'+d.logo+'" width="512" height="512" preserveAspectRatio="xMidYMid meet"/></svg>';
   const cache=await caches.open(CACHE);
-  await cache.put("/pwa-icon.svg",new Response(svg,{headers:{"Content-Type":"image/svg+xml","Cache-Control":"no-cache"}}));
+  for(const size of [192,512]){
+   const raw=icons[size].split(",");
+   if(raw.length!==2||!raw[0].includes("image/png"))continue;
+   const binary=atob(raw[1]),bytes=new Uint8Array(binary.length);
+   for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+   await cache.put("/pwa-icon-"+size+".png",new Response(bytes,{headers:{"Content-Type":"image/png","Cache-Control":"no-cache"}}));
+  }
  })());
 });
 self.addEventListener("fetch",e=>{
  const u=new URL(e.request.url);
- if(u.origin===self.location.origin&&u.pathname==="/pwa-icon.svg"){
-  e.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match("/pwa-icon.svg")||fetch(e.request)})());
+ if(u.origin===self.location.origin&&/^\/pwa-icon-(192|512)\.png$/.test(u.pathname)){
+  e.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match(u.pathname)||fetch(e.request)})());
  }
 });
