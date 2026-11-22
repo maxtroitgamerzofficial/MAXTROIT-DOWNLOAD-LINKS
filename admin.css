@@ -406,3 +406,6 @@
 #view-editor .editor-hint{display:none}
 #view-editor .editor-control-stack{top:78px;right:14px;max-height:calc(100dvh - 160px)}
 @media(max-width:700px){#view-editor .editor-preview-panel iframe{height:calc(100dvh - 225px);min-height:540px}#view-editor .editor-control-stack{bottom:8px;max-height:78dvh}}
+
+/* Clean reset workspace */
+.admin-reset-shell{min-height:100vh;padding:22px max(5%,calc((100% - 1180px)/2));background:#080d1b;color:#edf3ff}.admin-reset-shell[hidden]{display:none!important}.admin-reset-shell>header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0 22px;border-bottom:1px solid #ffffff18}.admin-reset-empty{min-height:calc(100vh - 100px)}
