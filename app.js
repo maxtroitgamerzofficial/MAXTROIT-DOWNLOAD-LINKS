@@ -1,11 +1,26 @@
 
 function syncPwaBrandIcon(logo){
- if(!logo||!/^data:image\/(png|jpeg|webp);base64,/i.test(logo)||!("serviceWorker" in navigator))return;
- const send=reg=>{
-  const worker=navigator.serviceWorker.controller||reg?.active;
-  if(worker)worker.postMessage({type:"UPDATE_PWA_LOGO",logo});
+ if(!logo||!("serviceWorker" in navigator))return;
+ const img=new Image();
+ img.onload=async()=>{
+  try{
+   const reg=await navigator.serviceWorker.ready;
+   const worker=navigator.serviceWorker.controller||reg.active;
+   if(!worker)return;
+   const icons={};
+   for(const size of [192,512]){
+    const canvas=document.createElement("canvas");canvas.width=size;canvas.height=size;
+    const ctx=canvas.getContext("2d");ctx.clearRect(0,0,size,size);
+    const scale=Math.min(size/img.width,size/img.height);
+    const w=img.width*scale,h=img.height*scale;
+    ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);
+    icons[size]=canvas.toDataURL("image/png");
+   }
+   worker.postMessage({type:"UPDATE_PWA_LOGO",icons});
+  }catch(error){console.warn("PWA logo sync failed",error)}
  };
- navigator.serviceWorker.ready.then(send).catch(()=>{});
+ img.onerror=()=>console.warn("PWA logo could not be loaded");
+ img.src=logo;
 }
 function setupPwaInstall(){
  const button=document.querySelector("#pwa-install-button");
