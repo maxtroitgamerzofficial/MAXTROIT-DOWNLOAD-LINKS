@@ -1100,3 +1100,12 @@ html[data-hub-animations="on"][data-anim-background="on"] .card{background:rgba(
 html[data-hub-animations="on"][data-anim-background="on"] .hero-art{background-color:rgba(12,22,44,var(--hub-glass-opacity));background-blend-mode:screen}
 html[data-hub-animations="on"][data-anim-background="on"] footer{background:rgba(8,13,29,.28);backdrop-filter:blur(calc(var(--hub-glass-blur)*.5))}
 @media(prefers-reduced-motion:reduce){html[data-hub-animations="on"][data-anim-background="on"] body{animation:none;background-size:cover}}
+
+/* Public animated background layer: always behind MAXTROIT content */
+html[data-hub-animations="on"][data-anim-background="on"]{background:#080d1b!important}
+html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body){background:transparent!important;isolation:isolate}
+html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body)::before{content:"";position:fixed!important;inset:-18%!important;z-index:-1!important;pointer-events:none!important;background:linear-gradient(125deg,var(--hub-bg-1),var(--hub-bg-2),var(--hub-bg-3),var(--hub-bg-1))!important;background-size:300% 300%!important;opacity:var(--hub-bg-intensity)!important;animation:maxTroitColourFlow var(--hub-bg-speed) ease-in-out infinite alternate!important}
+html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body) .hero{background-color:transparent}
+html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body) .hero-logo-badge{background:rgba(18,26,52,var(--hub-logo-glass))!important;backdrop-filter:blur(var(--hub-glass-blur))!important;-webkit-backdrop-filter:blur(var(--hub-glass-blur))!important;border:1px solid #ffffff38!important;box-shadow:0 14px 44px #03071355,inset 0 1px #ffffff24!important}
+html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body) .card,html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body) .hero-art,html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body) .custom-site-section{background:rgba(13,23,47,var(--hub-glass-opacity))!important;backdrop-filter:blur(var(--hub-glass-blur))!important;-webkit-backdrop-filter:blur(var(--hub-glass-blur))!important;border-color:#ffffff2b!important}
+@media(prefers-reduced-motion:reduce){html[data-hub-animations="on"][data-anim-background="on"] body:not(.admin-body)::before{animation:none!important}}
