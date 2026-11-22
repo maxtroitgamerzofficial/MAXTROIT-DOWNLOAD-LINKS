@@ -1084,3 +1084,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 .es-anim-glow{animation:esGlow 2s ease-in-out infinite alternate}.es-anim-pulse{animation:esPulse 1.8s ease-in-out infinite}.es-anim-flash{animation:esFlash 2.6s ease-in-out infinite}.es-anim-float{animation:esFloat 3s ease-in-out infinite}
 @keyframes esGlow{from{filter:drop-shadow(0 0 2px #b36aff)}to{filter:drop-shadow(0 0 13px #ec4899)}}@keyframes esPulse{50%{transform:scale(1.035)}}@keyframes esFlash{0%,82%,100%{opacity:1}88%{opacity:.55}}@keyframes esFloat{50%{transform:translateY(-7px)}}
 @media(max-width:650px){.editor-preview-panel iframe{height:58vh;min-height:390px}.editor-preview-panel.is-mobile iframe{height:694px;min-height:694px}.editor-device-switch button{flex:1}.editor-control-card .editor-grid{grid-template-columns:1fr!important}.editor-control-card input,.editor-control-card select{min-height:42px}}
+
+/* Native PWA install action */
+.pwa-install-button{border:1px solid #b66cff;background:linear-gradient(105deg,#9b42db,#e34b9f);color:#fff;min-height:44px}
+.pwa-install-button:disabled{opacity:.75;cursor:default}
