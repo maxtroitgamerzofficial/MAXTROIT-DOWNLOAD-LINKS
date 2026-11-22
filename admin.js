@@ -101,7 +101,7 @@ adminList.addEventListener("click",async e=>{const edit=e.target.closest("[data-
 
 
 function readAnimationControls(){
-  const animations={preset:$("#animation-preset").value,bg1:$("#anim-bg-1").value,bg2:$("#anim-bg-2").value,bg3:$("#anim-bg-3").value,speed:Number($("#anim-speed").value),intensity:Number($("#anim-intensity").value),glassOpacity:Number($("#glass-opacity").value),glassBlur:Number($("#glass-blur").value),logoGlass:Number($("#logo-glass").value)};
+  const animations={glassThemeVersion:1,preset:$("#animation-preset").value,bg1:$("#anim-bg-1").value,bg2:$("#anim-bg-2").value,bg3:$("#anim-bg-3").value,speed:Number($("#anim-speed").value),intensity:Number($("#anim-intensity").value),glassOpacity:Number($("#glass-opacity").value),glassBlur:Number($("#glass-blur").value),logoGlass:Number($("#logo-glass").value)};
   for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])animations[key]=$("#anim-"+key).checked;
   return animations;
 }
@@ -131,8 +131,8 @@ function applyAnimationPreview(){
 }
 function loadAnimationControls(){
   const cfg=siteSettings.animations&&typeof siteSettings.animations==="object"?siteSettings.animations:{};
-  const defaults={enabled:true,preset:"cyber",background:true,logo:true,cards:false,buttons:false,transitions:false,loader:false,bg1:"#122d68",bg2:"#7c2ca8",bg3:"#087e83",speed:18,intensity:75,glassOpacity:72,glassBlur:16,logoGlass:82};
-  const value={...defaults,...cfg};
+  const defaults={glassThemeVersion:1,enabled:true,preset:"cyber",background:true,logo:true,cards:false,buttons:false,transitions:false,loader:false,bg1:"#122d68",bg2:"#7c2ca8",bg3:"#087e83",speed:18,intensity:75,glassOpacity:72,glassBlur:16,logoGlass:82};
+  const value={...defaults,...cfg};if(!Number(cfg.glassThemeVersion))value.background=true;
   $("#animation-preset").value=["cyber","energy","dimension"].includes(value.preset)?value.preset:"cyber";
    for(const [id,key] of [["anim-bg-1","bg1"],["anim-bg-2","bg2"],["anim-bg-3","bg3"],["anim-speed","speed"],["anim-intensity","intensity"],["glass-opacity","glassOpacity"],["glass-blur","glassBlur"],["logo-glass","logoGlass"]])$("#"+id).value=value[key]??defaults[key];
    for(const [id,suffix,unit] of [["anim-intensity","out","%"],["glass-opacity","out","%"],["glass-blur","out"," px"],["logo-glass","out","%"]])$("#"+id+"-"+suffix).textContent=$("#"+id).value+unit;
@@ -284,7 +284,7 @@ login.addEventListener("submit",async e=>{e.preventDefault();if(!ready){loginSay
  const app=document.querySelector("#admin-app"),sidebar=document.querySelector(".sidebar"),main=document.querySelector(".admin-main");
  if(!app||!sidebar||!main||document.querySelector("#view-animations"))return;
  const nav=[
-  ["animations","✦","Animations"],
+  ["animations","✦","Background & glass theme"],
   ["visual","▤","Visual editor"]
  ];
  nav.forEach(([id,icon,label])=>{
