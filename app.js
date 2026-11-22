@@ -110,6 +110,7 @@ function applyHubAnimations(settings){
   const preset=["cyber","energy","dimension"].includes(config.preset)?config.preset:"cyber";
   root.dataset.hubAnimations=enabled?"on":"off";
   root.dataset.hubPreset=preset;
+  root.style.setProperty("--hub-bg-1",/^#[0-9a-f]{6}$/i.test(config.bg1||"")?config.bg1:"#122d68");root.style.setProperty("--hub-bg-2",/^#[0-9a-f]{6}$/i.test(config.bg2||"")?config.bg2:"#7c2ca8");root.style.setProperty("--hub-bg-3",/^#[0-9a-f]{6}$/i.test(config.bg3||"")?config.bg3:"#087e83");root.style.setProperty("--hub-bg-speed",Math.max(6,Math.min(60,Number(config.speed)||18))+"s");root.style.setProperty("--hub-bg-intensity",String(Math.max(10,Math.min(100,Number(config.intensity??75)))/100));root.style.setProperty("--hub-glass-opacity",String(Math.max(20,Math.min(95,Number(config.glassOpacity??72)))/100));root.style.setProperty("--hub-glass-blur",Math.max(0,Math.min(30,Number(config.glassBlur??16))+"px"));root.style.setProperty("--hub-logo-glass",String(Math.max(20,Math.min(100,Number(config.logoGlass??82)))/100));
   const flags=["background","logo","cards","buttons","transitions","loader"];
   for(const key of flags){const defaultOn=key==="logo";root.dataset["anim"+key.charAt(0).toUpperCase()+key.slice(1)]=enabled&&(config[key]===undefined?defaultOn:config[key]!==false)?"on":"off";}
 
