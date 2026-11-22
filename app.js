@@ -10,7 +10,7 @@ function syncPwaBrandIcon(logo){
    const icons={};
    for(const size of [192,512]){
     const canvas=document.createElement("canvas");canvas.width=size;canvas.height=size;
-    const ctx=canvas.getContext("2d");ctx.clearRect(0,0,size,size);
+    const ctx=canvas.getContext("2d");ctx.fillStyle="#12091f";ctx.fillRect(0,0,size,size);
     const scale=Math.min(size/img.width,size/img.height);
     const w=img.width*scale,h=img.height*scale;
     ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);
