@@ -101,7 +101,7 @@ adminList.addEventListener("click",async e=>{const edit=e.target.closest("[data-
 
 
 function readAnimationControls(){
-  const animations={preset:$("#animation-preset").value};
+  const animations={preset:$("#animation-preset").value,bg1:$("#anim-bg-1").value,bg2:$("#anim-bg-2").value,bg3:$("#anim-bg-3").value,speed:Number($("#anim-speed").value),intensity:Number($("#anim-intensity").value),glassOpacity:Number($("#glass-opacity").value),glassBlur:Number($("#glass-blur").value),logoGlass:Number($("#logo-glass").value)};
   for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])animations[key]=$("#anim-"+key).checked;
   return animations;
 }
@@ -130,16 +130,18 @@ function applyAnimationPreview(){
 }
 function loadAnimationControls(){
   const cfg=siteSettings.animations&&typeof siteSettings.animations==="object"?siteSettings.animations:{};
-  const defaults={enabled:true,preset:"cyber",background:false,logo:true,cards:false,buttons:false,transitions:false,loader:false};
+  const defaults={enabled:true,preset:"cyber",background:true,logo:true,cards:false,buttons:false,transitions:false,loader:false,bg1:"#122d68",bg2:"#7c2ca8",bg3:"#087e83",speed:18,intensity:75,glassOpacity:72,glassBlur:16,logoGlass:82};
   const value={...defaults,...cfg};
   $("#animation-preset").value=["cyber","energy","dimension"].includes(value.preset)?value.preset:"cyber";
+   for(const [id,key] of [["anim-bg-1","bg1"],["anim-bg-2","bg2"],["anim-bg-3","bg3"],["anim-speed","speed"],["anim-intensity","intensity"],["glass-opacity","glassOpacity"],["glass-blur","glassBlur"],["logo-glass","logoGlass"]])$("#"+id).value=value[key]??defaults[key];
+   for(const [id,suffix,unit] of [["anim-intensity","out","%"],["glass-opacity","out","%"],["glass-blur","out"," px"],["logo-glass","out","%"]])$("#"+id+"-"+suffix).textContent=$("#"+id).value+unit;
   for(const key of ["enabled","background","logo","cards","buttons","transitions","loader"])$("#anim-"+key).checked=value[key]!==false;
   applyAnimationPreview();
 }
-["animation-preset","anim-enabled","anim-background","anim-logo","anim-cards","anim-buttons","anim-transitions","anim-loader"].forEach(id=>{
+["animation-preset","anim-enabled","anim-background","anim-logo","anim-cards","anim-buttons","anim-transitions","anim-loader","anim-bg-1","anim-bg-2","anim-bg-3","anim-speed","anim-intensity","glass-opacity","glass-blur","logo-glass"].forEach(id=>{
   const control=$("#"+id);
   control.addEventListener("input",applyAnimationPreview);
-  control.addEventListener("change",applyAnimationPreview);
+  control.addEventListener("change",()=>{for(const [id,out,unit] of [["anim-intensity","anim-intensity-out","%"],["glass-opacity","glass-opacity-out","%"],["glass-blur","glass-blur-out"," px"],["logo-glass","logo-glass-out","%"]])$("#"+out).textContent=$("#"+id).value+unit;applyAnimationPreview()});
 });
 $("#vb-frame").addEventListener("load",()=>setTimeout(applyAnimationPreview,0));
 $("#template-preview-frame").addEventListener("load",()=>setTimeout(applyAnimationPreview,0));
