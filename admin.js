@@ -114,6 +114,7 @@ function applyAnimationPreview(){
       const enabled=animations.enabled;
       root.dataset.hubAnimations=enabled?"on":"off";
       root.dataset.hubPreset=animations.preset;
+      root.style.setProperty("--hub-bg-1",animations.bg1);root.style.setProperty("--hub-bg-2",animations.bg2);root.style.setProperty("--hub-bg-3",animations.bg3);root.style.setProperty("--hub-bg-speed",animations.speed+"s");root.style.setProperty("--hub-bg-intensity",String(animations.intensity/100));root.style.setProperty("--hub-glass-opacity",String(animations.glassOpacity/100));root.style.setProperty("--hub-glass-blur",animations.glassBlur+"px");root.style.setProperty("--hub-logo-glass",String(animations.logoGlass/100));
       for(const key of ["background","logo","cards","buttons","transitions","loader"]){
         const attr="anim"+key.charAt(0).toUpperCase()+key.slice(1);
         root.dataset[attr]=enabled&&animations[key]?"on":"off";
