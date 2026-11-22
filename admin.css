@@ -396,3 +396,13 @@
  #view-editor .editor-control-stack .editor-grid{grid-template-columns:1fr 1fr}
  #view-editor .editor-control-stack .editor-studio-actions{grid-template-columns:1fr 1fr}
 }
+
+/* Full-screen in-canvas editing workspace */
+#view-editor .editor-studio-intro{padding:4px 0}
+#view-editor .editor-preview-panel{border:0;background:transparent;box-shadow:none;padding:0}
+#view-editor .editor-preview-panel>.panel-heading{background:rgba(14,10,26,.94);border:1px solid rgba(190,130,255,.16);border-radius:14px;padding:10px 12px}
+#view-editor .editor-preview-panel>.panel-heading h2{letter-spacing:.01em}
+#view-editor .editor-preview-panel iframe{height:calc(100dvh - 235px);min-height:620px;border-radius:12px}
+#view-editor .editor-hint{display:none}
+#view-editor .editor-control-stack{top:78px;right:14px;max-height:calc(100dvh - 160px)}
+@media(max-width:700px){#view-editor .editor-preview-panel iframe{height:calc(100dvh - 225px);min-height:540px}#view-editor .editor-control-stack{bottom:8px;max-height:78dvh}}
