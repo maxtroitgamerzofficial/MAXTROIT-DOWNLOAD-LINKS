@@ -1,63 +1,26 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
-
-const admin = fs.readFileSync("admin.js", "utf8");
-const app = fs.readFileSync("app.js", "utf8");
-const html = fs.readFileSync("admin.html", "utf8");
-
-// 1. A committed write must not be treated as failed because list refresh is separate.
-assert.match(admin, /Download saved successfully\.[\s\S]*?try\{await loadAll\(\)\}catch\(refreshError\)/);
-assert.match(admin, /Download deleted successfully\.[\s\S]*?try\{await loadAll\(\)\}catch\(refreshError\)/);
-
-// 2. Logo encoding keeps alpha through WebP or PNG.
-assert.match(admin, /toDataURL\("image\/webp",\.78\)/);
-assert.match(admin, /preserveAlpha\?"image\/png":"image\/jpeg"/);
-
-// 3. Legacy records without created are not filtered out or silently backfilled on edit.
-assert.match(admin, /collection\("downloads"\)\.get\(\)/);
-assert.match(app, /collection\("downloads"\)\.get\(\)/);
-assert.match(admin, /old\.created!==undefined&&old\.created!==null/);
-assert.match(admin, /\.set\(item,\{merge:true\}\)/);
-assert.doesNotMatch(admin, /orderBy\(["']created["']\)/);
-
-// 4. Public search filters the already-loaded array locally.
-assert.match(app, /all\.filter\(x=>/);
-assert.match(app, /search\.addEventListener\("input",filterAndRender\)/);
-
-// 5. Empty search results explain that the search did not match.
-assert.match(app, /No downloads match your search\./);
-
-// 6. Image dimensions and encoded size are bounded.
-assert.match(admin, /readImage\(file,max=600/);
-assert.match(admin, /out\.length>280000/);
-
-// 7. Brand rendering preserves the OFFICIAL emphasis.
-assert.match(app, /function setBrand/);
-assert.ok(app.includes("<b>OFFICIAL</b>"));
-
-// 8. Firebase requests have a finite timeout and explicit offline messaging.
-assert.match(admin, /function withTimeout/);
-assert.match(admin, /navigator\.onLine/);
-
-// 9. Connection status is dynamic rather than hard-coded as Live.
-assert.match(html, /id="stat-connection">Checking…/);
-assert.match(admin, /textContent="Connected"/);
-assert.doesNotMatch(html, />Live<\/strong>/);
-
-// 10. Removing an uploaded template also clears its active state and preview.
-assert.match(admin, /activeUploadedTemplateId===target\.id/);
-assert.match(admin, /activeCustomTemplateId===target\.id/);
-assert.match(admin, /if\(result\.wasActive\).*?activeTemplate="midnight"/);
-assert.match(admin, /function closeTemplatePreview\(\)/);
-assert.match(html, /id="remove-active-template"/);
-
-
-// 11. Animation settings are saved separately and applied on the public site.
-assert.match(app, /function applyHubAnimations\(settings\)/);
-assert.match(app, /applyHubAnimations\(x\.animations\)/);
-assert.match(admin, /function loadAnimationControls\(\)/);
-assert.match(admin, /collection\("siteConfig"\)\.doc\("public"\)/);
-assert.match(html, /id="save-animation-settings"/);
-assert.match(html, /id="anim-enabled"/);
-
-console.log("MAXTROIT invariants: 11/11 passed");
+const admin=fs.readFileSync("admin.js","utf8");
+const app=fs.readFileSync("app.js","utf8");
+const html=fs.readFileSync("admin.html","utf8");
+const css=fs.readFileSync("admin.css","utf8");
+assert.match(html,/id="login-form"/);
+assert.match(admin,/signInWithEmailAndPassword/);
+assert.match(admin,/authOk/);
+assert.match(html,/id="site-preview"/);
+assert.match(admin,/addEventListener\("click",e=>\{const el=e\.target\.closest/);
+assert.match(admin,/dragstart/);
+assert.match(admin,/drop/);
+assert.match(admin,/id="delete"/);
+assert.match(admin,/id="undo"/);
+assert.match(admin,/id="redo"/);
+assert.match(admin,/collection\("siteConfig"\)\.doc\("public"\)/);
+assert.match(admin,/editorStudioDraft/);
+assert.match(admin,/visualEditsUpdated/);
+assert.match(app,/function applyVisualEdits\(edits\)/);
+assert.match(app,/visualEditorPreview/);
+assert.match(html,/id="publish"/);
+assert.match(css,/\.workspace/);
+assert.match(css,/@media\(max-width:900px\)/);
+assert.doesNotMatch(html,/id="dashboard|id="downloads-manager|id="appearance-settings/);
+console.log("MAXTROIT Visual Editor invariants: PASS");
