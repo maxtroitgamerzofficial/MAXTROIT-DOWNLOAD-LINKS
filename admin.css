@@ -4,169 +4,35 @@
 .tool-dock{display:none!important}
 
 
-/* Flash Screen as a separate collapsible editor section */
 
-/* Flash Screen master switch */
-
-/* Flash Screen switch lives inside the website preview header */
-
-/* Flash Screen editor lives in the existing preview pane; public switch is independent. */
+/* Visual editor chrome */
+.tool-dock{display:none!important}
 #flash-editor-tab{background:#392b69;color:#fff;border:1px solid #9b87f5;padding:8px 11px}
 #flash-editor-tab[aria-pressed="true"]{background:#7654df;border-color:#c4b5fd}
-.flash-editor-panel{height:calc(100% - 52px);min-height:430px;overflow:auto;background:#100d20;color:#f7f3ff;display:grid;grid-template-columns:minmax(245px,340px) minmax(260px,1fr);gap:14px;padding:14px}
-.flash-editor-panel[hidden]{display:none!important}
-.flash-editor-controls,.flash-editor-live{background:#19152d;border:1px solid #57448c;border-radius:12px;padding:14px;min-width:0}
-.flash-editor-controls h2,.flash-editor-live h2{font-size:15px;margin:0 0 12px}
-.flash-editor-controls label{display:grid;gap:5px;margin:9px 0;font-size:12px;color:#ddd5f8}
-.flash-editor-controls input,.flash-editor-controls select{width:100%;min-width:0;box-sizing:border-box;padding:8px;border-radius:7px;border:1px solid #66558f;background:#100d20;color:white}
-.flash-editor-controls input[type=range]{padding:0}
-.flash-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.flash-editor-actions button{padding:9px 12px}
-#fs-status{min-height:18px;color:#c4b9e9;font-size:12px}
-.flash-editor-live{display:flex;flex-direction:column}
-#fs-stage{flex:1;min-height:310px;border-radius:10px;background:#16091f;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;overflow:hidden}
-#fs-stage img{max-width:75%;max-height:240px;object-fit:contain}
-#fs-stage strong{font-size:clamp(14px,2vw,20px);color:white;text-align:center}
-@media(max-width:760px){.flash-editor-panel{height:auto;grid-template-columns:1fr}.flash-editor-live{min-height:300px}#fs-stage{min-height:260px}.preview-flash-toggle{width:100%;margin-left:0}}
 
-
-/* Flash Screen preview: full-width, website-like canvas rather than a small thumbnail. */
-.flash-editor-panel{height:100%;min-height:0;box-sizing:border-box;overflow:auto;display:flex;flex-direction:column;gap:14px;padding:14px}
-.flash-editor-controls{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px 12px;align-items:end}
-.flash-editor-controls h2,.flash-editor-controls .flash-editor-actions,#fs-status{grid-column:1/-1}
-.flash-editor-controls label{margin:0;min-width:0}
-.flash-editor-controls label input,.flash-editor-controls label select{min-height:38px}
-.flash-editor-live{width:100%;min-height:0;box-sizing:border-box}
-#fs-stage{width:100%;height:auto;min-height:0;aspect-ratio:16/9;max-height:calc(100dvh - 330px);box-sizing:border-box}
-#fs-stage img{max-width:min(58%,520px);max-height:68%;object-fit:contain}
-#fs-stage strong{font-size:clamp(20px,3vw,42px);letter-spacing:.04em}
-@media(max-width:900px){.flash-editor-controls{grid-template-columns:repeat(2,minmax(130px,1fr))}#fs-stage{max-height:none;min-height:320px;aspect-ratio:16/9}}
-@media(max-width:560px){.flash-editor-panel{padding:8px}.flash-editor-controls{grid-template-columns:1fr 1fr;gap:8px}.flash-editor-controls label{font-size:11px}#fs-stage{min-height:240px;aspect-ratio:4/3}.flash-editor-live{padding:9px}}
-
-/* Dedicated Flash Screen workspace: the tab opens this section; its switch only controls the public splash. */
-.preview-heading{align-items:center;flex-wrap:wrap}
-.preview-flash-toggle{width:auto;margin-left:auto;background:transparent;border:0;padding:0}
-.flash-editor-panel{height:100%;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:12px;background:#100d20;color:#f7f3ff}
-.flash-editor-live{order:0;width:100%;min-height:0;display:flex;flex-direction:column;padding:12px}
-.flash-live-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.flash-live-heading span,.flash-section-heading p{margin:0;color:#c4b9e9;font-size:12px}
-.flash-editor-controls{order:1;display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:10px 12px;align-items:end}
-.flash-section-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:12px;border:1px solid #57448c;border-radius:10px;background:#211a3a}
-.flash-section-heading h2{margin:0 0 4px}
-.flash-public-switch{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.flash-public-switch b{font-size:12px}
-.flash-public-switch #startup-switch-status{flex-basis:100%;font-size:11px;color:#c4b9e9;text-align:right}
-.flash-editor-controls h2{font-size:15px}
-#fs-stage{position:relative;width:100%;height:auto;min-height:0;aspect-ratio:16/9;max-height:none;overflow:hidden;touch-action:none;background:#16091f}
-#fs-stage img,#fs-stage strong{max-width:80%;max-height:80%;user-select:none;-webkit-user-drag:none}
-#fs-stage strong{font-size:clamp(18px,3vw,42px);white-space:normal;overflow-wrap:anywhere}
-#fs-preview-logo[hidden]{display:none!important}
-@media(max-width:900px){.flash-editor-controls{grid-template-columns:repeat(2,minmax(130px,1fr))}}
-@media(max-width:600px){
- .preview-area{height:calc(100dvh - 120px);min-height:400px;padding:6px}
- .flash-editor-panel{padding:8px}
- .flash-editor-live{padding:8px}
- #fs-stage{aspect-ratio:9/16;width:min(100%,420px);max-height:62dvh;min-height:390px;margin:0 auto}
- .flash-editor-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- .flash-section-heading{grid-column:1/-1;padding:10px}
- .flash-public-switch{width:100%;justify-content:space-between}
- .flash-public-switch #startup-switch-status{text-align:left}
- .flash-editor-controls label{font-size:11px}
-}
-
-/* Keep all Flash Screen controls, especially the background picker, clearly visible. */
-.flash-editor-controls input[type="color"]{display:block;width:100%;height:44px;min-height:44px;padding:4px;border:1px solid #8068b7;border-radius:8px;background:#211a3a;cursor:pointer}
-.flash-editor-controls input[type="file"]{min-height:42px;height:auto;padding:7px}
-.flash-editor-controls label{min-width:0;align-content:start}
-.flash-editor-controls label input,.flash-editor-controls label select{min-height:40px}
-.flash-editor-controls input[type="range"]{min-height:26px;height:26px}
-.flash-editor-controls .flash-section-heading{min-height:68px}
-
-/* The compact public ON/OFF switch now sits inside the live preview heading. */
-.flash-live-heading{align-items:center}
-.flash-live-heading>div:first-child{display:grid;gap:4px}
-.flash-live-heading .flash-public-switch{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #57448c;border-radius:9px;background:#211a3a}
-.flash-live-heading .flash-public-switch b{font-size:12px;white-space:nowrap}
-.flash-live-heading .switch-control{position:relative;display:inline-flex;width:42px;height:24px;flex:0 0 42px}
-.flash-live-heading .switch-control input{position:absolute;opacity:0;width:1px;height:1px}
-.flash-live-heading .switch-track{position:absolute;inset:0;border-radius:99px;background:#514b65;transition:.2s;cursor:pointer}
-.flash-live-heading .switch-track:before{content:"";position:absolute;width:16px;height:16px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.2s}
-.flash-live-heading .switch-control input:checked+.switch-track{background:#7654df}
-.flash-live-heading .switch-control input:checked+.switch-track:before{transform:translateX(18px)}
-.flash-live-heading .switch-control input:focus-visible+.switch-track{outline:3px solid #c4b5fd;outline-offset:3px}
-.flash-live-heading #startup-switch-status{font-size:10px;color:#c4b9e9;max-width:220px}
-@media(max-width:600px){.flash-live-heading{align-items:flex-start}.flash-live-heading .flash-public-switch{width:100%;box-sizing:border-box;justify-content:space-between}.flash-live-heading #startup-switch-status{max-width:58%;text-align:right}}
-
-/* Stable Flash Screen editor layout: controls remain beside the preview on desktop. */
+/* One canonical Flash Screen editor. No legacy/duplicate editor selectors. */
 .preview-area{min-height:0}
-.flash-editor-panel{flex:1 1 0;height:auto;min-height:0;width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);align-items:stretch;gap:12px;overflow:hidden;padding:12px}
-.flash-editor-panel[hidden]{display:none!important}
-.flash-editor-controls{order:0;display:grid;grid-template-columns:minmax(0,1fr);align-content:start;align-items:stretch;gap:10px;min-width:0;min-height:0;max-height:100%;overflow:auto;padding:14px}
-.flash-editor-controls .flash-section-heading{grid-column:1/-1}
-.flash-editor-controls label{display:grid;grid-template-columns:1fr;gap:5px;margin:0;min-width:0;font-size:12px}
-.flash-editor-controls label input,.flash-editor-controls label select{width:100%;min-width:0;box-sizing:border-box}
-.flash-editor-controls input[type=color]{display:block;width:100%;height:42px;min-height:42px;padding:3px}
-.flash-editor-live{order:1;min-width:0;min-height:0;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:12px}
-.flash-live-heading{flex:0 0 auto;align-items:center;justify-content:space-between;gap:10px}
-#fs-stage{flex:1 1 auto;width:100%;height:auto;min-height:260px;max-height:none;aspect-ratio:auto;position:relative;overflow:hidden}
-#fs-stage img{max-width:80%;max-height:70%;object-fit:contain}
-#fs-stage strong{max-width:90%;font-size:clamp(18px,2.4vw,36px);white-space:normal;overflow-wrap:anywhere;text-align:center}
-.flash-live-heading .flash-public-switch{flex:0 1 auto;max-width:100%}
-@media(max-width:850px){
- .flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(320px,1fr) auto;overflow:auto}
- .flash-editor-live{grid-row:1;min-height:320px;height:auto}
- #fs-stage{min-height:260px;aspect-ratio:16/9}
- .flash-editor-controls{grid-row:2;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
- .flash-editor-controls .flash-section-heading,.flash-editor-controls .flash-editor-actions,#fs-status{grid-column:1/-1}
-}
-@media(max-width:560px){
- .flash-editor-panel{padding:7px;gap:8px}
- .flash-editor-live,.flash-editor-controls{padding:9px}
- .flash-editor-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- #fs-stage{width:100%;min-height:250px;aspect-ratio:4/3}
- .flash-live-heading{align-items:flex-start}
- .flash-live-heading .flash-public-switch{width:100%;box-sizing:border-box;justify-content:space-between}
- .flash-live-heading #startup-switch-status{max-width:58%;text-align:right}
-}
-
-/* Match the public Flash Screen: full portrait preview with the original gradient. */
-.flash-editor-panel{grid-template-columns:minmax(240px,330px) minmax(0,1fr);gap:14px;overflow:auto}
-.flash-editor-live{min-width:0;min-height:0;height:100%;overflow:visible}
-#fs-stage{display:block;width:min(100%,420px);height:min(68dvh,720px);min-height:480px;aspect-ratio:9/16;margin:8px auto 0;flex:none;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);border:1px solid #7654a8;border-radius:14px}
-#fs-stage img{max-width:58%;max-height:36%;object-fit:contain}
-#fs-stage strong{font-size:clamp(16px,2.1vw,26px);max-width:88%;text-align:center;letter-spacing:.04em}
-#fs-solid-color-wrap[hidden]{display:none!important}
-@media(max-width:850px){
- .flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow:auto;align-content:start}
- .flash-editor-live{grid-row:1;height:auto;min-height:0;overflow:visible}
- #fs-stage{width:min(100%,420px);height:min(66dvh,700px);min-height:440px;aspect-ratio:9/16;margin:8px auto}
- .flash-editor-controls{grid-row:2;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:560px){
- .flash-editor-panel{padding:7px}
- #fs-stage{width:min(100%,390px);height:min(64dvh,640px);min-height:390px;aspect-ratio:9/16}
- .flash-editor-live{padding:8px}
- .flash-live-heading{align-items:flex-start}
-}
-
-
-/* Single canonical Flash Screen editor layout */
-.flash-editor-panel{height:100%;min-height:0;box-sizing:border-box;display:grid;grid-template-columns:minmax(250px,330px) minmax(0,1fr);gap:14px;padding:12px;overflow:auto;background:#100d20;color:#f7f3ff}
+.flash-editor-panel{flex:1 1 0;height:auto;min-height:0;width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);align-items:stretch;gap:12px;overflow:hidden;padding:12px;background:#100d20;color:#f7f3ff}
 .flash-editor-panel[hidden]{display:none!important}
 .flash-editor-controls,.flash-editor-live{min-width:0;min-height:0;background:#19152d;border:1px solid #57448c;border-radius:12px;padding:14px}
-.flash-editor-controls{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:10px;overflow:auto}
-.flash-editor-controls h2,.flash-editor-live h2{font-size:15px;margin:0 0 8px}
-.flash-editor-controls label{display:grid;gap:5px;margin:0;color:#ddd5f8;font-size:12px}
-.flash-editor-controls input,.flash-editor-controls select{width:100%;min-width:0;min-height:40px;box-sizing:border-box;padding:8px;border:1px solid #8068b7;border-radius:8px;background:#100d20;color:#fff}
-.flash-editor-controls input[type=color]{height:46px;padding:4px;background:#211a3a;cursor:pointer}
+.flash-editor-controls{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;align-items:stretch;gap:10px;max-height:100%;overflow:auto}
+.flash-editor-controls .flash-section-heading{grid-column:1/-1;padding:12px;border:1px solid #57448c;border-radius:10px;background:#211a3a}
+.flash-section-heading h2{margin:0 0 4px;font-size:15px}
+.flash-section-heading p{margin:0;color:#c4b9e9;font-size:12px}
+.flash-editor-controls label{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;margin:0;min-width:0;color:#ddd5f8;font-size:12px}
+.flash-editor-controls input,.flash-editor-controls select{display:block;width:100%;min-width:0;min-height:40px;box-sizing:border-box;padding:8px;border:1px solid #8068b7;border-radius:8px;background:#100d20;color:#fff}
+.flash-editor-controls input[type=color]{height:44px;min-height:44px;padding:3px;background:#211a3a;cursor:pointer}
 .flash-editor-controls input[type=file]{height:auto}
 .flash-editor-controls input[type=range]{padding:0}
 .flash-editor-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-#fs-status{grid-column:1/-1;min-height:18px;color:#d8cafa;font-size:12px}
-.flash-editor-live{display:flex;flex-direction:column;overflow:auto}
-.flash-live-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.flash-editor-actions button{padding:9px 12px}
+#fs-status{grid-column:1/-1;min-height:18px;margin:0;color:#d8cafa;font-size:12px}
+.flash-editor-live{display:flex;flex-direction:column;overflow:hidden}
+.flash-live-heading{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.flash-live-heading h2{margin:0 0 5px;font-size:15px}
 .flash-live-heading span{font-size:11px;color:#c4b9e9}
 .flash-public-switch{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:#eee8ff;font-size:12px}
+.flash-public-switch b{font-size:12px}
 .flash-public-switch #startup-switch-status{font-size:11px;color:#c4b9e9}
 .switch-control{position:relative;display:inline-flex;width:48px;height:27px;flex:0 0 48px}
 .switch-control input{position:absolute;opacity:0;width:1px;height:1px}
@@ -174,10 +40,25 @@
 .switch-track:before{content:"";position:absolute;width:19px;height:19px;left:4px;top:4px;border-radius:50%;background:#fff;transition:transform .2s}
 .switch-control input:checked+.switch-track{background:#7654df}
 .switch-control input:checked+.switch-track:before{transform:translateX(21px)}
-#fs-stage{position:relative;display:block;flex:none;width:min(100%,420px);height:min(64dvh,640px);min-height:390px;margin:10px auto 0;overflow:hidden;touch-action:pan-y;border:1px solid #9b67c7;border-radius:14px;background:radial-gradient(circle at 50% 42%,rgba(202,67,255,.26) 0%,transparent 32%),radial-gradient(ellipse at 50% 0%,#6d287b 0%,#3a174d 34%,#24102f 62%,#16091f 100%);box-shadow:inset 0 0 45px rgba(210,95,255,.12),0 8px 30px rgba(0,0,0,.25)}
+.switch-control input:focus-visible+.switch-track{outline:3px solid #c4b5fd;outline-offset:3px}
+#fs-stage{position:relative;flex:1 1 auto;width:100%;height:auto;min-height:260px;max-height:none;aspect-ratio:9/16;margin:10px auto 0;overflow:hidden;touch-action:pan-y;border:1px solid #7654a8;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);box-shadow:inset 0 0 45px rgba(210,95,255,.12),0 8px 30px rgba(0,0,0,.25)}
 #fs-stage img{max-width:58%;max-height:36%;object-fit:contain;user-select:none;-webkit-user-drag:none}
 #fs-stage strong{max-width:88%;font-size:clamp(16px,2.1vw,26px);color:#fff;text-align:center;letter-spacing:.04em;overflow-wrap:anywhere;outline:none;cursor:text}
 #fs-stage strong:focus{outline:1px dashed #f0c7ff;outline-offset:5px}
 #fs-solid-color-wrap[hidden]{display:none!important}
-@media(max-width:850px){.flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow:auto}.flash-editor-live{grid-row:1;overflow:visible}.flash-editor-controls{grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.flash-editor-controls .flash-section-heading,.flash-editor-actions,#fs-status{grid-column:1/-1}}
-@media(max-width:560px){.flash-editor-panel{padding:7px;gap:8px}.flash-editor-live,.flash-editor-controls{padding:9px}#fs-stage{width:min(100%,390px);height:min(62dvh,620px);min-height:380px}.flash-editor-controls{gap:8px}.flash-live-heading{align-items:flex-start}.flash-public-switch{width:100%;justify-content:space-between}.flash-public-switch #startup-switch-status{max-width:58%;text-align:right}}
+@media(max-width:850px){
+ .flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(360px,auto) auto;overflow:auto;align-content:start}
+ .flash-editor-live{grid-row:1;min-height:0;overflow:visible}
+ #fs-stage{width:min(100%,420px);height:min(66dvh,700px);min-height:440px;aspect-ratio:9/16;flex:none}
+ .flash-editor-controls{grid-row:2;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .flash-editor-controls .flash-section-heading,.flash-editor-actions,#fs-status{grid-column:1/-1}
+}
+@media(max-width:650px){
+ .flash-editor-panel{padding:7px;gap:8px}
+ .flash-editor-live,.flash-editor-controls{padding:9px}
+ .flash-editor-controls{gap:8px}
+ #fs-stage{width:min(100%,390px);height:min(64dvh,640px);min-height:390px}
+ .flash-live-heading{align-items:flex-start}
+ .flash-public-switch{width:100%;justify-content:space-between}
+ .flash-public-switch #startup-switch-status{max-width:58%;text-align:right}
+}
