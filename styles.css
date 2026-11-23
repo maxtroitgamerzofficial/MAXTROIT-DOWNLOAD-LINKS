@@ -443,7 +443,7 @@ html[data-hub-preset="dimension"][data-hub-animations="on"][data-anim-background
 
 /* MAXTROIT sunset brand skin */
 :root{--bg:#16091f;--panel:#25102f;--panel2:#30143b;--line:#59304f;--text:#fff5fb;--muted:#c0a9c2;--cyan:#ff8a67;--violet:#d9469b;--green:#f3b35e}
-body{background:radial-gradient(ellipse at 15% 15%,#ff4fb8 0%,transparent 42%),radial-gradient(ellipse at 85% 80%,#6d4cff 0%,transparent 48%),linear-gradient(135deg,#160b36 0%,#35105c 50%,#0c2354 100%);color:var(--text);position:relative}
+body{background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);color:var(--text);position:relative}
 body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--brand-wallpaper);background-repeat:no-repeat;background-position:center 42%;background-size:min(78vw,760px) auto;opacity:var(--brand-wallpaper-opacity,0);filter:saturate(.9);mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 72%,transparent 100%)}
 .topbar{background:#16091fee;border-bottom-color:#e66ab322}
 .brand b,.footer-brand b{color:#ff936f}
@@ -560,7 +560,7 @@ body>.topbar{z-index:5}
 /* Prevent default-content flash while Firebase settings initialize */
 .site-startup{display:none}
 html.site-loading body>*:not(.site-startup){visibility:hidden}
-html.site-loading .site-startup{visibility:visible;display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);color:#fff;font:600 14px system-ui,sans-serif;letter-spacing:.04em}
+html.site-loading .site-startup{visibility:visible;display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:radial-gradient(ellipse at 15% 15%,#ff4fb8 0%,transparent 42%),radial-gradient(ellipse at 85% 80%,#6d4cff 0%,transparent 48%),linear-gradient(135deg,#160b36 0%,#35105c 50%,#0c2354 100%);color:#fff;font:600 14px system-ui,sans-serif;letter-spacing:.04em}
 .site-startup-mark{display:grid;place-items:center;width:min(58vw,220px);height:min(58vw,220px);border:0;background:transparent;border-radius:0;font-size:30px;box-shadow:none;overflow:visible}
 
 .site-startup-mark img{width:100%;height:100%;object-fit:contain;padding:0;border:0;border-radius:0;box-shadow:none}
