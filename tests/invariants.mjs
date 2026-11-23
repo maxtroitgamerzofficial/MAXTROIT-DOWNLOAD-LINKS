@@ -11,7 +11,7 @@ assert.match(html,/id="site-preview"/);
 assert.match(admin,/addEventListener\("pointerdown"/);
 assert.match(admin,/addEventListener\("pointermove"/);
 assert.match(admin,/data-style="backgroundColor"/);
-assert.match(admin,/translate\(/);
+assert.match(admin,/style\.translate|translate:/);
 assert.match(admin,/addEventListener\("pointerup"/);
 assert.match(admin,/user-select:none/);
 assert.match(html,/id="delete"/);
