@@ -41,7 +41,7 @@
 .switch-control input:checked+.switch-track{background:#7654df}
 .switch-control input:checked+.switch-track:before{transform:translateX(21px)}
 .switch-control input:focus-visible+.switch-track{outline:3px solid #c4b5fd;outline-offset:3px}
-#fs-stage{position:relative;flex:1 1 auto;width:100%;height:auto;min-height:260px;max-height:none;aspect-ratio:9/16;margin:10px auto 0;overflow:hidden;touch-action:pan-y;border:1px solid #7654a8;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);box-shadow:inset 0 0 45px rgba(210,95,255,.12),0 8px 30px rgba(0,0,0,.25)}
+#fs-stage{position:relative;flex:0 1 auto;width:auto;height:min(100%,700px);max-width:100%;min-height:260px;aspect-ratio:9/16;margin:10px auto 0;overflow:hidden;touch-action:pan-y;border:1px solid #7654a8;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);box-shadow:inset 0 0 45px rgba(210,95,255,.12),0 8px 30px rgba(0,0,0,.25)}
 #fs-stage img{max-width:58%;max-height:36%;object-fit:contain;user-select:none;-webkit-user-drag:none}
 #fs-stage strong{max-width:88%;font-size:clamp(16px,2.1vw,26px);color:#fff;text-align:center;letter-spacing:.04em;overflow-wrap:anywhere;outline:none;cursor:text}
 #fs-stage strong:focus{outline:1px dashed #f0c7ff;outline-offset:5px}
@@ -49,7 +49,7 @@
 @media(max-width:850px){
  .flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(360px,auto) auto;overflow:auto;align-content:start}
  .flash-editor-live{grid-row:1;min-height:0;overflow:visible}
- #fs-stage{width:min(100%,420px);height:min(66dvh,700px);min-height:440px;aspect-ratio:9/16;flex:none}
+ #fs-stage{width:auto;height:min(66dvh,700px);max-width:100%;min-height:390px;aspect-ratio:9/16;flex:none}
  .flash-editor-controls{grid-row:2;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
  .flash-editor-controls .flash-section-heading,.flash-editor-actions,#fs-status{grid-column:1/-1}
 }
@@ -57,7 +57,7 @@
  .flash-editor-panel{padding:7px;gap:8px}
  .flash-editor-live,.flash-editor-controls{padding:9px}
  .flash-editor-controls{gap:8px}
- #fs-stage{width:min(100%,390px);height:min(64dvh,640px);min-height:390px}
+ #fs-stage{width:auto;height:min(64dvh,640px);max-width:100%;min-height:390px}
  .flash-live-heading{align-items:flex-start}
  .flash-public-switch{width:100%;justify-content:space-between}
  .flash-public-switch #startup-switch-status{max-width:58%;text-align:right}
