@@ -35,3 +35,17 @@
 #fs-stage img{max-width:75%;max-height:240px;object-fit:contain}
 #fs-stage strong{font-size:clamp(14px,2vw,20px);color:white;text-align:center}
 @media(max-width:760px){.flash-editor-panel{height:auto;grid-template-columns:1fr}.flash-editor-live{min-height:300px}#fs-stage{min-height:260px}.preview-flash-toggle{width:100%;margin-left:0}}
+
+
+/* Flash Screen preview: full-width, website-like canvas rather than a small thumbnail. */
+.flash-editor-panel{height:100%;min-height:0;box-sizing:border-box;overflow:auto;display:flex;flex-direction:column;gap:14px;padding:14px}
+.flash-editor-controls{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px 12px;align-items:end}
+.flash-editor-controls h2,.flash-editor-controls .flash-editor-actions,#fs-status{grid-column:1/-1}
+.flash-editor-controls label{margin:0;min-width:0}
+.flash-editor-controls label input,.flash-editor-controls label select{min-height:38px}
+.flash-editor-live{width:100%;min-height:0;box-sizing:border-box}
+#fs-stage{width:100%;height:auto;min-height:0;aspect-ratio:16/9;max-height:calc(100dvh - 330px);box-sizing:border-box}
+#fs-stage img{max-width:min(58%,520px);max-height:68%;object-fit:contain}
+#fs-stage strong{font-size:clamp(20px,3vw,42px);letter-spacing:.04em}
+@media(max-width:900px){.flash-editor-controls{grid-template-columns:repeat(2,minmax(130px,1fr))}#fs-stage{max-height:none;min-height:320px;aspect-ratio:16/9}}
+@media(max-width:560px){.flash-editor-panel{padding:8px}.flash-editor-controls{grid-template-columns:1fr 1fr;gap:8px}.flash-editor-controls label{font-size:11px}#fs-stage{min-height:240px;aspect-ratio:4/3}.flash-editor-live{padding:9px}}
