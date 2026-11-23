@@ -27,4 +27,8 @@ assert.match(css,/\.tool-dock/);
 assert.match(css,/@media\(max-width:650px\)/);
 assert.doesNotMatch(html,/<textarea|type="url"|id="el-text"/);
 assert.doesNotMatch(html,/id="dashboard|id="downloads-manager|id="appearance-settings/);
+const flash=fs.readFileSync("flash-screen-editor.html","utf8");
+assert.match(admin,/location\.hash===\"#flash-screen\"/);
+assert.doesNotMatch(admin,/showInline\(el\);/);
+assert.match(flash,/admin\.html#flash-screen/);
 console.log("MAXTROIT visual-only editor invariants: PASS");
