@@ -2,3 +2,5 @@
 @media(max-width:650px){.tool-dock{position:sticky;bottom:0;z-index:5}.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.tools button{min-height:42px}}
 /* Editing tools live inside the website preview. */
 .tool-dock{display:none!important}
+
+.startup-editor{margin:18px 12px;padding:18px;background:#151329;border:1px solid #57448c;border-radius:14px;color:#f5f2ff}.startup-editor h2{margin:0 0 6px;font-size:18px}.startup-editor p{color:#c4b9e9;font-size:13px}.startup-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.startup-controls label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#ddd5f8}.startup-controls input,.startup-controls select{max-width:100%;min-height:36px;padding:7px;border-radius:7px;border:1px solid #66559a;background:#0c1020;color:white}.startup-controls input[type=checkbox]{width:20px;min-height:20px}.startup-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.startup-actions button{padding:10px 15px;border:0;border-radius:8px;background:#7054d8;color:#fff;font-weight:700}.startup-editor #startup-status{min-height:18px}
