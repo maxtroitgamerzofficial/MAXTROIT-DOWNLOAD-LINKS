@@ -31,4 +31,10 @@ const flash=fs.readFileSync("flash-screen-editor.html","utf8");
 assert.match(admin,/location\.hash===\"#flash-screen\"/);
 assert.doesNotMatch(admin,/const ui=doc\.createElement\("div"\)/);
 assert.match(flash,/admin\.html#flash-screen/);
+const ids=[...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);
+assert.equal(new Set(ids).size,ids.length,"Admin HTML must not contain duplicate IDs");
+assert.doesNotMatch(admin,/showInline/);
+assert.match(admin,/next\.enabled=startupEnabled/);
+assert.doesNotMatch(flash,/id="fs-animation"/);
+
 console.log("MAXTROIT visual-only editor invariants: PASS");
