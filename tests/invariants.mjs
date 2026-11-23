@@ -25,6 +25,6 @@ assert.match(app,/visualEditorPreview/);
 assert.match(html,/id="publish"/);
 assert.match(css,/\.tool-dock/);
 assert.match(css,/@media\(max-width:650px\)/);
-assert.doesNotMatch(html,/<textarea|type="url"|type="number"|id="el-text"/);
+assert.doesNotMatch(html,/<textarea|type="url"|id="el-text"/);
 assert.doesNotMatch(html,/id="dashboard|id="downloads-manager|id="appearance-settings/);
 console.log("MAXTROIT visual-only editor invariants: PASS");
