@@ -49,3 +49,34 @@
 #fs-stage strong{font-size:clamp(20px,3vw,42px);letter-spacing:.04em}
 @media(max-width:900px){.flash-editor-controls{grid-template-columns:repeat(2,minmax(130px,1fr))}#fs-stage{max-height:none;min-height:320px;aspect-ratio:16/9}}
 @media(max-width:560px){.flash-editor-panel{padding:8px}.flash-editor-controls{grid-template-columns:1fr 1fr;gap:8px}.flash-editor-controls label{font-size:11px}#fs-stage{min-height:240px;aspect-ratio:4/3}.flash-editor-live{padding:9px}}
+
+/* Dedicated Flash Screen workspace: the tab opens this section; its switch only controls the public splash. */
+.preview-heading{align-items:center;flex-wrap:wrap}
+.preview-flash-toggle{width:auto;margin-left:auto;background:transparent;border:0;padding:0}
+.flash-editor-panel{height:100%;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:12px;background:#100d20;color:#f7f3ff}
+.flash-editor-live{order:0;width:100%;min-height:0;display:flex;flex-direction:column;padding:12px}
+.flash-live-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.flash-live-heading span,.flash-section-heading p{margin:0;color:#c4b9e9;font-size:12px}
+.flash-editor-controls{order:1;display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:10px 12px;align-items:end}
+.flash-section-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:12px;border:1px solid #57448c;border-radius:10px;background:#211a3a}
+.flash-section-heading h2{margin:0 0 4px}
+.flash-public-switch{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flash-public-switch b{font-size:12px}
+.flash-public-switch #startup-switch-status{flex-basis:100%;font-size:11px;color:#c4b9e9;text-align:right}
+.flash-editor-controls h2{font-size:15px}
+#fs-stage{position:relative;width:100%;height:auto;min-height:0;aspect-ratio:16/9;max-height:none;overflow:hidden;touch-action:none;background:#16091f}
+#fs-stage img,#fs-stage strong{max-width:80%;max-height:80%;user-select:none;-webkit-user-drag:none}
+#fs-stage strong{font-size:clamp(18px,3vw,42px);white-space:normal;overflow-wrap:anywhere}
+#fs-preview-logo[hidden]{display:none!important}
+@media(max-width:900px){.flash-editor-controls{grid-template-columns:repeat(2,minmax(130px,1fr))}}
+@media(max-width:600px){
+ .preview-area{height:calc(100dvh - 120px);min-height:400px;padding:6px}
+ .flash-editor-panel{padding:8px}
+ .flash-editor-live{padding:8px}
+ #fs-stage{aspect-ratio:9/16;width:min(100%,420px);max-height:62dvh;min-height:390px;margin:0 auto}
+ .flash-editor-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .flash-section-heading{grid-column:1/-1;padding:10px}
+ .flash-public-switch{width:100%;justify-content:space-between}
+ .flash-public-switch #startup-switch-status{text-align:left}
+ .flash-editor-controls label{font-size:11px}
+}
