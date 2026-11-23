@@ -135,3 +135,23 @@
  .flash-live-heading .flash-public-switch{width:100%;box-sizing:border-box;justify-content:space-between}
  .flash-live-heading #startup-switch-status{max-width:58%;text-align:right}
 }
+
+/* Match the public Flash Screen: full portrait preview with the original gradient. */
+.flash-editor-panel{grid-template-columns:minmax(240px,330px) minmax(0,1fr);gap:14px;overflow:auto}
+.flash-editor-live{min-width:0;min-height:0;height:100%;overflow:visible}
+#fs-stage{display:block;width:min(100%,420px);height:min(68dvh,720px);min-height:480px;aspect-ratio:9/16;margin:8px auto 0;flex:none;background:radial-gradient(ellipse at 50% 0%,#4a174b 0%,#24102f 36%,#16091f 78%);border:1px solid #7654a8;border-radius:14px}
+#fs-stage img{max-width:58%;max-height:36%;object-fit:contain}
+#fs-stage strong{font-size:clamp(16px,2.1vw,26px);max-width:88%;text-align:center;letter-spacing:.04em}
+#fs-solid-color-wrap[hidden]{display:none!important}
+@media(max-width:850px){
+ .flash-editor-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow:auto;align-content:start}
+ .flash-editor-live{grid-row:1;height:auto;min-height:0;overflow:visible}
+ #fs-stage{width:min(100%,420px);height:min(66dvh,700px);min-height:440px;aspect-ratio:9/16;margin:8px auto}
+ .flash-editor-controls{grid-row:2;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+ .flash-editor-panel{padding:7px}
+ #fs-stage{width:min(100%,390px);height:min(64dvh,640px);min-height:390px;aspect-ratio:9/16}
+ .flash-editor-live{padding:8px}
+ .flash-live-heading{align-items:flex-start}
+}
