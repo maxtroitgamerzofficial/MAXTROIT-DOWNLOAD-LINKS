@@ -11,6 +11,8 @@ assert.match(html,/id="site-preview"/);
 assert.match(admin,/addEventListener\("pointerdown"/);
 assert.match(admin,/addEventListener\("pointermove"/);
 assert.match(admin,/function commitTextEdit\(el\)/);
+assert.match(admin,/file\.size>200000/);
+assert.match(admin,/reader\.onerror=\(\)=>say\("Image read nahi ho payi/);
 assert.match(admin,/style\.translate|translate:/);
 assert.match(admin,/addEventListener\("pointerup"/);
 assert.match(admin,/user-select:none/);
