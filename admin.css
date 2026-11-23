@@ -88,3 +88,18 @@
 .flash-editor-controls label input,.flash-editor-controls label select{min-height:40px}
 .flash-editor-controls input[type="range"]{min-height:26px;height:26px}
 .flash-editor-controls .flash-section-heading{min-height:68px}
+
+/* The compact public ON/OFF switch now sits inside the live preview heading. */
+.flash-live-heading{align-items:center}
+.flash-live-heading>div:first-child{display:grid;gap:4px}
+.flash-live-heading .flash-public-switch{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #57448c;border-radius:9px;background:#211a3a}
+.flash-live-heading .flash-public-switch b{font-size:12px;white-space:nowrap}
+.flash-live-heading .switch-control{position:relative;display:inline-flex;width:42px;height:24px;flex:0 0 42px}
+.flash-live-heading .switch-control input{position:absolute;opacity:0;width:1px;height:1px}
+.flash-live-heading .switch-track{position:absolute;inset:0;border-radius:99px;background:#514b65;transition:.2s;cursor:pointer}
+.flash-live-heading .switch-track:before{content:"";position:absolute;width:16px;height:16px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.2s}
+.flash-live-heading .switch-control input:checked+.switch-track{background:#7654df}
+.flash-live-heading .switch-control input:checked+.switch-track:before{transform:translateX(18px)}
+.flash-live-heading .switch-control input:focus-visible+.switch-track{outline:3px solid #c4b5fd;outline-offset:3px}
+.flash-live-heading #startup-switch-status{font-size:10px;color:#c4b9e9;max-width:220px}
+@media(max-width:600px){.flash-live-heading{align-items:flex-start}.flash-live-heading .flash-public-switch{width:100%;box-sizing:border-box;justify-content:space-between}.flash-live-heading #startup-switch-status{max-width:58%;text-align:right}}
